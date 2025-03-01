@@ -1,4 +1,4 @@
-import { USER_ROUTES } from '../../constants/ROUTES'
+import { USER_ROUTES } from '../../constants/routes'
 import Avatar from './Avatar'
 import { useUser } from '../../hooks/useUser'
 
