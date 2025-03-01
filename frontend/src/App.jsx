@@ -7,7 +7,7 @@ import { store, persistor } from './store/Store'; // Importa el store que acabas
 import Login from "./pages/user/Login";
 import { ToastContainer, Bounce } from "react-toastify";
 import './index.css'
-import { USER_ROUTES } from "./constants/routes.js"
+import { USER_ROUTES } from "./constants/routes"
 
 function App() {
 
