@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom"
-import { USER_ROUTES } from "../constants/ROUTES";
+import { USER_ROUTES } from "../constants/routes";
 import Home from "../pages/user/Home";
 import HeaderNav from "../components/navigation/HeaderNav";
 import SiderBarNav from "../components/navigation/SiderBarNav";
