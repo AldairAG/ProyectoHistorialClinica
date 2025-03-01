@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { USER_ROUTES } from "./constants/routes"
+import { USER_ROUTES } from "./constants/routes.js"
 import UserLaytout from "./layout/UserLayout"
 import { Provider } from 'react-redux'; // Importa el Provider de react-redux
 import { PersistGate } from 'redux-persist/integration/react';
