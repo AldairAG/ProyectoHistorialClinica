@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { USER_ROUTES } from "./constants/routes.js"
 import UserLaytout from "./layout/UserLayout"
 import { Provider } from 'react-redux'; // Importa el Provider de react-redux
 import { PersistGate } from 'redux-persist/integration/react';
@@ -8,6 +7,7 @@ import { store, persistor } from './store/Store'; // Importa el store que acabas
 import Login from "./pages/user/Login";
 import { ToastContainer, Bounce } from "react-toastify";
 import './index.css'
+import { USER_ROUTES } from "./constants/routes.js"
 
 function App() {
 
