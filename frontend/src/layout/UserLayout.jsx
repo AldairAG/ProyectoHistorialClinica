@@ -1,11 +1,12 @@
 import { Route, Switch } from "react-router-dom"
 import { USER_ROUTES } from "../constants/ROUTES";
-import Home from "../pages/user/home";
+import Home from "../pages/user/Home";
 import HeaderNav from "../components/navigation/HeaderNav";
 import SiderBarNav from "../components/navigation/SiderBarNav";
 import BreadCrumbs from "../components/breadcrumbs/BreadCrum";
 import PacientesList from "../pages/user/PacientesList";
 import CreatePaciente from "../pages/user/CreatePaciente";
+import EditHistoriaClinica from "../pages/user/EditHistoriaClinica";
 
 const UserLaytout = () => {
     return (
@@ -22,12 +23,13 @@ const UserLaytout = () => {
                         <BreadCrumbs />
                     </div>
 
-                    <div className="px-6 py-5 h-[calc(100%-64px)] overflow-auto flex flex-col gap-3">
+                    <div className="px-6 py-5 h-[calc(100%-64px)] flex flex-col gap-3 overflow-y-auto">
                         <div>
                             <Switch>
-                                <Route path={USER_ROUTES.HOME} component={Home} />
                                 <Route path={USER_ROUTES.PACIENTES_LIST} component={PacientesList} />
                                 <Route path={USER_ROUTES.CREATE_PACIENTE} component={CreatePaciente} />
+                                <Route path={USER_ROUTES.EDIT_PACIENTE} component={EditHistoriaClinica} />
+                                <Route path={USER_ROUTES.HOME} component={Home} />
                             </Switch>
                         </div>
 {/*                         <footer className="bg-amber-800 h-12 border-2 mt-auto">

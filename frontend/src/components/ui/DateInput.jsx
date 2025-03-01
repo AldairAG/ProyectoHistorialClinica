@@ -9,11 +9,12 @@ const DateInput = ({ label, field, form, placeholder }) => {
         if (input.length > 8) input = input.slice(0, 8); // Máximo 8 dígitos
 
         let formatted = "";
-        if (input.length > 0) formatted = input.slice(0, 2);
-        if (input.length > 2) formatted += "-" + input.slice(2, 4);
-        if (input.length > 4) formatted += "-" + input.slice(4, 8);
+        if (input.length > 0) formatted = input.slice(0, 4);
+        if (input.length > 2) formatted += "-" + input.slice(4, 6);
+        if (input.length > 4) formatted += "-" + input.slice(6, 8);
 
         setValue(formatted);
+        
         form.setFieldValue(field.name, formatted); // Actualiza el valor en Formik
     };
 
@@ -28,10 +29,11 @@ const DateInput = ({ label, field, form, placeholder }) => {
                 type="text"
                 value={value}
                 onChange={handleChange}
-                placeholder={placeholder || "DD-MM-YYYY"}
+                placeholder={placeholder || "YYYY-MM-DD"}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm
                 px-3 py-1.5 focus:ring-blue-500 focus:border-blue-500 outline-none
                 focus:shadow-lg w-full"
+                required
             />
         </div>
     );

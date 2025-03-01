@@ -3,7 +3,15 @@ import { getRolesFromToken } from "../../utils/decodeUtils"
 import { createSelector } from 'reselect';
 
 const initialState = {
-  user: null,
+  user: {
+    apellidoMaterno: "",
+    apellidoPaterno: "",
+    cedula: "",
+    cedulaEspecialidad: "",
+    email: "",
+    nombre: "",
+    universidad: "",
+  },
   token: null,
   menuSiderBarOpen: true,
 };
@@ -14,6 +22,7 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       const { user, token } = action.payload;
+
       state.user = user;
       state.token = token;
       localStorage.setItem('token', token); // Guardar el token en localStorage
@@ -29,7 +38,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logout,openClose } = authSlice.actions;
+export const { setCredentials, logout, openClose } = authSlice.actions;
 
 // Selector para verificar si el usuario está autenticado
 export const selectCurrentUser = (state) => state.auth.user;

@@ -26,7 +26,6 @@ const Login = () => {
         }),
         onSubmit: (values) => {
             // Aquí puedes manejar el envío del formulario (por ejemplo, enviar a una API)
-            console.log("Datos enviados:", values);
             handleLogin(values)
             //alert(`Inicio de sesión exitoso:\nEmail: ${values.email}\nContraseña: ${values.password}`);
         },

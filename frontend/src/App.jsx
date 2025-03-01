@@ -1,39 +1,44 @@
-import { Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+/* eslint-disable no-unused-vars */
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { USER_ROUTES } from "./constants/ROUTES"
 import UserLaytout from "./layout/UserLayout"
 import { Provider } from 'react-redux'; // Importa el Provider de react-redux
-import Store from './store/Store'; // Importa el store que acabas de crear
-import { ToastContainer, Bounce } from 'react-toastify';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/Store'; // Importa el store que acabas de crear
 import Login from "./pages/user/Login";
+import { ToastContainer, Bounce } from "react-toastify";
 import './index.css'
 
-const history = createBrowserHistory(); // Crea el historial
 function App() {
 
   return (
-    <Provider store={Store}>
-      <div className="bg-slate-500 w-screen h-screen overflow-hidden">
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
+        <div className="overflow-hidden bg-slate-500 w-full h-screen ">
 
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={true}
-          closeOnClick={false}
-          pauseOnHover={true}
-          draggable={true}
-          progress={undefined}
-          theme="light"
-          transition={Bounce} />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
 
-        <Router history={history}>
+          <BrowserRouter>
             <Switch>
               <Route path={USER_ROUTES.LAYOUT} component={UserLaytout} />
               <Route path={USER_ROUTES.LOGIN} component={Login} />
-            </Switch>
 
-        </Router>
-      </div>
+            </Switch>
+          </BrowserRouter>
+        </div>
+      {/* </PersistGate> */}
     </Provider>
   )
 }

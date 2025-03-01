@@ -38,7 +38,6 @@ public class SecurityConfig {
                                                 .requestMatchers(HttpMethod.POST, "/mdn/doctor/registrarPaciente")
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/mdn/doctor/all/{email}").permitAll()
-                                                .requestMatchers(HttpMethod.GET, "/mdn/doctor/all").permitAll()
                                                 .requestMatchers(HttpMethod.GET,
                                                                 "/mdn/doctor/getPacienteById/{idPaciente}")
                                                 .permitAll()

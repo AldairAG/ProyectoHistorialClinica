@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { USER_ROUTES } from '../../constants/ROUTES'
 import Avatar from './Avatar'
 import { useUser } from '../../hooks/useUser'
@@ -24,10 +23,9 @@ const SiderBarNav = () => {
         return window.location.pathname === route;
     };
 
-    const handleChangeNavigation = useCallback((e, ruta) => {
-        e.preventDefault()
+    const handleChangeNavigation =(e,ruta) => {
         navigateTo(ruta)
-    }, []);
+    };
 
     return (
         <div className={(menuBar ? "w-64 " : "w-20 ") + "relative flex flex-col justify-between h-full overflow-hidden " +

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import store from '../store/Store'; // Importa tu store de Redux
+import {store} from '../store/Store'; // Importa tu store de Redux
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080/mdn', // URL de tu backend

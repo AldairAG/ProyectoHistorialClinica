@@ -25,15 +25,15 @@ public class AntecedentesNoPatologicos {
     private String materialPared;
     private String materialPiso;
     private String materialTecho;
+    private Integer habitaciones;
+    private Integer habitantes;
+    private Boolean zoonosis;
     // servicios
     private Boolean aguaPotable;
     private Boolean electricidad;
     private Boolean drenaje;
     private Boolean gas;
     private Boolean sanitario;
-    private Integer habitaciones;
-    private Integer habitantes;
-    private Boolean zoonosis;
 
     // dieta
     @Pattern(regexp = "SANA|REGULAR|MALA", message = ERROR_MESSAGES.VALOR_NO_PERMITIDO)
@@ -41,7 +41,7 @@ public class AntecedentesNoPatologicos {
     private Integer comidasDiarias;
     @Pattern(regexp = "SANA|REGULAR|MALA", message = ERROR_MESSAGES.VALOR_NO_PERMITIDO)
     private String higieneBucaL;
-    private String duchas;
+    private Integer evacuacionesDiarias;
     private Integer ingestaCarneBlanca;
     private Integer ingestaCarneRoja;
     private Integer ingestaCarnePuerco;
@@ -49,6 +49,9 @@ public class AntecedentesNoPatologicos {
     private Integer ingestaMariscos;
     private Integer ingestaDulces;
     private Integer ingestaCereales;
+    private Integer ingestaVerduras;
+    private Integer ingestaFrutas;
+    private Integer ingestaLeguminosas;
 
     @OneToOne
     @JoinColumn(name = "id_paciente")

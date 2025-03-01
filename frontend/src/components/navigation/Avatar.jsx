@@ -2,7 +2,7 @@ import userProfile from '../../assets/usuario.png'
 import { useUser } from '../../hooks/useUser'
 
 const Avatar = () => {
-     const {menuBar } = useUser();
+     const {menuBar,user } = useUser();
 
     return (
         <div className='h-22 flex items-center py-1.5 pe-6 ps-3.5'>
@@ -16,7 +16,7 @@ const Avatar = () => {
             <div className={('flex flex-col ms-4 ')
                 + (!menuBar&& 'hidden ')
             }>
-                <label className='text-lg font-bold'>Juan perez</label>
+                <label className='text-lg font-bold'>{user?.nombre}</label>
                 <label className='text-xs'> Administrar perfil</label>
             </div>
                 
