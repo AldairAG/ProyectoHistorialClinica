@@ -2,7 +2,7 @@ import { loginService } from '../services/authService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials, selectCurrentUser, selectUserRoles,selectSiderBar,openClose } from '../store/sliders/authSlice';
 import { useHistory } from 'react-router-dom';
-import { USER_ROUTES } from "../constants/routes";
+import { USER_ROUTES } from "../constants/ROUTES";
 import { getRolesFromToken } from '../utils/decodeUtils';
 
 export const useUser = () => {

@@ -8,7 +8,7 @@ import { useFormik } from "formik"
 import { usePaciente } from "../../hooks/usePaciente"
 import { useUser } from "../../hooks/useUser"
 import Swal from 'sweetalert2';
-import { USER_ROUTES } from "../../constants/routes"
+import { USER_ROUTES } from "../../constants/ROUTES"
 
 const campos = [
     { key: "nombre", label: "Nombre completo", placeholder: "Ej: Juan Aguilar Rojas", obligatorio: true, tipo: "text" },

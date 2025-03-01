@@ -1,5 +1,5 @@
 import { useUser } from "../../hooks/useUser"
-import { USER_ROUTES } from "../../constants/routes"
+import { USER_ROUTES } from "../../constants/ROUTES"
 import { usePaciente } from "../../hooks/usePaciente"
 import { useEffect } from "react"
 
