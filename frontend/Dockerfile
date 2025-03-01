@@ -9,6 +9,11 @@ COPY . .
 # Construye el proyecto frontend
 RUN npm run build
 
+# Muestra el contenido del directorio src para depurar
+RUN ls -l src
+RUN ls -l src/constants
+RUN npm run build
+
 # Etapa 2: Servir con Nginx
 FROM nginx:alpine
 # Copia el archivo de configuración de Nginx
@@ -19,3 +24,4 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80
 # Inicia Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
