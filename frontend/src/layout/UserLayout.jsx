@@ -7,6 +7,7 @@ import BreadCrumbs from "../components/breadcrumbs/BreadCrum";
 import PacientesList from "../pages/user/PacientesList";
 import CreatePaciente from "../pages/user/CreatePaciente";
 import EditHistoriaClinica from "../pages/user/EditHistoriaClinica";
+import ViewPaciente from "../pages/user/ViewPaciente";
 
 const UserLaytout = () => {
     return (
@@ -29,12 +30,13 @@ const UserLaytout = () => {
                                 <Route path={USER_ROUTES.PACIENTES_LIST} component={PacientesList} />
                                 <Route path={USER_ROUTES.CREATE_PACIENTE} component={CreatePaciente} />
                                 <Route path={USER_ROUTES.EDIT_PACIENTE} component={EditHistoriaClinica} />
+                                <Route path={USER_ROUTES.VIEW_PACIENTE} component={ViewPaciente} />
                                 <Route path={USER_ROUTES.HOME} component={Home} />
                             </Switch>
                         </div>
-{/*                         <footer className="bg-amber-800 h-12 border-2 mt-auto">
-                            footer
-                        </footer> */}
+                       <footer className=" h-12 mt-auto">
+
+                        </footer> 
                     </div>
 
                 </div>

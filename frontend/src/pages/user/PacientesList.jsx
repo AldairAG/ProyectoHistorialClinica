@@ -123,7 +123,7 @@ const PacientesList = () => {
                                     {paciente.fechaNacimiento}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                    <label onClick={()=>navigateTo(USER_ROUTES.VIEW_PACIENTE)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">view</label>
                                 </td>
                             </tr>
                         ))}

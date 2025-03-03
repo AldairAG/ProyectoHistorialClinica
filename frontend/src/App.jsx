@@ -8,13 +8,14 @@ import Login from "./pages/user/Login";
 import { ToastContainer, Bounce } from "react-toastify";
 import './index.css'
 import { USER_ROUTES } from "./constants/routes"
+import RegistrarUser from "./pages/user/RegistrarUser";
 
 function App() {
 
   return (
     <Provider store={store}>
       {/* <PersistGate loading={null} persistor={persistor}> */}
-        <div className="overflow-hidden bg-slate-500 w-full h-screen ">
+        <div className="relative overflow-hidden bg-white w-full h-screen ">
 
           <ToastContainer
             position="top-right"
@@ -33,8 +34,8 @@ function App() {
           <BrowserRouter>
             <Switch>
               <Route path={USER_ROUTES.LAYOUT} component={UserLaytout} />
+              <Route path={USER_ROUTES.REGISTER} component={RegistrarUser} />
               <Route path={USER_ROUTES.LOGIN} component={Login} />
-
             </Switch>
           </BrowserRouter>
         </div>

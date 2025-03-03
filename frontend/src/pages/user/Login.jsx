@@ -2,9 +2,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Input } from "../../components/ui/Input";
 import { useUser } from "../../hooks/useUser";
+import { USER_ROUTES } from "../../constants/routes";
 
 const Login = () => {
-    const { login } = useUser()
+    const { login, navigateTo } = useUser()
 
     const handleLogin = async (values) => {
         await login(values)
@@ -32,53 +33,56 @@ const Login = () => {
     });
 
     return (
-        <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8
-         dark:bg-gray-800 dark:border-gray-700">
-            <form className="space-y-6" onSubmit={formik.handleSubmit}>
+        <div className="flex items-center justify-center w-screen h-screen">
 
-                <h5 className="text-xl font-medium text-gray-900 dark:text-white">Inicia sesion</h5>
+            <div className="w-full max-w-sm p-4  bg-white border border-gray-300 rounded-lg shadow-sm sm:p-6 md:p-8">
+                <form className="space-y-6" onSubmit={formik.handleSubmit}>
 
-                <Input
-                    label="Correo Electrónico"
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="ejemplo@gmail.com"
-                    required={true}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                />
+                    <h5 className="text-xl font-medium text-gray-900">Inicia sesion</h5>
 
-                <Input
-                    label="Contraseña"
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    required={true}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                />
+                    <Input
+                        label="Correo Electrónico"
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="ejemplo@gmail.com"
+                        required={true}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                    />
 
-                <div className="flex items-start">
-                    <a href="#" className="ms-auto text-sm text-blue-700 hover:underline
+                    <Input
+                        label="Contraseña"
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="••••••••"
+                        required={true}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                    />
+
+                    <div className="flex items-start">
+                        <a href="#" className="ms-auto text-sm text-blue-700 hover:underline
                         dark:text-blue-500">¿Olvidaste tu contraseña?</a>
-                </div>
+                    </div>
 
-                <button type="submit"
-                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
+                    <button type="submit"
+                        className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
                     focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
                     py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
                     dark:focus:ring-blue-800">Iniciar sesion</button>
 
-                <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    ¿Aun no estas registrado? <a href="#"
-                        className="text-blue-700 hover:underline dark:text-blue-500">Crea una cuenta aqui</a>
-                </div>
-            </form >
-        </div >
+                    <div className="text-sm font-medium text-gray-500">
+                        ¿Aun no estas registrado? <a onClick={() => navigateTo(USER_ROUTES.REGISTER)}
+                            className="text-blue-700 hover:underline dark:text-blue-500">Crea una cuenta aqui</a>
+                    </div>
+                </form >
+            </div >
+
+        </div>
     )
 }
 
