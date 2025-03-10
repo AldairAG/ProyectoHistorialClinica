@@ -14,6 +14,7 @@ const initialState = {
   },
   token: null,
   menuSiderBarOpen: true,
+  loading:true
 };
 
 const authSlice = createSlice({
@@ -35,15 +36,19 @@ const authSlice = createSlice({
     openClose: (state) => {
       state.menuSiderBarOpen = !state.menuSiderBarOpen;
     },
+    setLoading: (state,{payload}) => {
+      state.loading = payload;
+    },
   },
 });
 
-export const { setCredentials, logout, openClose } = authSlice.actions;
+export const { setCredentials, logout, openClose,setLoading } = authSlice.actions;
 
 // Selector para verificar si el usuario está autenticado
 export const selectCurrentUser = (state) => state.auth.user;
 export const selectCurrentToken = (state) => state.auth.token;
 export const selectSiderBar = (state) => state.auth.menuSiderBarOpen;
+export const selectLoading = (state) => state.auth.loading;
 
 // Selector memorizado para obtener los roles
 export const selectUserRoles = createSelector(

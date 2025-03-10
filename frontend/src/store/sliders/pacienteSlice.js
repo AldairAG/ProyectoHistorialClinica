@@ -2,7 +2,62 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   pacientesList: [],
-  pacienteSelect:{}
+  pacienteSelect: {
+    antecedentesFams: [],
+    antecedentesNoPatologicos: {
+      aguaPotable:false,
+      comidasDiarias: null,
+      dieta: "",
+      drenaje:false,
+      electricidad:false,
+      evacuacionesDiarias: null,
+      gas:false,
+      higieneBucal: "",
+      idAntecedenteNoPatologico: null,
+      ingestaCarneBlanca: null,
+      ingestaCarnePuerco: null,
+      ingestaCarneRoja: null,
+      ingestaCereales: null,
+      ingestaDulces: null,
+      ingestaFrutas: null,
+      ingestaLeguminosas: null,
+      ingestaMariscos: null,
+      ingestaPescado: null,
+      ingestaVerduras: null,
+      materialPared: "",
+      materialPiso: "",
+      materialTecho: "",
+      sanitario:false,
+      vivienda: "",
+      zoonosis:false
+    },
+    antecedentesPatologicos: {
+      alcoholismo: "",
+      alergias: "",
+      cirugias: "",
+      enfermadesInfancia: "",
+      exposicionBiomasa: "",
+      idAntecedentePatologico: null,
+      otrasToxinas: "",
+      tabaquismo: "",
+      transfusiones: "",
+      traumaticos: ""
+    },
+    domicilio: "",
+    edad:  null,
+    enfermedadesCronicas: [],
+    escolaridad: "",
+    estadoCivil: "",
+    grupoSanguineo: "",
+    hospitalizacionesPrevias: [],
+    idPaciente: null,
+    lugarNacimiento: "",
+    nombre: "",
+    ocupacion: "",
+    religion: "",
+    sexo: "",
+    telefono: ""
+  }
 };
 
 const pacienteSlice = createSlice({
@@ -14,8 +69,8 @@ const pacienteSlice = createSlice({
       localStorage.setItem('paciente', action.payload); // Guardar en localStorage
     },
     setPacientesList: (state, action) => {
-        state.pacientesList = action.payload;
-        localStorage.setItem('pacienteList', action.payload); // Guardar en localStorage  
+      state.pacientesList = action.payload;
+      localStorage.setItem('pacienteList', action.payload); // Guardar en localStorage  
     }
   },
 });

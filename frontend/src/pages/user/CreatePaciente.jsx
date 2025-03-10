@@ -1,7 +1,7 @@
 import BotonAzul from "../../components/ui/BotonAzul"
 import BotonBlanco from "../../components/ui/BotonBlanco"
 import InputWhite from "../../components/ui/InputWhite"
-import DateInput from "../../components/ui/DateInput"
+//import DateInput from "../../components/ui/DateInput"
 import Select from "../../components/ui/Select"
 import * as Yup from "yup";
 import { useFormik } from "formik"
@@ -11,7 +11,9 @@ import Swal from 'sweetalert2';
 import { USER_ROUTES } from "../../constants/routes"
 
 const campos = [
-    { key: "nombre", label: "Nombre completo", placeholder: "Ej: Juan Aguilar Rojas", obligatorio: true, tipo: "text" },
+    { key: "nombre", label: "Nombre", placeholder: "Ej: Juan", obligatorio: true, tipo: "text" },
+    { key: "apellidoPaterno", label: "Apellido paterno", placeholder: "Ej: Aguilar", obligatorio: true, tipo: "text" },
+    { key: "apellidoMaterno", label: "Apellido materno", placeholder: "Ej: Rojas", obligatorio: true, tipo: "text" },
     { key: "edad", label: "Edad", placeholder: "Ej: 18", obligatorio: true, tipo: "number" },
     { key: "lugarNacimiento", label: "Lugar de nacimiento", placeholder: "Ej:Cordova,Ver", obligatorio: false, tipo: "text" },
     { key: "domicilio", label: "Domicilio", placeholder: "Municipio,Colonia,calle,No. casa", obligatorio: false, tipo: "text" },
@@ -23,12 +25,14 @@ const campos = [
 
 const CreatePaciente = () => {
     const { savePaciente } = usePaciente()
-    const { user,navigateTo } = useUser()
+    const { user, navigateTo } = useUser()
 
     // Configuración de Formik
     const formik = useFormik({
         initialValues: {
             nombre: '',
+            apellidoPaterno: '',
+            apellidoMaterno: '',
             edad: null,
             lugarNacimiento: '',
             domicilio: '',
@@ -36,9 +40,9 @@ const CreatePaciente = () => {
             ocupacion: '',
             religion: '',
             escolaridad: '',
-            grupoSanguineo: '',
+            grupoSanguineo: 'A+',
             estadoCivil: '',
-            sexo: '',
+            sexo: 'Femenino',
             fechaNacimiento: '',
             emailDoctor: user.email,
         },
@@ -46,17 +50,17 @@ const CreatePaciente = () => {
         validationSchema: Yup.object({
             nombre: Yup.string()
                 .required("El nombre del paciente es obligatorio"),
+            apellidoPaterno: Yup.string()
+                .required("El nombre del paciente es obligatorio"),
+            apellidoMaterno: Yup.string()
+                .required("El nombre del paciente es obligatorio"),
             edad: Yup.string()
                 .max(3, "La edad no debe tener mas de 3 digitos")
                 .required("La eda del paciente es obligatoria")
                 .max(150, "La edad no debe ser mayor a 150 años"),
-            grupoSanguineo: Yup.string()
-                .required('El grupo sanguineo y rh del paciente son requeridos'),
-            sexo: Yup.string()
-                .required('El genero del paciente es requerido'),
-            fechaNacimiento: Yup.string()
+            /* fechaNacimiento: Yup.string()
                 .matches(/^\d{4}-\d{2}-\d{2}$/, "La fecha debe estar en formato DD-MM-YYYY")
-                .required("La fecha de nacimiento es obligatoria"),
+                .required("La fecha de nacimiento es obligatoria"), */
             telefono: Yup.number()
                 .typeError("El teléfono debe ser un número")
                 .integer("El teléfono debe ser un número entero")
@@ -87,7 +91,7 @@ const CreatePaciente = () => {
                     console.log("El usuario eligió Seguir2");
                 }
             });
-        // eslint-disable-next-line no-unused-vars
+            // eslint-disable-next-line no-unused-vars
         } catch (error) { /* empty */ }
     }
 
@@ -106,9 +110,9 @@ const CreatePaciente = () => {
                             obligatorio={item.obligatorio}
                             placeholder={item.placeholder}
                             required={item.obligatorio}
-                            onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            value={formik.values[item.key]}
+                            onChange={formik.handleChange} // Actualiza el valor
+                            value={formik.values[item.key]} // Vincula el valor actual
                         />
                     </div>
                 ))}
@@ -162,11 +166,11 @@ const CreatePaciente = () => {
                     </Select>
                 </div>
                 <div className="sm:basis-1/3 lg:basis-1/5 md:basis-1/4 grow">
-                    <DateInput
+                    {/*                     <DateInput
                         label={'Fecha de nacimiento'}
                         field={formik.getFieldProps("fechaNacimiento")} // Proporciona las props del campo
                         form={formik} // Proporciona el objeto formik
-                    />
+                    /> */}
                 </div >
                 <div className="h-10 w-full flex justify-end gap-2 ">
                     <BotonBlanco

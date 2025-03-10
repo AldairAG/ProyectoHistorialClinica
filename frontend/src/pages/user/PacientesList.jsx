@@ -123,16 +123,13 @@ const PacientesList = () => {
                                     {paciente.fechaNacimiento}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <label onClick={()=>navigateTo(USER_ROUTES.VIEW_PACIENTE)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">view</label>
+                                    <label onClick={()=>navigateTo(`${USER_ROUTES.VIEW_PACIENTE}/${paciente.idPaciente}`)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">view</label>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-
-
-
         </section>
     )
 }

@@ -12,7 +12,6 @@ const Select = ({obligatorio, label, id, children, ...props }) => {
                 w-full"
                 {...props}
             >
-                <option selected value={''}>Selecciona una opcion</option>
                 {children}
             </select>
         </div>

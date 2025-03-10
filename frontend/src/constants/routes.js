@@ -6,7 +6,7 @@ export const USER_ROUTES = {
     PROFILE: "/c/profile",
     ////////////////////
     PACIENTES_LIST:"/c/Pacientes-list",
-    VIEW_PACIENTE: "/c/Pacientes/:n?",
-    EDIT_PACIENTE: "/c/Edit_paciente/:n?",
+    VIEW_PACIENTE: "/c/Paciente",
+    EDIT_PACIENTE: "/c/Edit_paciente",
     CREATE_PACIENTE:"/c/Crear-paciente"
 }

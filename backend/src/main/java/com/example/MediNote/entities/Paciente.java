@@ -8,6 +8,7 @@ import com.example.MediNote.constants.ERROR_MESSAGES;
 import com.example.MediNote.entities.historia_clinica.AntecedentesFam;
 import com.example.MediNote.entities.historia_clinica.AntecedentesNoPatologicos;
 import com.example.MediNote.entities.historia_clinica.AntecedentesPatologicos;
+import com.example.MediNote.entities.historia_clinica.EnfermedadCronica;
 import com.example.MediNote.entities.historia_clinica.HospitalizacionesPrevias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,13 +40,15 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaciente;
 
-    //@NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
+    // @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
     private String nombre;
-    //@NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    // @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
     private String sexo;
-    //@NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
+    // @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
     private Integer edad;
-    //@NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
+    // @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     private String lugarNacimiento;
@@ -73,12 +76,48 @@ public class Paciente {
     @Builder.Default
     private List<HospitalizacionesPrevias> hospitalizacionesPrevias = new ArrayList<>();
 
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<EnfermedadCronica> enfermedadesCronicas = new ArrayList<>();
+
     @Builder.Default
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AntecedentesNoPatologicos antecedentesNoPatologicos = new AntecedentesNoPatologicos();
-    
+
     @Builder.Default
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AntecedentesPatologicos antecedentesPatologicos = new AntecedentesPatologicos();
-    
+
+    // Método para agregar un antecedente familiar
+    public void addAntecedenteFam(AntecedentesFam antecedente) {
+        antecedentesFams.add(antecedente);
+        antecedente.setPaciente(this); // Asigna la relación bidireccional
+    }
+
+    // Método para eliminar un antecedente familiar por ID
+    public void removeAntecedenteFam(Long idAntecedente) {
+        antecedentesFams.removeIf(ant -> ant.getIdAntecedenteFam().equals(idAntecedente));
+    }
+
+    // Método para agregar una hospitalización previa
+    public void addHospitalizacion(HospitalizacionesPrevias hospitalizacion) {
+        hospitalizacionesPrevias.add(hospitalizacion);
+        hospitalizacion.setPaciente(this); // Asigna la relación bidireccional
+    }
+
+    //\ Método para eliminar una hospitalización previa por ID
+    public void removeHospitalizacion(Long idHospitalizacion) {
+        hospitalizacionesPrevias.removeIf(hos -> hos.getIdHospitalizacion().equals(idHospitalizacion));
+    }
+
+    // Método para agregar una hospitalización previa
+    public void addEnfermedadCronica(EnfermedadCronica enfermedad) {
+        enfermedadesCronicas.add(enfermedad);
+        enfermedad.setPaciente(this); // Asigna la relación bidireccional
+    }
+
+    //\ Método para eliminar una hospitalización previa por ID
+    public void removeEnfermedadCronica(Long idEnfermedad) {
+        hospitalizacionesPrevias.removeIf(hos -> hos.getIdHospitalizacion().equals(idEnfermedad));
+    }
 }

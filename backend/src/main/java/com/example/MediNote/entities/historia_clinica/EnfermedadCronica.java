@@ -1,7 +1,5 @@
 package com.example.MediNote.entities.historia_clinica;
 
-import java.sql.Date;
-
 import com.example.MediNote.entities.Paciente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,19 +12,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-@Data
 @Entity
-public class HospitalizacionesPrevias {
+@Data
+public class EnfermedadCronica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idHospitalizacion;
+    private Long idEnfermedadCronica;
 
-    private String motivo;
-    private String diagnostico;
-    private String tratamiendo;
-    private String institucion;
-    private Date fechaIngreso;
-    private String duracion;
+    private String enfermedad;
+    private String tratamiento;
+    private String fechaDiagnostico;
+    private String ultimaRev;
 
     // Relación muchos a uno con Paciente
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,5 +30,3 @@ public class HospitalizacionesPrevias {
     @JsonIgnore
     private Paciente paciente;
 }
-
-

@@ -40,7 +40,7 @@ public class AntecedentesNoPatologicos {
     private String dieta;
     private Integer comidasDiarias;
     @Pattern(regexp = "SANA|REGULAR|MALA", message = ERROR_MESSAGES.VALOR_NO_PERMITIDO)
-    private String higieneBucaL;
+    private String higieneBucal;
     private Integer evacuacionesDiarias;
     private Integer ingestaCarneBlanca;
     private Integer ingestaCarneRoja;

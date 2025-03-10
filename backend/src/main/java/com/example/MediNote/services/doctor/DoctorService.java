@@ -1,15 +1,20 @@
 package com.example.MediNote.services.doctor;
 
 import java.util.List;
+
+import com.example.MediNote.DTO.PacienteDTO;
 import com.example.MediNote.DTO.PacientesListDTO;
 import com.example.MediNote.entities.Paciente;
+import com.example.MediNote.entities.historia_clinica.AntecedentesFam;
 import com.example.MediNote.entities.historia_clinica.AntecedentesNoPatologicos;
 import com.example.MediNote.entities.historia_clinica.AntecedentesPatologicos;
+import com.example.MediNote.entities.historia_clinica.EnfermedadCronica;
+import com.example.MediNote.entities.historia_clinica.HospitalizacionesPrevias;
 import com.example.MediNote.request.NuevoPacienteRequest;
 
 public interface DoctorService {
 
-    Paciente actualizarPaciente(Long idPaciente, Paciente pacienteActualizado);
+    int actualizarPaciente(Long idPaciente, PacienteDTO pacienteActualizado);
 
     void eliminarPaciente(Long idPaciente);
 
@@ -25,5 +30,15 @@ public interface DoctorService {
     
     AntecedentesNoPatologicos actualizarAntecedentesNoPatologicos(Long id,AntecedentesNoPatologicos antecedentesPatologicos);
 
+    AntecedentesFam addAntecedentesFamiliares(Long idPaciente,AntecedentesFam antecedente);
 
+    void deleteAntecedentesFamiliares(Long idPaciente,Long idAntecedente);
+
+    HospitalizacionesPrevias addHospitalizaciones(Long idPaciente,HospitalizacionesPrevias hospitalizacion);
+
+    void deleteHospitalizaciones(Long idPaciente,Long idHospitalizacion);
+
+    EnfermedadCronica addEnfermedadesCronicas(Long idPaciente,EnfermedadCronica enfermedad);
+
+    void deleteEnfermedadesCronicas(Long idPaciente,Long idEnfermedad);
 }

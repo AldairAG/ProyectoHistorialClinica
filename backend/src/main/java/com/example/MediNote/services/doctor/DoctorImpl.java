@@ -1,6 +1,8 @@
 package com.example.MediNote.services.doctor;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.MediNote.DTO.PacienteDTO;
 import com.example.MediNote.DTO.PacientesListDTO;
 import com.example.MediNote.entities.Paciente;
 import com.example.MediNote.entities.Usuario;
 import com.example.MediNote.entities.historia_clinica.AntecedentesFam;
 import com.example.MediNote.entities.historia_clinica.AntecedentesNoPatologicos;
 import com.example.MediNote.entities.historia_clinica.AntecedentesPatologicos;
+import com.example.MediNote.entities.historia_clinica.EnfermedadCronica;
 import com.example.MediNote.entities.historia_clinica.HospitalizacionesPrevias;
 import com.example.MediNote.helpers.Helpers;
 import com.example.MediNote.repositories.AntecedentesNPRepository;
@@ -43,19 +47,12 @@ public class DoctorImpl implements DoctorService {
 
     @Override
     @Transactional
-    public Paciente actualizarPaciente(Long idPaciente, Paciente pacienteActualizado) {
+    public int actualizarPaciente(Long idPaciente, PacienteDTO pacienteActualizado) {
         // Buscar el paciente existente
-        Paciente paciente = pacienteRepository.findById(idPaciente)
+        pacienteRepository.findById(idPaciente)
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
 
-        // Campos a excluir en la copia de propiedades
-        Set<String> excludeFields = Set.of("antecedentesPatologicos", "antecedentesNoPatologicos");
-
-        // Copiar solo los campos no nulos del objeto fuente al objeto destino
-        BeanUtils.copyProperties(pacienteActualizado, paciente,
-                helpers.getNullPropertyNames(pacienteActualizado, excludeFields));
-
-        return pacienteRepository.save(paciente);
+        return pacienteRepository.actualizarPaciente(idPaciente, pacienteActualizado);
     }
 
     @Override
@@ -121,7 +118,7 @@ public class DoctorImpl implements DoctorService {
                         HospitalizacionesPrevias hospitalizacionesPrevias = new HospitalizacionesPrevias();
                         hospitalizacionesPrevias.setDiagnostico(hospitalizacion.getDiagnostico());
                         hospitalizacionesPrevias.setFechaIngreso(hospitalizacion.getFechaIngreso());
-                        hospitalizacionesPrevias.setFechaSalida(hospitalizacion.getFechaSalida());
+                        hospitalizacionesPrevias.setDuracion(hospitalizacion.getDuracion());
                         hospitalizacionesPrevias.setMotivo(hospitalizacion.getMotivo());
                         hospitalizacionesPrevias.setInstitucion(hospitalizacion.getInstitucion());
                         hospitalizacionesPrevias.setTratamiendo(hospitalizacion.getTratamiendo());
@@ -132,18 +129,16 @@ public class DoctorImpl implements DoctorService {
         }
 
         // Mapear antecedentes no patológicos
-        if (pacienteDTO.getAntecedentesNoPatologicos() != null) {
-            AntecedentesNoPatologicos antecedentesNoPatologicos = pacienteDTO.getAntecedentesNoPatologicos();
-            antecedentesNoPatologicos.setPaciente(paciente);
-            paciente.setAntecedentesNoPatologicos(antecedentesNoPatologicos);
-        }
+
+        AntecedentesNoPatologicos antecedentesNoPatologicos = new AntecedentesNoPatologicos();
+        antecedentesNoPatologicos.setPaciente(paciente);
+        paciente.setAntecedentesNoPatologicos(antecedentesNoPatologicos);
 
         // Mapear antecedentes patológicos
-        if (pacienteDTO.getAntecedentesPatologicos() != null) {
-            AntecedentesPatologicos antecedentesPatologicos = pacienteDTO.getAntecedentesPatologicos();
-            antecedentesPatologicos.setPaciente(paciente);
-            paciente.setAntecedentesPatologicos(antecedentesPatologicos);
-        }
+
+        AntecedentesPatologicos antecedentesPatologicos = new AntecedentesPatologicos();
+        antecedentesPatologicos.setPaciente(paciente);
+        paciente.setAntecedentesPatologicos(antecedentesPatologicos);
 
         // Crear el paciente
         return pacienteRepository.save(paciente);
@@ -160,7 +155,7 @@ public class DoctorImpl implements DoctorService {
             AntecedentesPatologicos antecedentesActulizado) {
 
         AntecedentesPatologicos antecedente = antecedentesPRepository.findById(idPaciente)
-            .orElseThrow(()->new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
 
         // Campos a excluir en la copia de propiedades
         Set<String> excludeFields = Set.of("idAntecedentePatologico");
@@ -174,12 +169,11 @@ public class DoctorImpl implements DoctorService {
 
     @Override
     @Transactional
-    public AntecedentesNoPatologicos actualizarAntecedentesNoPatologicos(Long idPaciente,
+    public AntecedentesNoPatologicos actualizarAntecedentesNoPatologicos(Long id,
             AntecedentesNoPatologicos antecedentesActulizado) {
 
-        AntecedentesNoPatologicos antecedente = antecedentesNPRepository.findById(idPaciente)
-        .orElseThrow(()->new RuntimeException("Registro no encontrado"));
-
+        AntecedentesNoPatologicos antecedente = antecedentesNPRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
 
         // Campos a excluir en la copia de propiedades
         Set<String> excludeFields = Set.of();
@@ -189,6 +183,92 @@ public class DoctorImpl implements DoctorService {
                 helpers.getNullPropertyNames(antecedentesActulizado, excludeFields));
 
         return antecedentesNPRepository.save(antecedente);
+    }
+
+    @Override
+    @Transactional
+    public AntecedentesFam addAntecedentesFamiliares(Long idPaciente, AntecedentesFam antecedente) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        // Agrega el antecedente a la lista
+        paciente.addAntecedenteFam(antecedente);
+
+        // Guarda el paciente con los nuevos datos
+        pacienteRepository.save(paciente);
+
+        // Obtiene el último antecedente agregado de manera eficiente
+        return paciente.getAntecedentesFams().stream()
+                .max(Comparator.comparing(AntecedentesFam::getIdAntecedenteFam)) // Suponiendo que ID es autoincremental
+                .orElseThrow(() -> new RuntimeException("No se pudo obtener el antecedente agregado"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteAntecedentesFamiliares(Long idAntecedente, Long idPaciente) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        paciente.removeAntecedenteFam(idAntecedente);
+        pacienteRepository.save(paciente); // Guarda los cambios
+    }
+
+    @Override
+    @Transactional
+    public HospitalizacionesPrevias addHospitalizaciones(Long idPaciente, HospitalizacionesPrevias hospitalizacion) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        // Agrega el antecedente a la lista
+        paciente.addHospitalizacion(hospitalizacion);
+
+        // Guarda el paciente con los nuevos datos
+        pacienteRepository.save(paciente);
+
+        // Obtiene el último antecedente agregado de manera eficiente
+        return paciente.getHospitalizacionesPrevias().stream()
+                .max(Comparator.comparing(HospitalizacionesPrevias::getIdHospitalizacion)) // Suponiendo que ID es
+                                                                                           // autoincremental
+                .orElseThrow(() -> new RuntimeException("No se pudo obtener el antecedente agregado"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteHospitalizaciones(Long idPaciente, Long idHospitalizacion) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        paciente.removeHospitalizacion(idHospitalizacion);
+        pacienteRepository.save(paciente); // Guarda los cambios
+    }
+
+    @Override
+    @Transactional
+    public EnfermedadCronica addEnfermedadesCronicas(Long idPaciente, EnfermedadCronica enfermedad) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        // Agrega el antecedente a la lista
+        paciente.addEnfermedadCronica(enfermedad);
+
+        // Guarda el paciente con los nuevos datos
+        pacienteRepository.save(paciente);
+
+        // Obtiene el último antecedente agregado de manera eficiente
+        return paciente.getEnfermedadesCronicas().stream()
+                .max(Comparator.comparing(EnfermedadCronica::getIdEnfermedadCronica)) // Suponiendo que ID es
+                                                                                      // autoincremental
+                .orElseThrow(() -> new RuntimeException("No se pudo obtener el antecedente agregado"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteEnfermedadesCronicas(Long idPaciente, Long idEnfermedad) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        paciente.removeEnfermedadCronica(idEnfermedad);
+        pacienteRepository.save(paciente); // Guarda los cambios
     }
 
 }

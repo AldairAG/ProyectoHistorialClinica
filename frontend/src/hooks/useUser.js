@@ -1,6 +1,6 @@
 import { loginService } from '../services/authService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials, selectCurrentUser, selectUserRoles,selectSiderBar,openClose } from '../store/sliders/authSlice';
+import { setCredentials, selectCurrentUser, selectUserRoles,selectSiderBar,openClose,selectLoading,setLoading } from '../store/sliders/authSlice';
 import { useHistory } from 'react-router-dom';
 import { USER_ROUTES } from "../constants/routes";
 import { getRolesFromToken } from '../utils/decodeUtils';
@@ -11,11 +11,15 @@ export const useUser = () => {
     const user = useSelector(selectCurrentUser);
     const roles = useSelector(selectUserRoles);
     const menuBar = useSelector(selectSiderBar);
+    const loading =useSelector(selectLoading)
+
+    const changeLoading=()=>{
+         dispatch(setLoading())
+    }
 
     const navigateTo = (to) => {
-        console.log(to);
-        
         history.push(to);
+        changeLoading()
     }
 
     const login = async (values) => {
@@ -41,8 +45,10 @@ export const useUser = () => {
         user,
         roles,
         menuBar,
+        loading,
         login,
         navigateTo,
         openCloseMenuBar,
+        changeLoading,
     }
 }

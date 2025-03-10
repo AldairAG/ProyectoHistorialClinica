@@ -18,7 +18,7 @@ public class SecurityConfig {
         @SuppressWarnings("unused")
         private final JwtUtil jwtUtil;
 
-        @Autowired 
+        @Autowired
         private CorsConfig corsConfig;
 
         public SecurityConfig(JwtUtil jwtUtil) {
@@ -29,25 +29,29 @@ public class SecurityConfig {
         SecurityFilterChain filterChain(HttpSecurity http, AuthenticationConfiguration authenticationConfiguration,
                         JwtUtil jwtUtil) throws Exception {
                 http.csrf(csrf -> csrf.disable()) // Desactivar CSRF (opcional, dependiendo del caso de uso)
-                                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource())) // Habilitar CORS
+                                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource())) // Habilitar
+                                                                                                              // CORS
                                 .sessionManagement(management -> management
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(HttpMethod.POST, "/mdn/auth/login").permitAll()
                                                 .requestMatchers(HttpMethod.POST, "/mdn/auth/registrar").permitAll()
-                                                .requestMatchers(HttpMethod.POST, "/mdn/doctor/registrarPaciente")
-                                                .permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/mdn/doctor/registrarPaciente").permitAll()
                                                 .requestMatchers(HttpMethod.GET, "/mdn/doctor/all/{email}").permitAll()
-                                                .requestMatchers(HttpMethod.GET,
-                                                                "/mdn/doctor/getPacienteById/{idPaciente}")
-                                                .permitAll()
-                                                .requestMatchers(HttpMethod.PATCH,
-                                                                "/mdn/doctor/actualizarPaciente/{idPaciente}")
-                                                .permitAll()
-                                                .requestMatchers(HttpMethod.PATCH,
-                                                                "/mdn/doctor/actualizarANP/{idPaciente}")
-                                                .permitAll()
-                                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir OPTIONS
+                                                .requestMatchers(HttpMethod.GET,"/mdn/doctor/getPacienteById/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.PATCH,"/mdn/doctor/actualizarPaciente/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.PATCH,"/mdn/doctor/actualizarANP/{id}").permitAll()
+                                                .requestMatchers(HttpMethod.PATCH,"/mdn/doctor/actualizarAP/{id}").permitAll()
+                                                .requestMatchers(HttpMethod.POST,"/mdn/doctor/addAH/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.DELETE,"/mdn/doctor/addAH/{idPaciente}/{idAntecedente}").permitAll()
+                                                .requestMatchers(HttpMethod.POST,"/mdn/doctor/addHP/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.DELETE,"/mdn/doctor/addHP/{idPaciente}/{idHospitalizacion}").permitAll()
+                                                .requestMatchers(HttpMethod.POST,"/mdn/doctor/addEC/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.DELETE,"/mdn/doctor/addEC/{idPaciente}/{idEnfermedad}").permitAll()
+                                                
+                                                
+                                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir
+                                                                                                        
                                                 // .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN")
                                                 // // Solo accesible para ADMIN
                                                 .anyRequest().authenticated()) // Proteger todos los demás endpoints

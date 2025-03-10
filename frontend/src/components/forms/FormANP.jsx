@@ -1,8 +1,10 @@
 import InputWhite from "../../components/ui/InputWhite"
 import Select from "../../components/ui/Select"
 import LabelLg from "../ui/LabelLg"
-import LabelXl from "../ui/LabelXl"
 import BotonAzul from "../ui/BotonAzul"
+import Acordion from "../ui/Acordion"
+import { useFormik } from "formik"
+import { usePaciente } from "../../hooks/usePaciente"
 //import Checkbox from "../../components/ui/Checkbox"
 
 const inputs = [
@@ -10,14 +12,14 @@ const inputs = [
     { label: 'Material de la pared', pl: '', key: 'materialPared' },
     { label: 'Material del piso', pl: '', key: 'materialPiso' },
     { label: 'Material del techo', pl: '', key: 'materialTecho' },
-    { label: 'Numero de habitaciones', pl: '', key: 'habitaciones' },
-    { label: 'Material de habitantes', pl: '', key: 'habitantes' },
+    { label: 'Numero de habitaciones', pl: '0', key: 'habitaciones' },
+    { label: 'Material de habitantes', pl: '0', key: 'habitantes' },
 ]
 
 const servicios = [
     { label: 'Agua potable', key: 'aguaPotable', opciones: [{ value: true, label: 'si tiene' }, { value: false, label: 'no tiene' }] },
     { label: 'electricidad', key: 'electricidad', opciones: [{ value: true, label: 'si tiene' }, { value: false, label: 'no tiene' }] },
-    { label: 'Sistema de drenaje', key: 'drenaje', opciones: [{ value: true, label: 'si tiene' }, { value: true, label: 'no tiene' }] },
+    { label: 'Sistema de drenaje', key: 'drenaje', opciones: [{ value: true, label: 'si tiene' }, { value: false, label: 'no tiene' }] },
     { label: 'Gas', key: 'gas', opciones: [{ value: true, label: 'si tiene' }, { value: false, label: 'no tiene' }] },
     { label: 'Sanitario', key: 'sanitario', opciones: [{ value: true, label: 'si tiene' }, { value: false, label: 'no tiene' }] },
 ]
@@ -38,32 +40,52 @@ const dieta = [
 ]
 
 const FormANP = () => {
+    const {updateAntecedentesNP,pacienteSelect}=usePaciente()
+
+    const formik = useFormik({
+        initialValues: {
+            vivienda: pacienteSelect?.antecedentesNoPatologicos?.vivienda || "",
+            materialPared: pacienteSelect?.antecedentesNoPatologicos?.materialPared || "",
+            materialPiso: pacienteSelect?.antecedentesNoPatologicos?.materialPiso || "",
+            materialTecho: pacienteSelect?.antecedentesNoPatologicos?.materialTecho || "",
+            habitaciones: pacienteSelect?.antecedentesNoPatologicos?.habitaciones || "",
+            habitantes: pacienteSelect?.antecedentesNoPatologicos?.habitantes || "",
+            zoonosis: pacienteSelect?.antecedentesNoPatologicos?.zoonosis || true,
+            aguaPotable: pacienteSelect?.antecedentesNoPatologicos?.aguaPotable || true,
+            electricidad: pacienteSelect?.antecedentesNoPatologicos?.electricidad || true,
+            drenaje: pacienteSelect?.antecedentesNoPatologicos?.drenaje || true,
+            gas: pacienteSelect?.antecedentesNoPatologicos?.gas || true,
+            sanitario: pacienteSelect?.antecedentesNoPatologicos?.sanitario || true,
+            dieta: pacienteSelect?.antecedentesNoPatologicos?.dieta || "SANA",
+            comidasDiarias: pacienteSelect?.antecedentesNoPatologicos?.comidasDiarias || "",
+            higieneBucal: pacienteSelect?.antecedentesNoPatologicos?.higieneBucal || "SANA",
+            evacuacionesDiarias: pacienteSelect?.antecedentesNoPatologicos?.evacuacionesDiarias || "",
+            ingestaCarneBlanca: pacienteSelect?.antecedentesNoPatologicos?.ingestaCarneBlanca || "",
+            ingestaCarneRoja: pacienteSelect?.antecedentesNoPatologicos?.ingestaCarneRoja || "",
+            ingestaCarnePuerco: pacienteSelect?.antecedentesNoPatologicos?.ingestaCarnePuerco || "",
+            ingestaPescado: pacienteSelect?.antecedentesNoPatologicos?.ingestaPescado || "",
+            ingestaMariscos: pacienteSelect?.antecedentesNoPatologicos?.ingestaMariscos || "",
+            ingestaDulces: pacienteSelect?.antecedentesNoPatologicos?.ingestaDulces || "",
+            ingestaCereales: pacienteSelect?.antecedentesNoPatologicos?.ingestaCereales || "",
+            ingestaVerduras: pacienteSelect?.antecedentesNoPatologicos?.ingestaVerduras || "",
+            ingestaFrutas: pacienteSelect?.antecedentesNoPatologicos?.ingestaFrutas || "",
+            ingestaLeguminosas: pacienteSelect?.antecedentesNoPatologicos?.ingestaLeguminosas || "",
+        },
+        onSubmit: (values) => {
+            // Aquí puedes manejar el envío del formulario (por ejemplo, enviar a una API)
+            updateAntecedentesNP(values)
+            console.log("Valores:", values);
+        },
+    })
+
+
     return (
-        <form action="" className="rounded-sm bg-gray-50 px-3 py-4"
-            id="accordion-collapse" data-accordion="collapse">
-
-            <div className=" w-full" id="accordion-collapse-heading-1">
-                <button type="button"
-                    className="flex items-center justify-between w-full font-medium rtl:text-right 
-                        text-gray-500 focus:ring-4 focus:ring-gray-200"
-                    data-accordion-target="#accordion-collapse-body-1"
-                    aria-expanded="true"
-                    aria-controls="accordion-collapse-body-1">
-
-                    <LabelXl>Antecedentes personales no patologicos</LabelXl>
-                    <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" d="M9 5 5 1 1 5" />
-                    </svg>
-
-                </button>
-            </div>
-
-            <div id="accordion-collapse-body-1" className="hidden pt-5" aria-labelledby="accordion-collapse-heading-1">
+        <Acordion title="Antecedentes personales no patologicos">
+            <form onSubmit={formik.handleSubmit}>
 
                 <div className="mb-4">
                     <div className="mb-5 border-b-1 border-b-gray-300
-                    after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
+                            after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
                         <LabelLg >Vivienda</LabelLg>
                     </div>
 
@@ -76,19 +98,20 @@ const FormANP = () => {
                                     id={item.key}
                                     name={item.key}
                                     obligatorio={item.obligatorio}
-                                    placeholder={item.placeholder}
+                                    placeholder={item.pl}
                                     required={item.obligatorio}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values[item.key]}
                                 />
-
                             </div>
-
                         ))}
                     </div>
                 </div>
 
                 <div className="mb-4">
                     <div className="mb-5 border-b-1 border-b-gray-300
-                    after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
+                            after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
                         <LabelLg >Servicios</LabelLg>
                     </div>
 
@@ -97,7 +120,10 @@ const FormANP = () => {
                         {servicios.map((item, index) => (
                             <div key={index} className="sm:basis-1/2 lg:basis-1/4 md:basis-1/3 grow">
                                 <Select
+                                    id={item.key}
                                     label={item.label}
+                                    onChange={formik.handleChange}
+                                    value={formik.values[item.key]}
                                 >
                                     {item.opciones.map((opcion, index) => (
                                         <option key={index} value={opcion.value}>{opcion.label}</option>
@@ -111,7 +137,7 @@ const FormANP = () => {
 
                 <div className="mb-4">
                     <div className="mb-5 border-b-1 border-b-gray-300
-                    after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
+                            after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
                         <LabelLg >Dieta</LabelLg>
                     </div>
 
@@ -119,6 +145,9 @@ const FormANP = () => {
 
                         <Select
                             label={'¿Como es la dieta del paciente?'}
+                            id={'dieta'}
+                            onChange={formik.handleChange}
+                            value={formik.values.dieta}
                         >
                             <option value={'SANA'}>{'SANA'}</option>
                             <option value={'REGULAR'}>{'REGULAR'}</option>
@@ -126,6 +155,9 @@ const FormANP = () => {
                         </Select>
                         <Select
                             label={'¿Como es la higiene bucal del paciente?'}
+                            id={'higieneBucal'}
+                            onChange={formik.handleChange}
+                            value={formik.values.higieneBucal}
                         >
                             <option value={'SANA'}>{'SANA'}</option>
                             <option value={'REGULAR'}>{'REGULAR'}</option>
@@ -140,8 +172,11 @@ const FormANP = () => {
                                     id={item.key}
                                     name={item.key}
                                     obligatorio={item.obligatorio}
-                                    placeholder={item.placeholder}
+                                    placeholder={item.pl}
                                     required={item.obligatorio}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values[item.key]}
                                 />
                             </div>
                         ))}
@@ -155,10 +190,8 @@ const FormANP = () => {
                         type={"submit"} />
                 </div>
 
-            </div>
-
-
-        </form>
+            </form>
+        </Acordion>
     )
 }
 

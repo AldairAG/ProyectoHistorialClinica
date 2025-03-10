@@ -2,19 +2,21 @@ import InputWhite from "../../components/ui/InputWhite"
 import TextArea from "../../components/ui/TextArea"
 import Select from "../../components/ui/Select"
 import LabelLg from "../ui/LabelLg"
-import LabelXl from "../ui/LabelXl"
 import BotonAzul from "../ui/BotonAzul"
+import Accordion from "../ui/Acordion"
+import { useFormik } from "formik"
+import { usePaciente } from "../../hooks/usePaciente"
 //import Checkbox from "../../components/ui/Checkbox"
 
 const tabaquismo = [
-    { label: 'Cigarrillos fumados al dia', pl: '', key: 'cigarrillosDia' },
-    { label: 'Tiempo fumando del paciente', pl: '', key: 'tiempoFumando' },
-    { label: 'Indice tabaquico', pl: '', key: 'indiceTabaquico' },
+    { label: 'Cigarrillos fumados al dia', pl: '0', key: 'cigarrillosDia' },
+    { label: 'Tiempo fumando del paciente en años', pl: '0', key: 'tiempoFumando' },
+    { label: 'Indice tabaquico', pl: '0', key: 'indiceTabaquico' },
 ]
 
 const alcoholismo = [
-    { label: 'Numero de copas semanales', pl: '', key: 'copasSemanales' },
-    { label: 'Tiempo tomando', pl: '', key: 'tiempoTomando' },
+    { label: 'Numero de copas semanales', pl: '0', key: 'copasSemanales' },
+    { label: 'Tiempo tomando en años', pl: '0', key: 'tiempoTomando' },
 ]
 
 const textAreas = [
@@ -27,111 +29,140 @@ const textAreas = [
 ]
 
 const FormAP = () => {
+    const { pacienteSelect, updateAntecedentesP } = usePaciente()
+
+    const formik = useFormik({
+        initialValues: {
+            enfermadesInfancia: pacienteSelect?.antecedentesPatologicos?.enfermadesInfancia || '',
+            tabaquismo: pacienteSelect?.antecedentesPatologicos?.tabaquismo || 'NO',
+            cigarrillosDia: pacienteSelect?.antecedentesPatologicos?.cigarrillosDia || '',
+            tiempoFumando: pacienteSelect?.antecedentesPatologicos?.tiempoFumando || '',
+            indiceTabaquico: pacienteSelect?.antecedentesPatologicos?.indiceTabaquico || '',
+            alcoholismo: pacienteSelect?.antecedentesPatologicos?.alcoholismo || 'NO',
+            copasSemanales: pacienteSelect?.antecedentesPatologicos?.copasSemanales || '',
+            tiempoTomando: pacienteSelect?.antecedentesPatologicos?.tiempoTomando || '',
+            otrasToxinas: pacienteSelect?.antecedentesPatologicos?.otrasToxinas || '',
+            alergias: pacienteSelect?.antecedentesPatologicos?.alergias || '',
+            traumaticos: pacienteSelect?.antecedentesPatologicos?.traumaticos || '',
+            cirugias: pacienteSelect?.antecedentesPatologicos?.cirugias || '',
+            transfusiones: pacienteSelect?.antecedentesPatologicos?.transfusiones || '',
+            exposicionBiomasa: pacienteSelect?.antecedentesPatologicos?.exposicionBiomasa || '',
+        },
+        onSubmit: (values) => {
+            console.log(values);
+            updateAntecedentesP(values)
+        }
+    })
+
     return (
-        <form action="" className="rounded-sm bg-gray-50 px-3 py-4"
-            id="accordion-collapse-2" data-accordion="collapse">
-
-            <div className=" w-full" id="accordion-collapse-heading-2">
-                <button type="button"
-                    className="flex items-center justify-between w-full font-medium rtl:text-right 
-                        text-gray-500 focus:ring-4 
-                        focus:ring-gray-200 focus:text-gray-50"
-                    data-accordion-target="#accordion-collapse-body-2"
-                    aria-expanded="true"
-                    aria-controls="accordion-collapse-body-2">
-
-                    <LabelXl>Antecedentes personales patologicos</LabelXl>
-                    <svg data-accordion-icon className="w-3 h-3 rotate-180 shrink-0" 
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" d="M9 5 5 1 1 5" />
-                    </svg>
-                </button>
-            </div>
-
-            <div id="accordion-collapse-body-2" className="hidden pt-5" aria-labelledby="accordion-collapse-heading-2">
-
+        <Accordion title="Antecedentes personales patologicos">
+            <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
                     <TextArea
                         label={'Enfermedades en la infancia'}
                         placeHolder={'Escribe las enfermedades aqui...'}
+                        id={'enfermadesInfancia'}
+                        name={'enfermadesInfancia'}
+                        onChange={formik.handleChange}
+                        value={formik.values.enfermadesInfancia}
                     />
                 </div>
 
-                <div className="mb-4">
-                    <div className="mb-5 border-b-1 border-b-gray-300
+                <div className="mb-5 border-b-1 border-b-gray-300
                     after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
-                        <LabelLg >Adiccioens</LabelLg>
-                    </div>
+                    <LabelLg >Adiccioens</LabelLg>
+                </div>
 
-                    <div className="flex flex-col gap-4 mb-4">
-                        <Select
-                            label={'Tabaquismo'}
-                        >
-                            <option value="SI">SI</option>
-                            <option value="NO">NO</option>
-                            <option value="OCACIONAL">OCACIONAL</option>
-                        </Select>
+                <div className="flex flex-col gap-4 mb-4">
+                    <Select
+                        label={'Tabaquismo'}
+                        id={'tabaquismo'}
+                        name={'tabaquismo'}
+                        onChange={formik.handleChange}
+                        value={formik.values.tabaquismo}
+                    >
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                        <option value="OCACIONAL">OCACIONAL</option>
+                    </Select>
 
-
+                    {formik.values.tabaquismo != 'NO' && (
                         <div className="flex flex-wrap gap-4 mb-4">
                             {tabaquismo.map((item, index) => (
                                 <div key={index} className="sm:basis-1/2 lg:basis-1/4 md:basis-1/3 grow">
                                     <InputWhite
-                                        type={item.tipo}
+                                        type={'number'}
                                         label={item.label}
                                         id={item.key}
                                         name={item.key}
                                         obligatorio={item.obligatorio}
                                         placeholder={item.placeholder}
                                         required={item.obligatorio}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values[item.key]}
                                     />
 
                                 </div>
                             ))}
                         </div>
+                    )}
 
-                        <Select
-                            label={'Alcoholismo'}
-                        >
-                            <option value="SI">SI</option>
-                            <option value="NO">NO</option>
-                            <option value="OCACIONAL">OCACIONAL</option>
-                        </Select>
+                    <Select
+                        label={'Alcoholismo'}
+                        id={'alcoholismo'}
+                        name={'alcoholismo'}
+                        onChange={formik.handleChange}
+                        value={formik.values.alcoholismo}
+                    >
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                        <option value="OCACIONAL">OCACIONAL</option>
+                    </Select>
 
-
+                    {formik.values.alcoholismo != 'NO' && (
                         <div className="flex flex-wrap gap-4 mb-4">
                             {alcoholismo.map((item, index) => (
                                 <div key={index} className="sm:basis-1/2 lg:basis-1/4 md:basis-1/3 grow">
                                     <InputWhite
-                                        type={item.tipo}
+                                        type={'number'}
                                         label={item.label}
                                         id={item.key}
                                         name={item.key}
                                         obligatorio={item.obligatorio}
                                         placeholder={item.placeholder}
                                         required={item.obligatorio}
+                                        onChange={formik.handleChange}
+                                        value={formik.values[item.key]}
                                     />
                                 </div>
                             ))}
                         </div>
+                    )}
+                </div>
 
-                    </div>
+                <div className="mb-5 border-b-1 border-b-gray-300
+                    after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20">
+                    <LabelLg >Antecedentes</LabelLg>
+                </div>
 
-                    <div className="flex flex-wrap gap-4 mb-4">
-                        {textAreas.map((item, index) => (
-                            <div key={index} className="sm:basis-1/2 md:basis-1/3 grow">
-                                <TextArea
-                                    type={item.tipo}
-                                    label={item.label}
-                                    id={item.key}
-                                    name={item.key}
-                                    obligatorio={item.obligatorio}
-                                    placeholder={item.pl}
-                                    required={item.obligatorio}
-                                />
-                            </div>
-                        ))}
-                    </div>
+                <div className="flex flex-wrap gap-4 mb-4">
+                    {textAreas.map((item, index) => (
+                        <div key={index} className="sm:basis-1/2 md:basis-1/3 grow">
+                            <TextArea
+                                type={item.tipo}
+                                label={item.label}
+                                id={item.key}
+                                name={item.key}
+                                obligatorio={item.obligatorio}
+                                placeholder={item.pl}
+                                required={item.obligatorio}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values[item.key]}
+                            />
+                        </div>
+                    ))}
                 </div>
 
                 <div className="h-10 w-full flex justify-end">
@@ -139,12 +170,11 @@ const FormAP = () => {
                         label={"Guardar"}
                         type={"submit"} />
                 </div>
-            </div>
+            </form>
+        </Accordion>
 
-
-
-        </form>
     )
 }
+
 
 export default FormAP
