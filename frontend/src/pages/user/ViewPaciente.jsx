@@ -7,7 +7,7 @@ import HistoriaClinicaCard from "../../components/cards/HistoriaClinicaCard";
 import LabelXl from "../../components/ui/LabelXl";
 
 const ViewPaciente = () => {
-    const { pacienteSelect, getPacienteById } = usePaciente()
+    const { getPacienteById } = usePaciente()
     const [seccion, setSeccion] = useState(1)
     const { id } = useParams(); // Obtiene el "41" de la URL
 
