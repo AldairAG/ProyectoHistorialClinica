@@ -48,6 +48,13 @@ public class SecurityConfig {
                                                 .requestMatchers(HttpMethod.DELETE,"/mdn/doctor/addHP/{idPaciente}/{idHospitalizacion}").permitAll()
                                                 .requestMatchers(HttpMethod.POST,"/mdn/doctor/addEC/{idPaciente}").permitAll()
                                                 .requestMatchers(HttpMethod.DELETE,"/mdn/doctor/addEC/{idPaciente}/{idEnfermedad}").permitAll()
+                                                .requestMatchers(HttpMethod.POST,"/mdn/notaMedica/save").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/notaMedica/{id}").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/notaMedica/doctor/{idDoctor}").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/notaMedica/paciente/{idPaciente}").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/receta/{id}").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/receta/doctor/{idDoctor}").permitAll()
+                                                .requestMatchers(HttpMethod.GET,"/mdn/receta/paciente/{idPaciente}").permitAll()
                                                 
                                                 
                                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir

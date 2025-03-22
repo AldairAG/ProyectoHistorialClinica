@@ -10,6 +10,7 @@ import EditHistoriaClinica from "../pages/user/EditHistoriaClinica";
 import ViewPaciente from "../pages/user/ViewPaciente";
 import Loader from '../components/ui/Loader'
 import { useUser } from "../hooks/useUser";
+import CrearNotaMedica from "../pages/user/CrearNotaMedica";
 
 const UserLaytout = () => {
     const { loading } = useUser()
@@ -18,12 +19,12 @@ const UserLaytout = () => {
             <HeaderNav />
 
             <div className="flex h-screen w-screen">
-                <div className="w-auto">
+                <div className="w-auto print:hidden">
                     <SiderBarNav />
                 </div>
 
                 <div className="flex-col w-full " >
-                    <div className="bg-gray-100 px-6">
+                    <div className="bg-gray-100 px-6 print:hidden">
                         <BreadCrumbs />
                     </div>
 
@@ -37,12 +38,13 @@ const UserLaytout = () => {
                                     <Route path={USER_ROUTES.CREATE_PACIENTE} component={CreatePaciente} />
                                     <Route path={USER_ROUTES.EDIT_PACIENTE} component={EditHistoriaClinica} />
                                     <Route path={USER_ROUTES.VIEW_PACIENTE + "/:id?"} component={ViewPaciente} />
+                                    <Route path={USER_ROUTES.CREATE_NOTA_MEDICA + "/:id?"} component={CrearNotaMedica} />
                                     <Route path={USER_ROUTES.HOME} component={Home} />
                                 </Switch>
                             )}
 
                         </div>
-                        <footer className=" h-12 mt-auto">
+                        <footer className=" h-12 mt-auto print:hidden">
 
                         </footer>
                     </div>

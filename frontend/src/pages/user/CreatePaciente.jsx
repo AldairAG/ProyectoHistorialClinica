@@ -103,7 +103,7 @@ const CreatePaciente = () => {
                 {campos.map((item, index) => (
                     <div key={index} className="sm:basis-1/3 lg:basis-1/5 md:basis-1/4 grow">
                         <InputWhite
-                            type={item.tipo}
+                            type={item.tipo}               
                             label={item.label}
                             id={item.key}
                             name={item.key}

@@ -1,41 +1,56 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPacienteList, selectPacienteSelect, setPaciente, setPacientesList } from '../store/sliders/pacienteSlice';
+import { pacienteActions, pacienteSelectors } from '../store/sliders/pacienteSlice';
 import { setLoading } from '../store/sliders/authSlice';
-import {
-    crearPacienteService, fetchAllPacientesByDoctor, fetchPacienteById, updatePacienteById, updatePacientAPNP,
-    updatePacientAPP, addAntecedenteHeredadoService, addEnfermedadCronicaService, addHospitalizacionService,
-    deleteAntecedenteHeredadoService, deleteEnfermedadCronicaService, deleteHospitalizacionService
-} from '../services/pacienteService';
+import { antecedenteService, pacienteService } from '../services/pacienteService';
+import { NotaMedicaService, RecetaService } from '../services/notaMedicaService';
 
 export const usePaciente = () => {
     const dispatch = useDispatch();
-    const pacientesList = useSelector(selectPacienteList);
-    const pacienteSelect = useSelector(selectPacienteSelect);
+    const pacientesList = useSelector(pacienteSelectors.pacienteList);
+    const pacienteSelect = useSelector(pacienteSelectors.pacienteSelect);
+    const recetasList = useSelector(pacienteSelectors.recetaList);
+    const recetaSelect = useSelector(pacienteSelectors.recetaSelect);
+    const notaMedicaList = useSelector(pacienteSelectors.notaMedicaList);
+    const notaMedicaSelect = useSelector(pacienteSelectors.notaMedicaSelect);
 
-    const editPaciente = (paciente) => {
-        console.log(paciente);
-
-        dispatch(setPaciente(paciente));
-    }
-
+    /////SLICE//////////
     const editPacientesList = (pacientesList) => {
-        dispatch(setPacientesList(pacientesList));
+        dispatch(pacienteActions.setPacientesList(pacientesList));
     }
+    const editPaciente = (paciente) => {
+        dispatch(pacienteActions.setPaciente(paciente));
+    }
+
+    const editNotaMedicaList = (list) => {
+        dispatch(pacienteActions.setNotaMedicaList(list));
+    }
+    const editNotaMedica = (notaMedica) => {
+        dispatch(pacienteActions.setNotaMedica(notaMedica));
+    }
+
+    const editRecetaList = (list) => {
+        dispatch(pacienteActions.setRecetaList(list));
+    }
+
+    const editReceta = (receta) => {
+        dispatch(pacienteActions.setReceta(receta));
+    }
+    //////////////////
 
     const savePaciente = async (paciente) => {
-        const result = await crearPacienteService(paciente)
+        const result = await pacienteService.crearPacienteService(paciente)
         editPaciente(result?.data)
         return result?.data || null
     }
 
     const getPacientesByEmailDoctor = async (email) => {
-        const result = await fetchAllPacientesByDoctor(email)
+        const result = await pacienteService.fetchAllPacientesByDoctor(email)
         editPacientesList(result?.data || null)
     }
 
     const getPacienteById = async (id) => {
         changeLoading()
-        const result = await fetchPacienteById(id)
+        const result = await pacienteService.fetchPacienteById(id)
         editPaciente(result?.data || null)
         changeLoading()
     }
@@ -53,7 +68,7 @@ export const usePaciente = () => {
         }
 
         try {
-            const result = await updatePacienteById(pacienteSelect.idPaciente, diferencias);
+            const result = await pacienteService.updatePacienteById(pacienteSelect.idPaciente, diferencias);
 
             if (result && result.status === 200) {
                 editPaciente({ ...pacienteSelect, ...diferencias })
@@ -76,6 +91,42 @@ export const usePaciente = () => {
         return diferencias;
     };
 
+    /////////////////RECETA//////////////////
+    const getRecetaById = async (id) => {
+        const result = await RecetaService.fetchReceta(id)
+        editReceta(result?.data || null)
+    }
+    const getRecetaByDoctor = async (id) => {
+        const result = await RecetaService.fetchRecetasByDoctor(id)
+        editRecetaList(result?.data || null)
+    }
+    const getRecetaByPaciente = async () => {
+        const result = await RecetaService.fetchRecetasByPaciente(pacienteSelect.idPaciente)
+        console.log(result?.data);
+        editRecetaList(result?.data || null)
+    }
+
+
+    /////////////////NOTAS MEDICAS//////////////////
+    const getNotaMedicaById = async (id) => {
+        const result = await NotaMedicaService.fetchNotaMedica(id)
+        editNotaMedica(result?.data || null)
+    }
+    const getNotaMedicaByDoctor = async (id) => {
+        const result = await NotaMedicaService.fetchNotaMedicasByDoctor(id)
+        editNotaMedicaList(result?.data || null)
+    }
+    const getNotaMedicaByPaciente = async (id) => {
+        const result = await NotaMedicaService.fetchNotaMedicasByPaciente(id)
+        editNotaMedicaList(result?.data || null)
+    }
+    const saveNotaMedica = async (request) => {
+        const result = await NotaMedicaService.saveNotaMedica(request)
+        editNotaMedica(result?.data || null)
+    }
+
+
+
     //MANEJO DE ANTECEDENTES
 
     const updateAntecedentesNP = async (paciente) => {
@@ -88,7 +139,7 @@ export const usePaciente = () => {
         }
 
         try {
-            const result = await updatePacientAPNP(pacienteSelect.antecedentesNoPatologicos.idAntecedenteNoPatologico,
+            const result = await antecedenteService.updatePacientAPNP(pacienteSelect.antecedentesNoPatologicos.idAntecedenteNoPatologico,
                 { ...antecedentesActuales, ...diferencias }
             );
 
@@ -114,7 +165,7 @@ export const usePaciente = () => {
         }
 
         try {
-            const result = await updatePacientAPP(pacienteSelect.antecedentesPatologicos.idAntecedentePatologico,
+            const result = await antecedenteService.updatePacientAPP(pacienteSelect.antecedentesPatologicos.idAntecedentePatologico,
                 { ...antecedentesActuales, ...diferencias }
             );
 
@@ -130,10 +181,10 @@ export const usePaciente = () => {
         }
     };
 
-    const addAntecedenteFamiliar= async (antecedente) => {
+    const addAntecedenteFamiliar = async (antecedente) => {
         try {
-            const result = await addAntecedenteHeredadoService(pacienteSelect.idPaciente, antecedente)
-            
+            const result = await antecedenteService.addAntecedenteHeredadoService(pacienteSelect.idPaciente, antecedente)
+
             if (result && result.status === 200) {
                 editPaciente((prev) => ({
                     ...prev,
@@ -147,8 +198,8 @@ export const usePaciente = () => {
 
     const deleteAntecedenteFamiliar = async (antecedenteId) => {
         try {
-            const result = await deleteAntecedenteHeredadoService(pacienteSelect.idPaciente, antecedenteId);
-    
+            const result = await antecedenteService.deleteAntecedenteHeredadoService(pacienteSelect.idPaciente, antecedenteId);
+
             if (result && result.status === 200) {
                 editPaciente((prev) => ({
                     ...prev,
@@ -160,10 +211,10 @@ export const usePaciente = () => {
         }
     };
 
-    const addHospitalizacion= async (antecedente) => {
+    const addHospitalizacion = async (antecedente) => {
         try {
-            const result = await addHospitalizacionService(pacienteSelect.idPaciente, antecedente)
-            
+            const result = await antecedenteService.addHospitalizacionService(pacienteSelect.idPaciente, antecedente)
+
             if (result && result.status === 200) {
 
                 editPaciente({
@@ -178,8 +229,8 @@ export const usePaciente = () => {
 
     const deleteHospitalizacion = async (antecedenteId) => {
         try {
-            const result = await deleteHospitalizacionService(pacienteSelect.idPaciente, antecedenteId);
-    
+            const result = await antecedenteService.deleteHospitalizacionService(pacienteSelect.idPaciente, antecedenteId);
+
             if (result && result.status === 200) {
                 editPaciente((prev) => ({
                     ...prev,
@@ -191,10 +242,10 @@ export const usePaciente = () => {
         }
     };
 
-    const addEnfermdadCroncia= async (antecedente) => {
+    const addEnfermdadCroncia = async (antecedente) => {
         try {
-            const result = await addEnfermedadCronicaService(pacienteSelect.idPaciente, antecedente)
-            
+            const result = await antecedenteService.addEnfermedadCronicaService(pacienteSelect.idPaciente, antecedente)
+
             if (result && result.status === 200) {
                 editPaciente({
                     ...pacienteSelect,
@@ -208,8 +259,8 @@ export const usePaciente = () => {
 
     const deleteEnfermdadCroncia = async (antecedenteId) => {
         try {
-            const result = await deleteEnfermedadCronicaService(pacienteSelect.idPaciente, antecedenteId);
-    
+            const result = await antecedenteService.deleteEnfermedadCronicaService(pacienteSelect.idPaciente, antecedenteId);
+
             if (result && result.status === 200) {
                 editPaciente((prev) => ({
                     ...prev,
@@ -221,16 +272,13 @@ export const usePaciente = () => {
         }
     };
 
-
-    
-
-
-
-
-
     return {
         pacienteSelect,
         pacientesList,
+        recetasList,
+        recetaSelect,
+        notaMedicaList,
+        notaMedicaSelect,
         editPaciente,
         editPacientesList,
         savePaciente,
@@ -243,6 +291,13 @@ export const usePaciente = () => {
         addAntecedenteFamiliar,
         addEnfermdadCroncia,
         addHospitalizacion,
+        getNotaMedicaById,
+        getNotaMedicaByDoctor,
+        getNotaMedicaByPaciente,
+        saveNotaMedica,
+        getRecetaById,
+        getRecetaByDoctor,
+        getRecetaByPaciente,
     };
 }
 

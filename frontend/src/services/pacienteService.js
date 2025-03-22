@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 import { handlePromiseWithToast } from '../utils/toastUtils'
 
-export const crearPacienteService = async (newPaciente) => {
+const crearPacienteService = async (newPaciente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.post('/doctor/registrarPaciente', newPaciente),
@@ -15,7 +15,7 @@ export const crearPacienteService = async (newPaciente) => {
     }
 }
 
-export const fetchAllPacientesByDoctor = async (email) => {
+const fetchAllPacientesByDoctor = async (email) => {
     try {
         const response = await axiosInstance.get(`/doctor/all/${email}`)
         return response
@@ -25,7 +25,7 @@ export const fetchAllPacientesByDoctor = async (email) => {
     }
 }
 
-export const fetchPacienteById = async (id) => {
+const fetchPacienteById = async (id) => {
     try {
         const response = await axiosInstance.get(`/doctor/getPacienteById/${id}`)
         return response
@@ -35,7 +35,7 @@ export const fetchPacienteById = async (id) => {
     }
 }
 
-export const updatePacienteById = async (id, paciente) => {
+const updatePacienteById = async (id, paciente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.patch(`/doctor/actualizarPaciente/${id}`, paciente),
@@ -50,7 +50,7 @@ export const updatePacienteById = async (id, paciente) => {
 }
 
 //METODOS API DE ANTECEDENTES
-export const updatePacientAPNP = async (id, antecedentes) => {
+const updatePacientAPNP = async (id, antecedentes) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.patch(`/doctor/actualizarANP/${id}`, antecedentes),
@@ -63,7 +63,7 @@ export const updatePacientAPNP = async (id, antecedentes) => {
         throw error;
     }
 }
-export const updatePacientAPP = async (id, antecedentes) => {
+const updatePacientAPP = async (id, antecedentes) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.patch(`/doctor/actualizarAP/${id}`, antecedentes),
@@ -77,7 +77,7 @@ export const updatePacientAPP = async (id, antecedentes) => {
     }
 }
 
-export const addAntecedenteHeredadoService = async (id, antecedente) => {
+const addAntecedenteHeredadoService = async (id, antecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.post(`/doctor/addAH/${id}`, antecedente),
@@ -90,7 +90,7 @@ export const addAntecedenteHeredadoService = async (id, antecedente) => {
         throw error;
     }
 }
-export const addHospitalizacionService = async (id, antecedente) => {
+const addHospitalizacionService = async (id, antecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.post(`/doctor/addHP/${id}`, antecedente),
@@ -103,7 +103,7 @@ export const addHospitalizacionService = async (id, antecedente) => {
         throw error;
     }
 }
-export const addEnfermedadCronicaService = async (id, antecedente) => {
+const addEnfermedadCronicaService = async (id, antecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.post(`/doctor/addEC/${id}`, antecedente),
@@ -117,7 +117,7 @@ export const addEnfermedadCronicaService = async (id, antecedente) => {
     }
 }
 
-export const deleteAntecedenteHeredadoService = async (id, idAntecedente) => {
+const deleteAntecedenteHeredadoService = async (id, idAntecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.delete(`/doctor/deleteAH/${id}/${idAntecedente}`),
@@ -130,7 +130,7 @@ export const deleteAntecedenteHeredadoService = async (id, idAntecedente) => {
         throw error;
     }
 }
-export const deleteHospitalizacionService = async (id, idAntecedente) => {
+const deleteHospitalizacionService = async (id, idAntecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.delete(`/doctor/deleteHP/${id}/${idAntecedente}`),
@@ -143,7 +143,7 @@ export const deleteHospitalizacionService = async (id, idAntecedente) => {
         throw error;
     }
 }
-export const deleteEnfermedadCronicaService = async (id, idAntecedente) => {
+const deleteEnfermedadCronicaService = async (id, idAntecedente) => {
     try {
         const response = await handlePromiseWithToast(
             axiosInstance.delete(`/doctor/deleteEC/${id}/${idAntecedente}`),
@@ -158,3 +158,22 @@ export const deleteEnfermedadCronicaService = async (id, idAntecedente) => {
 }
 
 ///////////////////////////////
+
+export const pacienteService = {
+    crearPacienteService,
+    fetchAllPacientesByDoctor,
+    fetchPacienteById,
+    updatePacienteById,
+}
+
+export const antecedenteService = {
+    updatePacientAPNP,
+    updatePacientAPP,
+    addAntecedenteHeredadoService,
+    addHospitalizacionService,
+    addEnfermedadCronicaService,
+    deleteAntecedenteHeredadoService,
+    deleteHospitalizacionService,
+    deleteEnfermedadCronicaService,
+
+}

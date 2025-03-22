@@ -57,7 +57,11 @@ const initialState = {
     religion: "",
     sexo: "",
     telefono: ""
-  }
+  },
+  notaMedicaSelect:{},
+  notaMedicaList:{},
+  recetaList:{},
+  recetaSelect:{},
 };
 
 const pacienteSlice = createSlice({
@@ -71,14 +75,35 @@ const pacienteSlice = createSlice({
     setPacientesList: (state, action) => {
       state.pacientesList = action.payload;
       localStorage.setItem('pacienteList', action.payload); // Guardar en localStorage  
+    },
+    setNotaMedica: (state, action) => {
+      state.notaMedicaSelect = action.payload;
+      localStorage.setItem('notaMedica', action.payload); // Guardar en localStorage
+    },
+    setNotaMedicaList: (state, action) => {
+      state.notaMedicaList = action.payload;
+      localStorage.setItem('pacienteList', action.payload); // Guardar en localStorage  
+    },
+    setReceta: (state, action) => {
+      state.recetaSelect = action.payload;
+      localStorage.setItem('receta', action.payload); // Guardar en localStorage
+    },
+    setRecetaList: (state, action) => {
+      state.recetaList = action.payload;
+      localStorage.setItem('recetaList', action.payload); // Guardar en localStorage  
     }
   },
 });
 
-export const { setPaciente, setPacientesList } = pacienteSlice.actions;
+export const pacienteActions = pacienteSlice.actions;
 
-// Selector para verificar si el usuario está autenticado
-export const selectPacienteSelect = (state) => state.paciente.pacienteSelect;
-export const selectPacienteList = (state) => state.paciente.pacientesList;
+export const pacienteSelectors = {
+  pacienteSelect: (state) => state.paciente.pacienteSelect,
+  pacienteList: (state) => state.paciente.pacientesList,
+  notaMedicaSelect: (state) => state.paciente.notaMedicaSelect,
+  notaMedicaList: (state) => state.paciente.notaMedicaList,
+  recetaSelect: (state) => state.paciente.recetaSelect,
+  recetaList: (state) => state.paciente.recetaList
+};
 
 export default pacienteSlice.reducer;

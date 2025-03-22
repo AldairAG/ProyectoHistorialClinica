@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserLogged {
     private String email;
+    private Long id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;

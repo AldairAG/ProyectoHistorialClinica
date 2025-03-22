@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.MediNote.constants.ERROR_MESSAGES;
+import com.example.MediNote.entities.notas_medicas.NotaMedica;
+import com.example.MediNote.entities.notas_medicas.Receta;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -30,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Builder
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
     @Id
@@ -43,7 +46,7 @@ public class Usuario {
     private String email;
 
     @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
-    //@Email(message = ERROR_MESSAGES.CONTRASENA_INVALIDA)
+    // @Email(message = ERROR_MESSAGES.CONTRASENA_INVALIDA)
     private String password;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -59,6 +62,18 @@ public class Usuario {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Paciente> pacientes = new ArrayList<>();
+
+    // Relación uno a muchos: un doctor tiene muchos pacientes
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonManagedReference
+    private List<NotaMedica> notasMedicas = new ArrayList<>();
+
+    // historial clinico
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonBackReference
+    private List<Receta> recetas = new ArrayList<>();
 
     // Método para agregar un paciente al doctor
     public void agregarPaciente(Paciente paciente) {

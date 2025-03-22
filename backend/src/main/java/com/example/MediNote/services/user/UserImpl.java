@@ -65,6 +65,7 @@ public class UserImpl implements UserService {
                 usuario.getRoles());
 
         UserLogged userLogged = UserLogged.builder()
+                .id(usuario.getIdUsuario())
                 .email(email)
                 .nombre(usuario.getPerfil().getNombre())
                 .apellidoMaterno(usuario.getPerfil().getApellidoMaterno())

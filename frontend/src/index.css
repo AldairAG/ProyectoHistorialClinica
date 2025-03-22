@@ -21,3 +21,16 @@
     background-color: #f1f1f1;
   }
 
+  @media print {
+    
+    /* Asegurarse de que los encabezados y pies no se muestren */
+    header, footer {
+      display: none;
+    }
+  
+    /* Eliminar márgenes extra */
+    @page {
+      margin: 0;
+    }
+  }
+  

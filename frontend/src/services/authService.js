@@ -5,10 +5,14 @@ import { toast,Bounce } from 'react-toastify';
 export const loginService = async (email, password) => {
     try {
         const response = await axiosInstance.post('/auth/login', { email, password });
+
         const { usuario, token } = response.data;
+        
         return { user: usuario, token };
     } catch (error) {
         const errorMessage = error.response?.data?.message || 'Error desconocido';
+        console.log(error);
+
         toast.error(errorMessage, {
             position: "top-right",
             autoClose: 5000,

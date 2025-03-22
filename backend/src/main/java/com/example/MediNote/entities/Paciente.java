@@ -10,7 +10,11 @@ import com.example.MediNote.entities.historia_clinica.AntecedentesNoPatologicos;
 import com.example.MediNote.entities.historia_clinica.AntecedentesPatologicos;
 import com.example.MediNote.entities.historia_clinica.EnfermedadCronica;
 import com.example.MediNote.entities.historia_clinica.HospitalizacionesPrevias;
+import com.example.MediNote.entities.notas_medicas.NotaMedica;
+import com.example.MediNote.entities.notas_medicas.Receta;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -72,6 +76,18 @@ public class Paciente {
     @Builder.Default
     private List<AntecedentesFam> antecedentesFams = new ArrayList<>();
 
+    // historial clinico
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonManagedReference
+    private List<NotaMedica> notaMedica = new ArrayList<>();
+
+    // historial clinico
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonBackReference
+    private List<Receta> recetas = new ArrayList<>();
+
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<HospitalizacionesPrevias> hospitalizacionesPrevias = new ArrayList<>();
@@ -105,7 +121,7 @@ public class Paciente {
         hospitalizacion.setPaciente(this); // Asigna la relación bidireccional
     }
 
-    //\ Método para eliminar una hospitalización previa por ID
+    // \ Método para eliminar una hospitalización previa por ID
     public void removeHospitalizacion(Long idHospitalizacion) {
         hospitalizacionesPrevias.removeIf(hos -> hos.getIdHospitalizacion().equals(idHospitalizacion));
     }
@@ -116,7 +132,7 @@ public class Paciente {
         enfermedad.setPaciente(this); // Asigna la relación bidireccional
     }
 
-    //\ Método para eliminar una hospitalización previa por ID
+    // \ Método para eliminar una hospitalización previa por ID
     public void removeEnfermedadCronica(Long idEnfermedad) {
         hospitalizacionesPrevias.removeIf(hos -> hos.getIdHospitalizacion().equals(idEnfermedad));
     }
