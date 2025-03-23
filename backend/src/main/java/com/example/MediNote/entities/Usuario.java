@@ -66,13 +66,13 @@ public class Usuario {
     // Relación uno a muchos: un doctor tiene muchos pacientes
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonManagedReference
+    @JsonManagedReference("usuario-notas")
     private List<NotaMedica> notasMedicas = new ArrayList<>();
 
     // historial clinico
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonManagedReference
+    @JsonManagedReference("usuario-receta")
     private List<Receta> recetas = new ArrayList<>();
 
     // Método para agregar un paciente al doctor

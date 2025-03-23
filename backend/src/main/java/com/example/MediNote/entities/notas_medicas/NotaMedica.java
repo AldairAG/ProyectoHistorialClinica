@@ -44,13 +44,13 @@ public class NotaMedica {
     // Relación muchos a uno con Paciente
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_paciente", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("paciente-notas")
     private Paciente paciente;
 
     // Relación muchos a uno: un paciente pertenece a un doctor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_doctor", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("usuario-notas")
     private Usuario doctor;
 
     // Relación uno a muchos: un doctor tiene muchos pacientes
@@ -60,7 +60,7 @@ public class NotaMedica {
     private List<RegistroNotaMedica> registroNotaMedicas = new ArrayList<>();
 
     @OneToOne(mappedBy = "notaMedica", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference("nota-receta")
     private Receta receta;
 
     // Campo de fecha de creación automático

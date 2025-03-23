@@ -79,13 +79,13 @@ public class Paciente {
     // historial clinico
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonManagedReference
+    @JsonManagedReference("paciente-notas")
     private List<NotaMedica> notaMedica = new ArrayList<>();
 
     // historial clinico
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonBackReference
+    @JsonManagedReference("paciente-receta")
     private List<Receta> recetas = new ArrayList<>();
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
