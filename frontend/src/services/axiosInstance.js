@@ -3,7 +3,7 @@ import {store} from '../store/Store'; // Importa tu store de Redux
 
 const axiosInstance = axios.create({
   //baseURL: 'http://localhost:8080/mdn', // URL de tu backend
-  baseURL: 'http://vps-4709113-x.dattaweb.com:8080/mdn', // URL de tu backend
+  baseURL: 'http://vps-4813471-x.dattaweb.com:8080/mdn', // URL de tu backend
 });
 
 // Interceptor para agregar el token JWT
