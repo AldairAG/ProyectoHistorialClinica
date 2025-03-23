@@ -45,14 +45,12 @@ public class Receta {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_paciente", nullable = false)
     @JsonBackReference
-    @JsonIgnore
     private Paciente paciente;
 
     // Relación muchos a uno: un paciente pertenece a un doctor
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_doctor", nullable = false)
     @JsonBackReference
-    @JsonIgnore
     private Usuario doctor;
 
             // Campo de fecha de creación automático

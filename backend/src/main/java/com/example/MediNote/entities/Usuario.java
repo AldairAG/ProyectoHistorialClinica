@@ -72,7 +72,7 @@ public class Usuario {
     // historial clinico
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonBackReference
+    @JsonManagedReference
     private List<Receta> recetas = new ArrayList<>();
 
     // Método para agregar un paciente al doctor
