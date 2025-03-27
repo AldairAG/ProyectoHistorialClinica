@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import LabelLg from "./LabelLg";
 
 // eslint-disable-next-line react/prop-types
@@ -10,6 +10,7 @@ const Accordion = ({ title, children, defaultOpen = false }) => {
         <div className="w-full border border-gray-300 rounded-lg overflow-hidden">
             {/* Botón del acordeón */}
             <button
+            type="button"
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center justify-between w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 transition"
             >

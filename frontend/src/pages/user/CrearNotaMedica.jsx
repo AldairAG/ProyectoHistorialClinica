@@ -304,6 +304,7 @@ const CrearNotaMedica = () => {
             )}
 
             <form className="space-y-5 mb-5 print:hidden" onSubmit={formik.handleSubmit}>
+
                 <Accordion title={'Signos vitales'}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {signos.map((item, index) => (
@@ -697,7 +698,6 @@ const CrearNotaMedica = () => {
 
                         </div>
 
-
                     </div>
                 </Accordion>
 
@@ -705,7 +705,7 @@ const CrearNotaMedica = () => {
                     <BotonAzul
                         label={'Guardar'}
                         type={'submit'}
-                        onClick={handleSubmit}
+                        onClick={(e)=>handleSubmit(e)}
                     />
                 </div>
             </div>

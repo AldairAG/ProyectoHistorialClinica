@@ -8,7 +8,6 @@ import java.util.Set;
 import com.example.MediNote.constants.ERROR_MESSAGES;
 import com.example.MediNote.entities.notas_medicas.NotaMedica;
 import com.example.MediNote.entities.notas_medicas.Receta;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;

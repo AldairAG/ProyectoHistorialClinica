@@ -12,26 +12,6 @@ services:
       DB_USER_NAME: postgres
       DB_PASSWORD: 1234
     restart: always
-    depends_on:
-      bd_mdn:
-        condition: service_healthy
-
-  bd_mdn:
-    image: postgres:15
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: db_mdn
-    restart: always
-    volumes:
-      - pgdata:/var/lib/postgresql/data  # ⬅️ Volumen persistente
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d db_mdn || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
 
   frontend:
     build: 
@@ -45,5 +25,3 @@ services:
     volumes:
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
-volumes:
-  pgdata:  # ⬅️ Define el volumen para PostgreSQL

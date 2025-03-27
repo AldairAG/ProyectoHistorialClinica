@@ -18,6 +18,8 @@ export const usePaciente = () => {
         dispatch(pacienteActions.setPacientesList(pacientesList));
     }
     const editPaciente = (paciente) => {
+        console.log(paciente);
+        
         dispatch(pacienteActions.setPaciente(paciente));
     }
 
@@ -106,7 +108,6 @@ export const usePaciente = () => {
         editRecetaList(result?.data || null)
     }
 
-
     /////////////////NOTAS MEDICAS//////////////////
     const getNotaMedicaById = async (id) => {
         const result = await NotaMedicaService.fetchNotaMedica(id)
@@ -124,8 +125,6 @@ export const usePaciente = () => {
         const result = await NotaMedicaService.saveNotaMedica(request)
         editNotaMedica(result?.data || null)
     }
-
-
 
     //MANEJO DE ANTECEDENTES
 
@@ -145,10 +144,10 @@ export const usePaciente = () => {
 
             if (result?.status === 200) {
 
-                editPaciente(((prev) => ({
-                    ...prev,
+                editPaciente({
+                    ...pacienteSelect,
                     antecedentesNoPatologicos: { ...antecedentesActuales, ...diferencias }
-                }))(pacienteSelect.antecedentesNoPatologicos));
+                });
             }
         } catch (error) {
             console.error("Error al actualizar el paciente:", error);
@@ -171,10 +170,10 @@ export const usePaciente = () => {
 
             if (result?.status === 200) {
 
-                editPaciente(((prev) => ({
-                    ...prev,
+                editPaciente({
+                    ...pacienteSelect,
                     antecedentesPatologicos: { ...antecedentesActuales, ...diferencias }
-                }))(pacienteSelect.antecedentesPatologicos));
+                });
             }
         } catch (error) {
             console.error("Error al actualizar el paciente:", error);

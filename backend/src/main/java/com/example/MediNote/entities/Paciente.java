@@ -12,7 +12,6 @@ import com.example.MediNote.entities.historia_clinica.EnfermedadCronica;
 import com.example.MediNote.entities.historia_clinica.HospitalizacionesPrevias;
 import com.example.MediNote.entities.notas_medicas.NotaMedica;
 import com.example.MediNote.entities.notas_medicas.Receta;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
