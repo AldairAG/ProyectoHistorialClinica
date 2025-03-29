@@ -58,7 +58,7 @@ const fetchNotaMedicasByPaciente = async (id) => {
         return response
     } catch (error) {
         console.error('Error capturado:', error);
-        throw error;
+        return []
     }
 }
 
@@ -84,7 +84,7 @@ export const NotaMedicaService = {
     saveNotaMedica,
 }
 
-export const RecetaService={
+export const RecetaService = {
     fetchReceta,
     fetchRecetasByDoctor,
     fetchRecetasByPaciente,

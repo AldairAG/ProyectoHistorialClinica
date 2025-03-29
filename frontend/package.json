@@ -11,14 +11,17 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.6",
     "axios": "^1.7.9",
     "flowbite": "^3.1.2",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.7",
+    "heroicons": "^2.2.0",
     "history": "^5.3.0",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.485.0",
     "print-js": "^1.6.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",

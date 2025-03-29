@@ -6,6 +6,7 @@ import PacienteCard from "../../components/cards/PacienteCard";
 import HistoriaClinicaCard from "../../components/cards/HistoriaClinicaCard";
 import RecetasTable from "../../components/tables/RecetasTable";
 import LabelXl from "../../components/ui/LabelXl";
+import NotaMedicaTable from "../../components/tables/NotaMedicaTable";
 
 const ViewPaciente = () => {
     const { getPacienteById } = usePaciente()
@@ -76,7 +77,10 @@ const ViewPaciente = () => {
                 </ul>
                 {seccion === 1 && <HistoriaClinicaCard />}
 
+                {seccion === 2 && <NotaMedicaTable />}
+
                 {seccion == 4 && <RecetasTable/>}
+
 
                 {seccion == 5 && (
                     <div>

@@ -33,7 +33,6 @@ export const usePaciente = () => {
     const editRecetaList = (list) => {
         dispatch(pacienteActions.setRecetaList(list));
     }
-
     const editReceta = (receta) => {
         dispatch(pacienteActions.setReceta(receta));
     }
@@ -100,26 +99,28 @@ export const usePaciente = () => {
     }
     const getRecetaByDoctor = async (id) => {
         const result = await RecetaService.fetchRecetasByDoctor(id)
-        editRecetaList(result?.data || null)
+        editRecetaList(result?.data || [])
     }
     const getRecetaByPaciente = async () => {
         const result = await RecetaService.fetchRecetasByPaciente(pacienteSelect.idPaciente)
         console.log(result?.data);
-        editRecetaList(result?.data || null)
+        editRecetaList(result?.data || [])
     }
 
     /////////////////NOTAS MEDICAS//////////////////
-    const getNotaMedicaById = async (id) => {
+    const getNotaMedicaById = async () => {
         const result = await NotaMedicaService.fetchNotaMedica(id)
         editNotaMedica(result?.data || null)
     }
-    const getNotaMedicaByDoctor = async (id) => {
+    const getNotaMedicaByDoctor = async () => {
         const result = await NotaMedicaService.fetchNotaMedicasByDoctor(id)
-        editNotaMedicaList(result?.data || null)
+        editNotaMedicaList(result?.data || [])
     }
-    const getNotaMedicaByPaciente = async (id) => {
-        const result = await NotaMedicaService.fetchNotaMedicasByPaciente(id)
-        editNotaMedicaList(result?.data || null)
+    const getNotaMedicaByPaciente = async () => {
+        const result = await NotaMedicaService.fetchNotaMedicasByPaciente(pacienteSelect.idPaciente);
+        console.log(result?.data);
+        
+        editNotaMedicaList(result?.data || [])
     }
     const saveNotaMedica = async (request) => {
         const result = await NotaMedicaService.saveNotaMedica(request)

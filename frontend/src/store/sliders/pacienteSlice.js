@@ -59,8 +59,8 @@ const initialState = {
     telefono: ""
   },
   notaMedicaSelect:{},
-  notaMedicaList:{},
-  recetaList:{},
+  notaMedicaList:[],
+  recetaList:[],
   recetaSelect:{},
 };
 
