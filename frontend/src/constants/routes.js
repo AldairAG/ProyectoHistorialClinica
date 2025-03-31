@@ -9,5 +9,6 @@ export const USER_ROUTES = {
     VIEW_PACIENTE: "/c/Paciente",
     EDIT_PACIENTE: "/c/Edit_paciente",
     CREATE_PACIENTE:"/c/Crear-paciente",
-    CREATE_NOTA_MEDICA:"/c/Crear-nota-medica"
+    CREATE_NOTA_MEDICA:"/c/Crear-nota-medica",
+    CITAS_MEDICAS:"/c/citas-medicas",
 }

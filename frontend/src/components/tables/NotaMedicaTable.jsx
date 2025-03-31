@@ -1,11 +1,14 @@
 import { usePaciente } from "../../hooks/usePaciente";
 import LabelXl from "../ui/LabelXl";
 import NotaMedicaItem from "../items/NotaMedicaItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loader from "../ui/Loader";
 
 const NotaMedicaTable = () => {
 
     const { notaMedicaList, getNotaMedicaByPaciente } = usePaciente()
+    const [loading, setLoading] = useState(true)
+
 
     useEffect(() => {
         fetchData()
@@ -13,9 +16,8 @@ const NotaMedicaTable = () => {
     }, [])
 
     const fetchData = async () => {
-        
         await getNotaMedicaByPaciente();
-
+        setLoading(false)
     }
 
     return (
@@ -30,13 +32,19 @@ const NotaMedicaTable = () => {
                 <LabelXl>Notas medicas</LabelXl>
             </header>
 
-            {notaMedicaList.map((item, index) => (
-                <div key={index}>
-                    <NotaMedicaItem notaMedica={item} />
-                </div>
-            ))}
+            {loading ? (
+                <Loader/>
+            ) : (
+                notaMedicaList.map((item, index) => (
+                    <div key={index}>
+                        <NotaMedicaItem notaMedica={item} />
+                    </div>
+                ))
+            )}
 
-        </div>
+
+
+        </div >
     );
 }
 

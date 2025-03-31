@@ -75,11 +75,12 @@ const ViewPaciente = () => {
                         <a>Estudios clinicos</a>
                     </li>
                 </ul>
+
                 {seccion === 1 && <HistoriaClinicaCard />}
 
                 {seccion === 2 && <NotaMedicaTable />}
 
-                {seccion == 4 && <RecetasTable/>}
+                {seccion == 4 && <RecetasTable />}
 
 
                 {seccion == 5 && (
@@ -181,7 +182,7 @@ const ViewPaciente = () => {
                 <div className="grid grid-cols-2 text-gray-400 font-bold py-2">
                     <label>Religion:</label> <label>Catolica</label>
                 </div>
-            </aside> */}
+            </aside>  */}
 
         </section>
     )

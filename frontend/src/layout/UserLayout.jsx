@@ -11,6 +11,7 @@ import ViewPaciente from "../pages/user/ViewPaciente";
 import Loader from '../components/ui/Loader'
 import { useUser } from "../hooks/useUser";
 import CrearNotaMedica from "../pages/user/CrearNotaMedica";
+import CitasMedicas from "../pages/user/CitasMedicas";
 
 const UserLaytout = () => {
     const { loading } = useUser()
@@ -39,6 +40,7 @@ const UserLaytout = () => {
                                     <Route path={USER_ROUTES.EDIT_PACIENTE} component={EditHistoriaClinica} />
                                     <Route path={USER_ROUTES.VIEW_PACIENTE + "/:id?"} component={ViewPaciente} />
                                     <Route path={USER_ROUTES.CREATE_NOTA_MEDICA + "/:id?"} component={CrearNotaMedica} />
+                                    <Route path={USER_ROUTES.CITAS_MEDICAS} component={CitasMedicas} />
                                     <Route path={USER_ROUTES.HOME} component={Home} />
                                 </Switch>
                             )}
