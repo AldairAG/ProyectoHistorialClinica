@@ -175,5 +175,4 @@ export const antecedenteService = {
     deleteAntecedenteHeredadoService,
     deleteHospitalizacionService,
     deleteEnfermedadCronicaService,
-
 }
