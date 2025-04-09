@@ -2,6 +2,7 @@ import img from '../../assets/usuario.png'
 import { usePaciente } from "../../hooks/usePaciente";
 import { useUser } from "../../hooks/useUser"
 import { USER_ROUTES } from "../../constants/routes"
+import { Citas } from '../icons/Icons';
 
 const PacienteCard = () => {
     const { navigateTo } = useUser()
@@ -32,6 +33,14 @@ const PacienteCard = () => {
                             Generar nota medica
                         </button>
                         <button onClick={() => navigateTo(USER_ROUTES.EDIT_PACIENTE)} className="text-sm bg-gray-100 flex items-center px-2 py-1 gap-1 font-bold rounded-sm border border-gray-300">Editar informacion</button>
+
+                        <button
+                            onClick={() => navigateTo(USER_ROUTES.CREAR_CITAS_MEDICAS)}
+                            className='text-sm bg-gray-100 flex items-center px-2 py-1 gap-1 font-bold rounded-sm border border-gray-300'>
+                            <Citas className={'w-4 h-4 text-gray-400'} />
+                            Agendar cita
+                        </button>
+
                     </div>
                 </div>
             </div>

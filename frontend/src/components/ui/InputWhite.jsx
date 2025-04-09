@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
-const InputWhite = ({ obligatorio = false, id, label, ...inputProps }) => {
+const InputWhite = ({ obligatorio = false, id, label, classNameDiv, ...inputProps }) => {
     return (
-        <div>
+        <div className={classNameDiv}>
             <label htmlFor={id}
                 className="block mb-2 text-sm font-sans font-semibold text-gray-500">
                 {label}

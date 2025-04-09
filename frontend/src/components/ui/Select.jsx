@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
-const Select = ({obligatorio, label, id, children, ...props }) => {
+const Select = ({obligatorio, label, id, children,classNameDiv, ...props }) => {
     return (
-        <div className="">
+        <div className={classNameDiv}>
             <label htmlFor={id} className="block mb-2 text-sm font-sans font-semibold text-gray-500">
                 {label}
                 {obligatorio &&

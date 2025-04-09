@@ -6,6 +6,7 @@ import { combineReducers } from 'redux';
 
 import authReducer from './sliders/authSlice'; // Importa el slice de autenticación
 import pacienteReducer from './sliders/pacienteSlice'; // Importa el slice de paciente
+import citasReducer from './sliders/citaSlice'; // Importa el slice de citas
 
 // Configuración de Redux-Persist
 const persistConfig = {
@@ -18,6 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   paciente:pacienteReducer,
+  cita:citasReducer,
 });
 
 // Aplica persistencia al reducer combinado

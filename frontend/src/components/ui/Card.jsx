@@ -25,6 +25,22 @@ const CardHeader = ({ children, className }) => {
     )
 }
 
+const CardHead = ({ children, className }) => {
+    return (
+        <div className={twMerge("", className)}>
+            {children}
+        </div>
+    )
+}
+
+const CardContent = ({ children, className }) => {
+    return (
+        <div className={twMerge("", className)}>
+            {children}
+        </div>
+    )
+}
+
 const Badge = ({ children, className }) => {
     return (
         <span className={twMerge("border border-gray-300 text-xs font-semibold px-2 py-1 rounded-full", className)}>
@@ -36,4 +52,4 @@ const Badge = ({ children, className }) => {
 
 
 
-export { Card, CardHeader, CardDescription,Badge };
+export { Card, CardHeader, CardDescription,Badge, CardHead, CardContent };

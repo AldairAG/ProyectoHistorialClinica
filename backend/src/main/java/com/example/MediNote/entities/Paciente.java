@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.MediNote.constants.ERROR_MESSAGES;
+import com.example.MediNote.entities.citas.Cita;
 import com.example.MediNote.entities.historia_clinica.AntecedentesFam;
 import com.example.MediNote.entities.historia_clinica.AntecedentesNoPatologicos;
 import com.example.MediNote.entities.historia_clinica.AntecedentesPatologicos;
@@ -102,6 +103,21 @@ public class Paciente {
     @Builder.Default
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AntecedentesPatologicos antecedentesPatologicos = new AntecedentesPatologicos();
+
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Cita> citas = new ArrayList<>();
+
+    // Método para agregar una cita
+    public void addCita(Cita cita) {
+        citas.add(cita);
+        cita.setPaciente(this); // Asigna la relación bidireccional
+    }
+
+    // Método para eliminar una cita por ID
+    public void removeCita(Long idCita) {
+        citas.removeIf(cita -> cita.getIdCita().equals(idCita));
+    }
 
     // Método para agregar un antecedente familiar
     public void addAntecedenteFam(AntecedentesFam antecedente) {

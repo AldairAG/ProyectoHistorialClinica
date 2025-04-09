@@ -24,17 +24,32 @@ const TabsList = ({ children, activeTab, setActiveTab, className }) => (
     </div>
 );
 
-const TabsTrigger = ({ value, children, activeTab, setActiveTab, className }) => (
-    <button
-        className={twMerge(`px-4 py-2 border-b-2 ${activeTab === value ? "border-blue-500 font-bold" : "border-transparent"
-            }`,className)}
-        onClick={() => setActiveTab(value)}
-    >
-        {children}
-    </button>
-);
+const TabsTrigger = ({
+    value,
+    children,
+    activeTab,
+    setActiveTab,
+    className,
+    activeClassName = "border-blue-500 font-bold stroke-3 text-blue-500",
+    inactiveClassName = "border-transparent"
+}) => {
+    const isActive = activeTab === value;
+
+    return (
+        <button
+            className={twMerge(
+                "px-4 py-2 border-b-2",
+                isActive ? activeClassName : inactiveClassName,
+                className
+            )}
+            onClick={() => setActiveTab?.(value)}
+        >
+            {children}
+        </button>
+    );
+};
 
 const TabsContent = ({ value, activeTab, children, className }) =>
-    activeTab === value ? <div className={twMerge("mt-4",className)}>{children}</div> : null;
+    activeTab === value ? <div className={twMerge("mt-4", className)}>{children}</div> : null;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };

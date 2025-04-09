@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.MediNote.constants.ERROR_MESSAGES;
+import com.example.MediNote.entities.citas.Cita;
 import com.example.MediNote.entities.notas_medicas.NotaMedica;
 import com.example.MediNote.entities.notas_medicas.Receta;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -74,9 +75,42 @@ public class Usuario {
     @JsonManagedReference("usuario-receta")
     private List<Receta> recetas = new ArrayList<>();
 
+    // Relación uno a muchos: un usuario puede tener muchos consultorios
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonManagedReference("usuario-consultorios")
+    private List<Consultorio> consultorios = new ArrayList<>();
+
+    // Relación uno a muchos: un usuario puede tener muchas citas
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    @JsonManagedReference("usuario-citas")
+    private List<Cita> citas = new ArrayList<>();
+
     // Método para agregar un paciente al doctor
     public void agregarPaciente(Paciente paciente) {
         this.pacientes.add(paciente);
         paciente.setDoctor(this); // Establece la relación inversa
     }
+
+    public void agregarNotaMedica(NotaMedica notaMedica) {
+        this.notasMedicas.add(notaMedica);
+        notaMedica.setDoctor(this); // Establece la relación inversa
+    }
+
+    public void agregarReceta(Receta receta) {
+        this.recetas.add(receta);
+        receta.setDoctor(this); // Establece la relación inversa
+    }
+
+    public void agregarConsultorio(Consultorio consultorio) {
+        this.consultorios.add(consultorio);
+        consultorio.setDoctor(this); // Establece la relación inversa
+    }
+
+    public void agregarCita(Cita cita) {
+        this.citas.add(cita);
+        cita.setDoctor(this); // Establece la relación inversa
+    }
+
 }

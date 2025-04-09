@@ -11,4 +11,5 @@ export const USER_ROUTES = {
     CREATE_PACIENTE:"/c/Crear-paciente",
     CREATE_NOTA_MEDICA:"/c/Crear-nota-medica",
     CITAS_MEDICAS:"/c/citas-medicas",
+    CREAR_CITAS_MEDICAS:"/c/crear-cita-medica",
 }
