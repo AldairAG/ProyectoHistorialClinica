@@ -1,6 +1,5 @@
 export const USER_ROUTES = {
-    LOGIN: "/",
-    REGISTER: "/register",
+    LANDING_PAGE: "/",
     LAYOUT:"/c",
     HOME: "/c/home",
     PROFILE: "/c/profile",

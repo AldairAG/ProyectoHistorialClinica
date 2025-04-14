@@ -17,7 +17,7 @@ const crearCitaService = async (newCita, idConsultorio, idPaciente, idDoctor) =>
 
 const fetchAllCitasByDoctor = async (medicoId) => {
     try {
-        const response = await axiosInstance.get(`/citas//medico/${medicoId}`)
+        const response = await axiosInstance.get(`/citas/medico/${medicoId}`)
         return response
     } catch (error) {
         console.error('Error capturado:', error);

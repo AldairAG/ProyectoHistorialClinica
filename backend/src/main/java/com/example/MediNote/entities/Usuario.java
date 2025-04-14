@@ -84,7 +84,7 @@ public class Usuario {
     // Relación uno a muchos: un usuario puede tener muchas citas
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonManagedReference("usuario-citas")
+    @JsonManagedReference("usuario-citas") // Relación gestionada con Cita
     private List<Cita> citas = new ArrayList<>();
 
     // Método para agregar un paciente al doctor

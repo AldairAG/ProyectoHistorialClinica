@@ -51,18 +51,17 @@ public class CitaImpl implements CitaService {
 
     @Override
     public Cita save(Cita cita, Long idConsultorio, Long idPaciente, Long idDoctor) {
-        cita.setConsultorio(consultorioRepository.findById(idConsultorio).orElseThrow(() -> 
-            new IllegalArgumentException("Consultorio not found with id: " + idConsultorio)));
-        
+
+        cita.setConsultorio(consultorioRepository.findById(idConsultorio)
+                .orElseThrow(() -> new IllegalArgumentException("Consultorio not found with id: " + idConsultorio)));
+
         if (idPaciente != null) {
-            cita.setPaciente(pacienteRepository.findById(idPaciente).orElseThrow(() -> 
-                new IllegalArgumentException("Paciente not found with id: " + idPaciente)));
-        } else {
-            cita.setPaciente(null);
+            cita.setPaciente(pacienteRepository.findById(idPaciente)
+                    .orElseThrow(() -> new IllegalArgumentException("Paciente not found with id: " + idPaciente)));
         }
-        
-        cita.setDoctor(doctorRepository.findById(idDoctor).orElseThrow(() -> 
-            new IllegalArgumentException("Doctor not found with id: " + idDoctor)));
+
+        cita.setDoctor(doctorRepository.findById(idDoctor)
+                .orElseThrow(() -> new IllegalArgumentException("Doctor not found with id: " + idDoctor)));
 
         return citaRepository.save(cita);
     }

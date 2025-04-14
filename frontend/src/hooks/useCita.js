@@ -31,9 +31,11 @@ export const useCita = () => {
 
     ///////////////////////////
 
-    const saveCita = async (cita, idConsultorio, idPaciente, idDoctor) => {
+    const saveCita = async (cita, idConsultorio) => {
         try {
-            const result = await citasService.crearCitaService(cita, idConsultorio||0, pacienteSelect.idPaciente, user.idUsuario);
+            console.log(user);
+            
+            const result = await citasService.crearCitaService(cita, idConsultorio||1, pacienteSelect.idPaciente, user.id);
             editCita(result?.data || null);
             return result?.data || null;
         } catch (error) {

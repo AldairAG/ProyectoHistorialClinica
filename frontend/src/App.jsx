@@ -9,6 +9,7 @@ import { ToastContainer, Bounce } from "react-toastify";
 import './index.css'
 import { USER_ROUTES } from "./constants/routes"
 import RegistrarUser from "./pages/user/RegistrarUser";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
 
@@ -34,8 +35,7 @@ function App() {
           <BrowserRouter>
             <Switch>
               <Route path={USER_ROUTES.LAYOUT} component={UserLaytout} />
-              <Route path={USER_ROUTES.REGISTER} component={RegistrarUser} />
-              <Route path={USER_ROUTES.LOGIN} component={Login} />
+              <Route path={USER_ROUTES.LANDING_PAGE} component={LandingPage} />
             </Switch>
           </BrowserRouter>
         </div>

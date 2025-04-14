@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.example.MediNote.entities.citas.Cita;
 import com.example.MediNote.entities.citas.Horario;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -31,6 +33,8 @@ public class Consultorio {
     private List<Horario> horarioAtencion;
 
     @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonBackReference("usuario-consultorios") // Relación inversa con Usuario
     private Usuario doctor;
 
     @OneToMany(mappedBy = "consultorio")

@@ -6,28 +6,33 @@ import TextArea from '../../components/ui/TextArea';
 import { usePaciente } from '../../hooks/usePaciente';
 import { useFormik } from 'formik';
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { useCita } from '../../hooks/useCita';
 
 const CrearCita = () => {
     const { pacienteSelect } = usePaciente();
+    const { saveCita } = useCita();
+
 
     const formik = useFormik({
         initialValues: {
             nombre: pacienteSelect.nombre || '',
-            fecha: '',
-            hora: '',
-            consultorio: '',
-            telefono: '',
+            fecha: new Date().toISOString().split('T')[0], // Set current date in YYYY-MM-DD format
+            hora: '08:00 AM',
+            consultorio: 1,
+            telefono: pacienteSelect.telefono || '',
             motivoConsulta: '',
             notasAdicionales: ''
         },
         onSubmit: values => {
             console.log(values);
+            saveCita(values, null);
         },
     });
 
     return (
         <MainDiv>
-            <Card className={'space-y-4 w-full'} onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
+            <Card className={'space-y-4 w-full'} >
                 <CardHead className={'space-y-2'}>
                     <CardHeader>Agendar nueva cita</CardHeader>
                     <CardDescription>Complete el formulario para agendar una cita médica</CardDescription>
@@ -35,6 +40,8 @@ const CrearCita = () => {
 
                 <CardContent className={'space-y-4 md:grid md:grid-cols-3 gap-4'}>
                     <InputWhite
+                        id={'nombre'}
+                        name={'nombre'}
                         classNameDiv={'cols-span-1'}
                         label={'Nombre del Paciente'}
                         placeholder={'Juan Pérez'}
@@ -45,6 +52,8 @@ const CrearCita = () => {
                     />
 
                     <InputWhite
+                        id={'fecha'}
+                        name={'fecha'}
                         classNameDiv={''}
                         label={'Fecha'}
                         placeholder={'Seleccionar fecha'}
@@ -55,6 +64,8 @@ const CrearCita = () => {
                     />
 
                     <Select
+                        id={'hora'}
+                        name={'hora'}
                         classNameDiv={''}
                         label={'Hora'}
                         placeholder={'Seleccionar hora'}
@@ -63,37 +74,41 @@ const CrearCita = () => {
                         value={formik.values.hora}
                         onChange={formik.handleChange}
                     >
-                        <option value="">08:00 AM</option>
-                        <option value="">09:00 AM</option>
-                        <option value="">10:00 AM</option>
-                        <option value="">11:00 AM</option>
-                        <option value="">12:00 PM</option>
-                        <option value="">01:00 PM</option>
-                        <option value="">02:00 PM</option>
-                        <option value="">03:00 PM</option>
-                        <option value="">04:00 PM</option>
-                        <option value="">05:00 PM</option>
-                        <option value="">06:00 PM</option>
-                        <option value="">07:00 PM</option>
-                        <option value="">08:00 PM</option>
-                        <option value="">09:00 PM</option>
-                        <option value="">10:00 PM</option>
+                        <option value="08:00 AM">08:00 AM</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="01:00 PM">01:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                        <option value="05:00 PM">05:00 PM</option>
+                        <option value="06:00 PM">06:00 PM</option>
+                        <option value="07:00 PM">07:00 PM</option>
+                        <option value="08:00 PM">08:00 PM</option>
+                        <option value="09:00 PM">09:00 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
 
                     </Select>
 
                     <Select
+                        id={'consultorio'}
+                        name={'consultorio'}
                         label={'Consultorio'}
                         placeholder={'Seleccionar consultorio'}
                         required={true}
                         value={formik.values.consultorio}
                         onChange={formik.handleChange}
                     >
-                        <option value="">Consultorio 1</option>
-                        <option value="">Consultorio 2</option>
-                        <option value="">Consultorio 3</option>
+                        <option value={null}>Consultorio 1</option>
+                        <option value={null}>Consultorio 2</option>
+                        <option value={null}>Consultorio 3</option>
                     </Select>
 
                     <InputWhite
+                        id={'telefono'}
+                        name={'telefono'}
                         classNameDiv={''}
                         label={'Teléfono de Contacto'}
                         placeholder={'Ej: 123-456-7890'}
@@ -105,12 +120,16 @@ const CrearCita = () => {
 
                     <div className='col-span-3 grid grid-cols-1 gap-4'>
                         <TextArea
+                            id={'motivoConsulta'}
+                            name={'motivoConsulta'}
                             label={'Motivo de la Consulta'}
                             placeholder={'Describa brevemente el motivo de su consulta'}
                             value={formik.values.motivoConsulta}
                         />
 
                         <TextArea
+                            id={'notasAdicionales'}
+                            name={'notasAdicionales'}
                             className={'h-auto'}
                             label={'Notas Adicionales'}
                             placeholder={'Notas adicionales sobre la cita'}
@@ -127,6 +146,7 @@ const CrearCita = () => {
                     </div>
                 </CardContent>
             </Card>
+            </form>
         </MainDiv>
     );
 }

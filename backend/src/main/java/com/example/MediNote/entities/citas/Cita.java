@@ -14,6 +14,7 @@ import com.example.MediNote.entities.Paciente;
 import com.example.MediNote.entities.Consultorio;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Setter
@@ -35,6 +36,7 @@ public class Cita {
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonBackReference("usuario-citas") // Relación inversa con Usuario
     private Usuario doctor;
 
     @ManyToOne
