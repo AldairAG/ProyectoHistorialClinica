@@ -1,13 +1,31 @@
+import { useState } from "react";
+import VentanaModal from "../components/ui/VentanaModal";
+import Login from "../components/forms/Login";
+import RegistrarUser from "../components/forms/RegistrarUser";
 
 const LandingPage = () => {
+    const [isVisibleRegister, setIsVisibleRegister] = useState(false);
+    const [isVisibleLogin, setIsVisibleLogin] = useState(false);
+
     return (
         <div className="landing-page min-h-screen flex flex-col bg-neutral-50 text-gray-800">
+
+            <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleRegister)}>
+                <Login/>
+            </VentanaModal>
+
+            <VentanaModal isOpen={isVisibleRegister} setOpen={() => setIsVisibleRegister(!isVisibleRegister)}>
+                <RegistrarUser/>
+            </VentanaModal>
+
             {/* Header */}
             <header className="w-full flex justify-end p-6 gap-4 bg-white shadow-sm">
                 <button className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition">
                     Iniciar sesión
                 </button>
-                <button className="text-sm font-semibold bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <button
+                    onClick={() => setIsVisibleRegister(!isVisibleRegister)}
+                    className="text-sm font-semibold bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
                     Registrarse
                 </button>
             </header>
@@ -20,7 +38,9 @@ const LandingPage = () => {
                     <p className="text-lg mb-6 max-w-md">
                         MediNote es una solución innovadora para la gestión de historiales clínicos. Mejora la atención médica con acceso seguro, digital y eficiente.
                     </p>
-                    <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    <button
+                        onClick={() => setIsVisibleRegister(!isVisibleRegister)}
+                        className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
                         Comenzar ahora
                     </button>
                 </div>
