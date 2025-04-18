@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.MediNote.DTO.UserLogged;
 import com.example.MediNote.auth.AuthService;
@@ -17,6 +18,7 @@ import com.example.MediNote.entities.Perfil;
 import com.example.MediNote.entities.Rol;
 import com.example.MediNote.entities.Usuario;
 import com.example.MediNote.repositories.UserRepository;
+import com.example.MediNote.request.RegisterRequest;
 import com.example.MediNote.services.rol.RolService;
 
 @Service
@@ -33,8 +35,25 @@ public class UserImpl implements UserService {
     @Autowired
     private AuthService authService;
 
-    public Usuario registrarUsuario(Usuario usuario, String rolNombre) {
+    /**
+     * Registra un nuevo usuario en el sistema con los datos proporcionados en la solicitud.
+     * 
+     * @param request  Objeto que contiene los datos necesarios para registrar al usuario,
+     *                 incluyendo nombre, apellidos, cédula y universidad.
+     * @param rolNombre Nombre del rol que se asignará al usuario.
+     * 
+     * @throws RuntimeException Si el rol especificado no se encuentra en el sistema.
+     * 
+     * Este método realiza las siguientes acciones:
+     * - Encripta la contraseña del usuario.
+     * - Asigna el rol especificado al usuario.
+     * - Crea y asocia un perfil al usuario con los datos proporcionados en la solicitud.
+     */
+    @Override
+    @Transactional
+    public void registrarUsuario(RegisterRequest request, String rolNombre) {
         // Encriptar la contraseña
+        Usuario usuario = new Usuario();
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         // Asignar roles
@@ -48,10 +67,13 @@ public class UserImpl implements UserService {
 
         // Crear perfil
         Perfil perfil = usuario.getPerfil();
+        perfil.setNombre(request.getNombre());
+        perfil.setApellidoPaterno(request.getApellidoPaterno());
+        perfil.setApellidoMaterno(request.getApellidoMaterno());
+        perfil.setCedula(request.getCedula());
+        perfil.setUniversidad(request.getUniversidad());
         usuario.setPerfil(perfil);
         perfil.setUsuario(usuario);
-
-        return repository.save(usuario);
     }
 
     @Override

@@ -6,9 +6,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.example.MediNote.entities.Usuario;
+import com.example.MediNote.request.RegisterRequest;
 
 public interface UserService {
-    Usuario registrarUsuario(Usuario usuario,String rolNombre);
+    void registrarUsuario(RegisterRequest request,String rolNombre);
 
     Map<String, Object> login(String email,String password);
 
