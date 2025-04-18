@@ -10,7 +10,7 @@ const LandingPage = () => {
     return (
         <div className="landing-page min-h-screen flex flex-col bg-neutral-50 text-gray-800">
 
-            <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleRegister)}>
+            <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleLogin)}>
                 <Login/>
             </VentanaModal>
 
@@ -20,7 +20,9 @@ const LandingPage = () => {
 
             {/* Header */}
             <header className="w-full flex justify-end p-6 gap-4 bg-white shadow-sm">
-                <button className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition">
+                <button 
+                    onClick={() => setIsVisibleLogin(!isVisibleRegister)}
+                    className="text-sm font-semibold text-gray-700 hover:text-indigo-600 transition">
                     Iniciar sesión
                 </button>
                 <button
