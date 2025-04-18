@@ -75,6 +75,7 @@ const RegistrarUser = () => {
                                 type="email"
                                 name="email"
                                 placeholder="Correo electrónico"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
@@ -86,6 +87,7 @@ const RegistrarUser = () => {
                                 type="password"
                                 name="password"
                                 placeholder="Contraseña"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password}
@@ -97,6 +99,7 @@ const RegistrarUser = () => {
                                 type="password"
                                 name="passwordConf"
                                 placeholder="Confirmar contraseña"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.passwordConf}
@@ -120,6 +123,7 @@ const RegistrarUser = () => {
                                 type="text"
                                 name="nombre"
                                 placeholder="Nombre"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.nombre}
@@ -131,6 +135,7 @@ const RegistrarUser = () => {
                                 type="text"
                                 name="apellidoPaterno"
                                 placeholder="Apellido paterno"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.apellidoPaterno}
@@ -142,6 +147,7 @@ const RegistrarUser = () => {
                                 type="text"
                                 name="apellidoMaterno"
                                 placeholder="Apellido materno"
+                                required={true}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.apellidoMaterno}
@@ -154,6 +160,7 @@ const RegistrarUser = () => {
                                 name="universidad"
                                 placeholder="Universidad"
                                 onChange={formik.handleChange}
+                                required={true}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.universidad}
                                 error={formik.touched.universidad && formik.errors.universidad}
@@ -165,6 +172,7 @@ const RegistrarUser = () => {
                                 name="cedula"
                                 placeholder="Cédula"
                                 onChange={formik.handleChange}
+                                required={true}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.cedula}
                                 error={formik.touched.cedula && formik.errors.cedula}
