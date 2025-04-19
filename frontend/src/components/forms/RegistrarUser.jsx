@@ -4,10 +4,12 @@ import BotonAzul from "../ui/BotonAzul";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
+import { useUser } from "../../hooks/useUser";
 
 const RegistrarUser = () => {
     const [step, setStep] = useState(1);
     const [registroCompleto, setRegistroCompleto] = useState(false);
+    const { registerUser } = useUser();
 
     const formik = useFormik({
         initialValues: {
@@ -49,9 +51,26 @@ const RegistrarUser = () => {
                 .matches(/^\d{7,10}$/, "La cédula debe contener entre 7 y 10 dígitos")
                 .required("La cédula es obligatoria"),
         }),
-        onSubmit: (values) => {
-            console.log("Datos enviados:", values);
-            setRegistroCompleto(true);
+        onSubmit: async (values) => {
+            try {
+                const request = {
+                    email: values.email,
+                    password: values.password,
+                    nombre: values.nombre,
+                    apellidoPaterno: values.apellidoPaterno,
+                    apellidoMaterno: values.apellidoMaterno,
+                    universidad: values.universidad,
+                    cedula: values.cedula,
+                };
+
+                await registerUser(request); // ya guarda token y user
+
+                setRegistroCompleto(true);
+            } catch (error) {
+                // eslint-disable-next-line no-undef
+                toast.error("Error al registrar usuario.");
+                console.error(error);
+            }
         },
     });
 

@@ -4,6 +4,7 @@ import { setCredentials, selectCurrentUser, selectUserRoles, selectSiderBar, ope
 import { useHistory } from 'react-router-dom';
 import { USER_ROUTES } from "../constants/routes";
 import { getRolesFromToken } from '../utils/decodeUtils';
+import { registerService } from "../services/authService";
 
 export const useUser = () => {
     const dispatch = useDispatch();
@@ -37,11 +38,23 @@ export const useUser = () => {
         }
     };
 
-    const registro = (values) => {
-        //llamar al servicio de registro
-        //verficar el registro
-        //mandar a llamr el login
-    }
+    const registro = async (data) => {
+        // eslint-disable-next-line no-useless-catch
+        try {
+            const response = await registerService(data);
+
+            if (response && response.token && response.user) {
+                localStorage.setItem("token", response.token);
+                localStorage.setItem("user", JSON.stringify(response.user));
+                // eslint-disable-next-line no-undef
+                setUser(response.user);
+                // eslint-disable-next-line no-undef
+                setToken(response.token);
+            }
+        } catch (error) {
+            throw error; // o puedes manejar errores aquí si prefieres
+        }
+    };
 
 
 
@@ -55,6 +68,7 @@ export const useUser = () => {
         menuBar,
         loading,
         login,
+        registro,
         navigateTo,
         openCloseMenuBar,
         changeLoading,

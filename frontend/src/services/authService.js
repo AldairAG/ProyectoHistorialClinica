@@ -33,9 +33,9 @@ export const registerService = async (request) => {
     try {
         // Intenta enviar una solicitud POST al endpoint '/auth/registrar' con los datos proporcionados en "request".
         const response = await axiosInstance.post('/auth/registrar', request);
-
+        const { usuario, token } = response.data;
         // Si la solicitud es exitosa, devuelve los datos de la respuesta.
-        return response;
+        return { user: usuario, token };
     } catch (error) {
         // Si ocurre un error, intenta obtener el mensaje de error desde la respuesta del servidor.
         // Si no hay un mensaje específico, usa un mensaje genérico "Error desconocido".
