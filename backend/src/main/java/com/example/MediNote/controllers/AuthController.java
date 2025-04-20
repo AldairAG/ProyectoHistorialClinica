@@ -40,7 +40,6 @@ public class AuthController {
      *                para registrar un usuario. El JSON que se debe enviar tiene el siguiente formato:
      *                <pre>
      *                {
-     *                    "username": "nombreDeUsuario",
      *                    "password": "contraseña",
      *                    "email": "correo@ejemplo.com",
      *                    "nombre": "Nombre Completo",

@@ -56,5 +56,7 @@ export const registerService = async (request) => {
             theme: "light", // Usa el tema claro para la notificación.
             transition: Bounce, // Aplica una animación de rebote al mostrar la notificación.
         });
+
+        return errorMessage; // Devuelve el mensaje de error para su manejo posterior.
     }
 };

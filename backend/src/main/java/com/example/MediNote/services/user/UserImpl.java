@@ -54,7 +54,7 @@ public class UserImpl implements UserService {
     public void registrarUsuario(RegisterRequest request, String rolNombre) {
         // Encriptar la contraseña
         Usuario usuario = new Usuario();
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
 
         // Asignar roles
         Set<Rol> roles = new HashSet<>();
@@ -66,7 +66,7 @@ public class UserImpl implements UserService {
         usuario.setRoles(roles);
 
         // Crear perfil
-        Perfil perfil = usuario.getPerfil();
+        Perfil perfil = new Perfil();
         perfil.setNombre(request.getNombre());
         perfil.setApellidoPaterno(request.getApellidoPaterno());
         perfil.setApellidoMaterno(request.getApellidoMaterno());

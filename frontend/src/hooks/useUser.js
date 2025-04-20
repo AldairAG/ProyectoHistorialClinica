@@ -18,6 +18,10 @@ export const useUser = () => {
         dispatch(setLoading())
     }
 
+    const setCredentialsToState = (user, token) => {
+        dispatch(setCredentials({ user, token }));
+    }
+
     const navigateTo = (to) => {
         history.push(to);
         changeLoading()
@@ -39,19 +43,17 @@ export const useUser = () => {
     };
 
     const registro = async (data) => {
-        // eslint-disable-next-line no-useless-catch
         try {
             const response = await registerService(data);
 
             if (response && response.token && response.user) {
                 localStorage.setItem("token", response.token);
                 localStorage.setItem("user", JSON.stringify(response.user));
-                // eslint-disable-next-line no-undef
-                setUser(response.user);
-                // eslint-disable-next-line no-undef
-                setToken(response.token);
+                setCredentialsToState(response.user, response.token);
             }
+            
         } catch (error) {
+            console.log(error.errorMessage);
             throw error; // o puedes manejar errores aquí si prefieres
         }
     };

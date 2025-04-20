@@ -3,7 +3,6 @@ import { USER_ROUTES } from "../constants/routes";
 import Home from "../pages/user/Home";
 import HeaderNav from "../components/navigation/HeaderNav";
 import SiderBarNav from "../components/navigation/SiderBarNav";
-import BreadCrumbs from "../components/breadcrumbs/BreadCrum";
 import PacientesList from "../pages/user/PacientesList";
 import CreatePaciente from "../pages/user/CreatePaciente";
 import EditHistoriaClinica from "../pages/user/EditHistoriaClinica";
@@ -18,7 +17,7 @@ const UserLaytout = () => {
     const { loading } = useUser()
     return (
         <section>
-            <HeaderNav />
+
 
             <div className="flex h-screen w-screen">
                 <div className="w-auto print:hidden">
@@ -26,12 +25,12 @@ const UserLaytout = () => {
                 </div>
 
                 <div className="flex-col w-full " >
-                    <div className="bg-gray-100 px-6 print:hidden">
-                        <BreadCrumbs />
-                    </div>
 
-                    <div className="px-6 py-5 h-[calc(100%-64px)] flex flex-col gap-3 overflow-y-auto">
-                        <div>
+                    <div className=" h-[calc(100%-64px)] flex flex-col overflow-y-auto">
+
+                        <HeaderNav/>{/*Cabecera */}
+
+                        <div className="p-6">
                             {loading ? (
                                 <Loader />
                             ) : (

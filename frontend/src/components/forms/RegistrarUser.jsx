@@ -9,7 +9,7 @@ import { useUser } from "../../hooks/useUser";
 const RegistrarUser = () => {
     const [step, setStep] = useState(1);
     const [registroCompleto, setRegistroCompleto] = useState(false);
-    const { registerUser } = useUser();
+    const { registro } = useUser();
 
     const formik = useFormik({
         initialValues: {
@@ -26,7 +26,7 @@ const RegistrarUser = () => {
             email: Yup.string()
                 .email("El correo electrónico no es válido")
                 .required("El correo electrónico es obligatorio"),
-            password: Yup.string()
+/*             password: Yup.string()
                 .min(6, "La contraseña debe tener al menos 6 caracteres")
                 .required("La contraseña es obligatoria"),
             passwordConf: Yup.string()
@@ -49,30 +49,28 @@ const RegistrarUser = () => {
                 .required("La universidad es obligatoria"),
             cedula: Yup.string()
                 .matches(/^\d{7,10}$/, "La cédula debe contener entre 7 y 10 dígitos")
-                .required("La cédula es obligatoria"),
+                .required("La cédula es obligatoria"), */
         }),
         onSubmit: async (values) => {
-            try {
-                const request = {
-                    email: values.email,
-                    password: values.password,
-                    nombre: values.nombre,
-                    apellidoPaterno: values.apellidoPaterno,
-                    apellidoMaterno: values.apellidoMaterno,
-                    universidad: values.universidad,
-                    cedula: values.cedula,
-                };
-
-                await registerUser(request); // ya guarda token y user
-
-                setRegistroCompleto(true);
-            } catch (error) {
-                // eslint-disable-next-line no-undef
-                toast.error("Error al registrar usuario.");
-                console.error(error);
-            }
+            const request = {
+                email: values.email,
+                password: values.password,
+                nombre: values.nombre,
+                apellidoPaterno: values.apellidoPaterno,
+                apellidoMaterno: values.apellidoMaterno,
+                universidad: values.universidad,
+                cedula: values.cedula,
+            };
+            console.log(request);
+            
+            handleRegister(request);
+            setRegistroCompleto(true);
         },
     });
+
+    const handleRegister = async (request) => {
+        await registro(request); // ya guarda token y user
+    }
 
     const nextStep = () => {
         if (step < 3) setStep(step + 1);
@@ -90,7 +88,6 @@ const RegistrarUser = () => {
                         <div>
                             <InputWhite
                                 label="Correo electrónico"
-                                id="email"
                                 type="email"
                                 name="email"
                                 placeholder="Correo electrónico"
@@ -102,7 +99,6 @@ const RegistrarUser = () => {
                             />
                             <InputWhite
                                 label="Contraseña"
-                                id="password"
                                 type="password"
                                 name="password"
                                 placeholder="Contraseña"
