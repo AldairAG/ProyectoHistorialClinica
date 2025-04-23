@@ -26,30 +26,7 @@ const RegistrarUser = () => {
             email: Yup.string()
                 .email("El correo electrónico no es válido")
                 .required("El correo electrónico es obligatorio"),
-/*             password: Yup.string()
-                .min(6, "La contraseña debe tener al menos 6 caracteres")
-                .required("La contraseña es obligatoria"),
-            passwordConf: Yup.string()
-                .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden")
-                .required("La confirmación es obligatoria"),
-            nombre: Yup.string()
-                .min(2, "El nombre debe tener al menos 2 caracteres")
-                .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, "El nombre solo puede contener letras")
-                .required("El nombre es obligatorio"),
-            apellidoPaterno: Yup.string()
-                .min(2, "Debe tener al menos 2 caracteres")
-                .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, "Solo se permiten letras")
-                .required("El apellido paterno es obligatorio"),
-            apellidoMaterno: Yup.string()
-                .min(2, "Debe tener al menos 2 caracteres")
-                .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, "Solo se permiten letras")
-                .required("El apellido materno es obligatorio"),
-            universidad: Yup.string()
-                .min(2, "Debe tener al menos 2 caracteres")
-                .required("La universidad es obligatoria"),
-            cedula: Yup.string()
-                .matches(/^\d{7,10}$/, "La cédula debe contener entre 7 y 10 dígitos")
-                .required("La cédula es obligatoria"), */
+
         }),
         onSubmit: async (values) => {
             const request = {
@@ -62,7 +39,7 @@ const RegistrarUser = () => {
                 cedula: values.cedula,
             };
             console.log(request);
-            
+
             handleRegister(request);
             setRegistroCompleto(true);
         },
@@ -80,12 +57,50 @@ const RegistrarUser = () => {
         if (step > 1) setStep(step - 1);
     };
 
+    const totalSteps = 2;
+
+    // Componente para el indicador de pasos estético
+    const StepIndicator = () => (
+        <div className="flex justify-center mb-6">
+            <div className="flex items-center space-x-3">
+                {[...Array(totalSteps)].map((_, index) => (
+                    <div key={index} className="flex items-center">
+                        {/* Círculo del paso */}
+                        <div
+                            className={`w-8 h-8 rounded-full flex items-center justify-center 
+                                      ${index + 1 === step
+                                    ? "bg-[#004581] text-white"
+                                    : index + 1 < step
+                                        ? "bg-[#1e88e5] text-white"
+                                        : "bg-gray-200 text-gray-600"}`}
+                        >
+                            {index + 1}
+                        </div>
+
+                        {/* Línea conectora entre círculos */}
+                        {index < totalSteps - 1 && (
+                            <div
+                                className={`w-10 h-1 ${index + 1 < step ? "bg-[#1e88e5]" : "bg-gray-200"}`}
+                            />
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
     return (
         <form onSubmit={formik.handleSubmit} className="space-y-4">
             {!registroCompleto && (
-                <>
+                <div className="min-h-[420px]"> {/* Contenedor con altura mínima fija */}
+                    <StepIndicator />
+
                     {step === 1 && (
-                        <div>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
                             <InputWhite
                                 label="Correo electrónico"
                                 type="email"
@@ -127,11 +142,15 @@ const RegistrarUser = () => {
                                     onClick={nextStep}
                                 />
                             </div>
-                        </div>
+                        </motion.div>
                     )}
 
                     {step === 2 && (
-                        <div>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        >
                             <InputWhite
                                 label="Nombre"
                                 id="nombre"
@@ -203,9 +222,9 @@ const RegistrarUser = () => {
                                     label="Registrar"
                                 />
                             </div>
-                        </div>
+                        </motion.div>
                     )}
-                </>
+                </div>
             )}
 
             {registroCompleto && (
