@@ -92,7 +92,7 @@ const RegistrarUser = () => {
     return (
         <form onSubmit={formik.handleSubmit} className="space-y-4">
             {!registroCompleto && (
-                <div className="min-h-[420px]"> {/* Contenedor con altura mínima fija */}
+                <div className="min-h-[470px]"> {/* Contenedor con altura mínima fija */}
                     <StepIndicator />
 
                     {step === 1 && (
@@ -101,6 +101,9 @@ const RegistrarUser = () => {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.3 }}
                         >
+                            <h1 className="text-center mb-5">
+                                Datos de acceso
+                            </h1>
                             <InputWhite
                                 label="Correo electrónico"
                                 type="email"
@@ -151,6 +154,9 @@ const RegistrarUser = () => {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.3 }}
                         >
+                            <h1 className="text-center mb-5">
+                                Datos de usuario
+                            </h1>
                             <InputWhite
                                 label="Nombre"
                                 id="nombre"

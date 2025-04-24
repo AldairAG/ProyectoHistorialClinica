@@ -1,4 +1,3 @@
-import DoctorCardHome from "../../components/cards/DoctorCardHome"
 import { Card, CardContent, CardDescription, CardHead, CardHeader } from "../../components/ui/Card"
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/Tabs";
