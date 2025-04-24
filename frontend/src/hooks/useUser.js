@@ -36,7 +36,7 @@ export const useUser = () => {
             } else if (roles.includes('ADMIN')) {
                 console.log("Aún no está creado");
             }
-            dispatch(setCredentials({ user, token }));
+            setCredentialsToState(user, token);
         } catch (err) {
             console.log(err.message);
         }
@@ -46,10 +46,12 @@ export const useUser = () => {
         try {
             const response = await registerService(data);
 
-            if (response && response.token && response.user) {
-                localStorage.setItem("token", response.token);
-                localStorage.setItem("user", JSON.stringify(response.user));
-                setCredentialsToState(response.user, response.token);
+            if (response.status === 201) {
+                console.log("Usuario registrado con éxito");
+                login({ email: data.email, password: data.password }) // Inicia sesión automáticamente después del registro
+            } else {
+                console.log(response);
+                console.log("Error al registrar el usuario");
             }
             
         } catch (error) {

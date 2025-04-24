@@ -3,13 +3,14 @@ import VentanaModal from "../components/ui/VentanaModal";
 import Login from "../components/forms/Login";
 import RegistrarUser from "../components/forms/RegistrarUser";
 import MainDiv from "../components/ui/MainDiv";
+import img1 from "../assets/lading-page.png";
 
 const LandingPage = () => {
     const [isVisibleRegister, setIsVisibleRegister] = useState(false);
     const [isVisibleLogin, setIsVisibleLogin] = useState(false);
 
     return (
-        <MainDiv className="bg-gray-50">
+        <MainDiv className="bg-gray-50 w-full max-w-full">
             <div className="flex flex-col h-full bg-gray-50">
                 <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleLogin)}>
                     <Login />
@@ -20,10 +21,10 @@ const LandingPage = () => {
                 </VentanaModal>
 
                 {/* Header */}
-                <header className="w-full flex justify-end p-6 gap-4 bg-white shadow-sm">
+                <header className="w-full flex justify-end p-6 gap-4 shadow-sm bg-blue-600">
                     <button
                         onClick={() => setIsVisibleLogin(!isVisibleRegister)}
-                        className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition">
+                        className="text-sm font-semibold text-blue-950 hover:text-white transition">
                         Iniciar sesión
                     </button>
                     <button
@@ -88,7 +89,7 @@ const LandingPage = () => {
                     {/* Sección derecha: Imagen */}
                     <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
                         <img
-                            src="src/assets/lading-page.png"
+                            src={img1}	
                             alt="Visual de MediNote"
                             className="w-5xl  h-auto rounded-xl shadow-lg"
                         />

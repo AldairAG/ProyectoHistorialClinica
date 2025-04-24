@@ -6,9 +6,10 @@ import * as Yup from "yup";
 import { motion } from "framer-motion";
 import { useUser } from "../../hooks/useUser";
 
+const totalSteps = 3;
+
 const RegistrarUser = () => {
     const [step, setStep] = useState(1);
-    const [registroCompleto, setRegistroCompleto] = useState(false);
     const { registro } = useUser();
 
     const formik = useFormik({
@@ -38,26 +39,26 @@ const RegistrarUser = () => {
                 universidad: values.universidad,
                 cedula: values.cedula,
             };
-            console.log(request);
 
             handleRegister(request);
-            setRegistroCompleto(true);
         },
     });
 
     const handleRegister = async (request) => {
+
         await registro(request); // ya guarda token y user
+        //nextStep(); // Avanza al siguiente paso después de enviar el formulario
+
     }
 
     const nextStep = () => {
-        if (step < 3) setStep(step + 1);
+        if (step < 4) setStep(step + 1);
     };
 
     const prevStep = () => {
         if (step > 1) setStep(step - 1);
     };
 
-    const totalSteps = 2;
 
     // Componente para el indicador de pasos estético
     const StepIndicator = () => (
@@ -91,7 +92,7 @@ const RegistrarUser = () => {
 
     return (
         <form onSubmit={formik.handleSubmit} className="space-y-4">
-            {!registroCompleto && (
+            {step != 3 && (
                 <div className="min-h-[470px]"> {/* Contenedor con altura mínima fija */}
                     <StepIndicator />
 
@@ -233,7 +234,7 @@ const RegistrarUser = () => {
                 </div>
             )}
 
-            {registroCompleto && (
+            {step === 3 && (
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -1,7 +1,6 @@
 import axiosInstance from './axiosInstance';
 import { toast,Bounce } from 'react-toastify';
 
-
 export const loginService = async (email, password) => {
     try {
         const response = await axiosInstance.post('/auth/login', { email, password });
@@ -33,16 +32,16 @@ export const registerService = async (request) => {
     try {
         // Intenta enviar una solicitud POST al endpoint '/auth/registrar' con los datos proporcionados en "request".
         const response = await axiosInstance.post('/auth/registrar', request);
-        const { usuario, token } = response.data;
+
         // Si la solicitud es exitosa, devuelve los datos de la respuesta.
-        return { user: usuario, token };
+        return response
     } catch (error) {
         // Si ocurre un error, intenta obtener el mensaje de error desde la respuesta del servidor.
         // Si no hay un mensaje específico, usa un mensaje genérico "Error desconocido".
         const errorMessage = error.response?.data?.message || 'Error desconocido';
 
         // Imprime el error completo en la consola para depuración.
-        console.log(error);
+        //console.log(error);
 
         // Muestra una notificación de error al usuario utilizando la librería "toast".
         toast.error(errorMessage, {

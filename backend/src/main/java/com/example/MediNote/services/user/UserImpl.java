@@ -17,6 +17,7 @@ import com.example.MediNote.auth.AuthService;
 import com.example.MediNote.entities.Perfil;
 import com.example.MediNote.entities.Rol;
 import com.example.MediNote.entities.Usuario;
+import com.example.MediNote.repositories.PerfilRepository;
 import com.example.MediNote.repositories.UserRepository;
 import com.example.MediNote.request.RegisterRequest;
 import com.example.MediNote.services.rol.RolService;
@@ -28,6 +29,9 @@ public class UserImpl implements UserService {
 
     @Autowired
     private RolService rolService;
+    
+    @Autowired
+    private PerfilRepository perfilRepository;
 
     @Autowired
     private UserRepository repository;
@@ -36,24 +40,42 @@ public class UserImpl implements UserService {
     private AuthService authService;
 
     /**
-     * Registra un nuevo usuario en el sistema con los datos proporcionados en la solicitud.
+     * Registra un nuevo usuario en el sistema con los datos proporcionados en la
+     * solicitud.
      * 
-     * @param request  Objeto que contiene los datos necesarios para registrar al usuario,
-     *                 incluyendo nombre, apellidos, cédula y universidad.
+     * @param request   Objeto que contiene los datos necesarios para registrar al
+     *                  usuario,
+     *                  incluyendo nombre, apellidos, cédula y universidad.
      * @param rolNombre Nombre del rol que se asignará al usuario.
      * 
-     * @throws RuntimeException Si el rol especificado no se encuentra en el sistema.
+     * @throws RuntimeException Si el rol especificado no se encuentra en el
+     *                          sistema.
      * 
-     * Este método realiza las siguientes acciones:
-     * - Encripta la contraseña del usuario.
-     * - Asigna el rol especificado al usuario.
-     * - Crea y asocia un perfil al usuario con los datos proporcionados en la solicitud.
+     *                          Este método realiza las siguientes acciones:
+     *                          - Encripta la contraseña del usuario.
+     *                          - Asigna el rol especificado al usuario.
+     *                          - Crea y asocia un perfil al usuario con los datos
+     *                          proporcionados en la solicitud.
      */
+
     @Override
     @Transactional
     public void registrarUsuario(RegisterRequest request, String rolNombre) {
+
+        // Validar si ya existe un usuario con el mismo correo electrónico
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException(
+                    "Ya existe un usuario registrado con el correo electrónico: " + request.getEmail());
+        }
+
+        // Validar si ya existe un usuario con la misma cédula
+        if (perfilRepository.existsByCedula(request.getCedula())) {
+            throw new RuntimeException("Ya existe un usuario registrado con la cédula: " + request.getCedula());
+        }
+
         // Encriptar la contraseña
         Usuario usuario = new Usuario();
+        usuario.setEmail(request.getEmail());
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
 
         // Asignar roles
@@ -74,6 +96,9 @@ public class UserImpl implements UserService {
         perfil.setUniversidad(request.getUniversidad());
         usuario.setPerfil(perfil);
         perfil.setUsuario(usuario);
+
+        // Guardar el usuario y su perfil en la base de datos
+        repository.save(usuario);
     }
 
     @Override
@@ -93,7 +118,6 @@ public class UserImpl implements UserService {
                 .apellidoMaterno(usuario.getPerfil().getApellidoMaterno())
                 .apellidoPaterno(usuario.getPerfil().getApellidoPaterno())
                 .cedula(usuario.getPerfil().getCedula())
-                .cedulaEspecialidad(usuario.getPerfil().getCedulaEspecialidad())
                 .universidad(usuario.getPerfil().getUniversidad())
                 .build();
 

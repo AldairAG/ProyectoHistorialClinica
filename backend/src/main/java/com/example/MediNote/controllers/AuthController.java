@@ -56,7 +56,7 @@ public class AuthController {
     public ResponseEntity<?> registrarUsuario(@RequestBody RegisterRequest request) {
         try {
             userService.registrarUsuario(request, ROLES.DOCTOR);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("success", true, "message", "Usuario registrado exitosamente."));
         } catch (Exception e) {
             // Registrar el error en los logs
             System.err.println("Error al registrar usuario: " + e.getMessage());

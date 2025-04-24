@@ -44,10 +44,10 @@ public class Perfil {
     @Pattern(regexp = "\\d{8}", message = ERROR_MESSAGES.CEDULA_INVALIDA)
     private String cedula;
 
-    @Column(unique = true, nullable = true)
-    @NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
-    @Pattern(regexp = "\\d{8}", message = ERROR_MESSAGES.CEDULA_INVALIDA)
-    private String cedulaEspecialidad;
+    //@Column(unique = true, nullable = true)
+    //@NotBlank(message = ERROR_MESSAGES.CAMPO_VACIO)
+    //@Pattern(regexp = "\\d{8}", message = ERROR_MESSAGES.CEDULA_INVALIDA)
+    //private String cedulaEspecialidad;
 
     @OneToOne
     @JoinColumn(name = "id_usuario")
