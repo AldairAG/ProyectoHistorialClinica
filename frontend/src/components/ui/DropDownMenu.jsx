@@ -1,32 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
 
-/**
- * Componente DropdownMenu
- *
- * Este componente representa un menú desplegable que se puede abrir y cerrar al hacer clic en un botón.
- * También detecta clics fuera del menú para cerrarlo automáticamente.
- *
- * @param {React.ReactNode} children - Los elementos secundarios que se mostrarán dentro del menú desplegable.
- *
- * @example
- * // Ejemplo de uso:
- * import DropdownMenu from './DropDownMenu';
- * 
- * const App = () => {
- *   return (
- *     <DropdownMenu>
- *       <DropdownMenuContent>
-    *       <DropdownMenuItem variant="titulo">Opciones</DropdownMenuItem>
-    *       <DropdownMenuItem variant="titulo">Opciones</DropdownMenuItem>
-    *       <DropdownMenuItem variant="titulo">Opciones</DropdownMenuItem>
- *       </DropdownMenuContent>
- *     </DropdownMenu>
- *   );
- * };
- */
+// DropdownMenu (Componente base reutilizable)
 const DropdownMenu = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -51,33 +28,60 @@ const DropdownMenu = ({ children }) => {
             >
                 <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
             </button>
-            {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-md z-10">
-                    {children}
-                </div>
-            )}
+            {isOpen && children}
         </div>
     );
 };
 
+// DropdownMenuContent (Estilizado)
 const DropdownMenuContent = ({ children }) => (
-    <div className="absolute right-0 mt-2 w-48 bg-white border-1 rounded-lg shadow-lg border-gray-200">
+    <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg border-gray-200 z-10">
         {children}
     </div>
 );
 
-const DropdownMenuItem = ({ children, className, variant = 'default' }) => {
+// DropdownMenuItem (Con soporte para íconos)
+const DropdownMenuItem = ({ children, className, variant = 'default', ...props }) => {
     const variantClasses = {
         default: "hover:bg-gray-100 text-gray-900",
         titulo: "font-bold text-gray-900",
     };
     return (
-
-        <button className={twMerge(`w-full text-sm text-left px-4 py-2 ${variantClasses[variant]}`, className)}>
+        <button 
+            className={twMerge(
+                "w-full text-sm text-left px-4 py-2 flex items-center gap-2",
+                variantClasses[variant], 
+                className
+            )}
+            {...props}
+        >
             {children}
         </button>
     )
 };
 
+// Componente especializado ActionsDropdown
+const ActionsDropdown = ({ onView, onEdit, onDelete }) => {
+    return (
+        <DropdownMenu>
+            <DropdownMenuContent>
+                <DropdownMenuItem onClick={onView}>
+                    <EyeIcon className="h-5 w-5 text-gray-500" />
+                    Ver detalles
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem onClick={onEdit}>
+                    <PencilSquareIcon className="h-5 w-5 text-gray-500" />
+                    Editar
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem onClick={onDelete}>
+                    <TrashIcon className="h-5 w-5 text-gray-500" />
+                    Eliminar
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
+};
 
-export { DropdownMenu, DropdownMenuContent, DropdownMenuItem };
+export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, ActionsDropdown };
