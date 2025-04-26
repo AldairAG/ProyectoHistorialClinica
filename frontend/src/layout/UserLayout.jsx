@@ -30,7 +30,7 @@ const UserLaytout = () => {
 
                         <HeaderNav/>{/*Cabecera */}
 
-                        <div className="p-6">
+                        <div className="bg-gray-50 p-8">
                             {loading ? (
                                 <Loader />
                             ) : (
@@ -47,9 +47,9 @@ const UserLaytout = () => {
                             )}
 
                         </div>
-                        <footer className=" h-12 mt-auto print:hidden">
+{/*                         <footer className=" h-12 mt-auto print:hidden">
 
-                        </footer>
+                        </footer> */}
                     </div>
 
                 </div>

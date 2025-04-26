@@ -31,7 +31,7 @@ const TabsTrigger = ({
     setActiveTab,
     className,
     activeClassName = "border-blue-500 font-bold stroke-3 text-blue-500",
-    inactiveClassName = "border-transparent"
+    inactiveClassName = "border-transparent",
 }) => {
     const isActive = activeTab === value;
 
