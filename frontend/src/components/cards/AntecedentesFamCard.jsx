@@ -1,11 +1,12 @@
 import LabelXl from "../../components/ui/LabelXl"
 import { usePaciente } from "../../hooks/usePaciente"
+import { Card } from "../ui/Card"
 
 const AntecedentesFamCard = () => {
     const { pacienteSelect } = usePaciente()
 
     return (
-        <div className=" bg-gray-100 border border-gray-300 rounded-sm p-4">
+        <Card>
             <div className="flex gap-3 items-center">
                 <i >
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16">
@@ -29,7 +30,7 @@ const AntecedentesFamCard = () => {
             ))}
 
 
-        </div>
+        </Card>
     )
 }
 
