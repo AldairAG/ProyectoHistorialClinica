@@ -1,9 +1,5 @@
 import { usePaciente } from "../../hooks/usePaciente";
-import { useUser } from "../../hooks/useUser"
-import { USER_ROUTES } from "../../constants/routes"
-import { Citas } from '../icons/Icons';
 import { Card, CardContent, CardHead, CardHeader } from '../ui/Card';
-import { useEffect } from "react";
 import { UserIcon } from "@heroicons/react/24/outline";
 
 

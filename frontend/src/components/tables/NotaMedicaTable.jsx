@@ -1,8 +1,10 @@
 import { usePaciente } from "../../hooks/usePaciente";
-import LabelXl from "../ui/LabelXl";
 import NotaMedicaItem from "../items/NotaMedicaItem";
 import { useEffect, useState } from "react";
 import Loader from "../ui/Loader";
+import { Card, CardHead, CardHeader } from "../ui/Card";
+import { DocumentTextIcon } from "@heroicons/react/24/outline";
+import BotonAzul from "../ui/BotonAzul";
 
 const NotaMedicaTable = () => {
 
@@ -21,19 +23,17 @@ const NotaMedicaTable = () => {
     }
 
     return (
-        <div className=" bg-gray-100 border border-gray-300 rounded-sm p-4 flex flex-col gap-4">
-            <header className="flex gap-3 items-center">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark-text" viewBox="0 0 16 16">
-                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
-                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-                    </svg>
-                </i>
-                <LabelXl>Notas medicas</LabelXl>
-            </header>
+        <Card className={'border-0 bg-transparent shadow-none'}>
+            <CardHead className="flex gap-3 items-center justify-between">
+                <CardHeader className={'text-2xl flex gap-2 items-center'}>
+                    <DocumentTextIcon className="h-6 w-6 text-gray-500" />
+                    Historial de Consultas
+                </CardHeader>
+                <BotonAzul className={'border-0 py-2'}>Nueva consulta</BotonAzul>
+            </CardHead>
 
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : (
                 notaMedicaList.map((item, index) => (
                     <div key={index}>
@@ -44,7 +44,7 @@ const NotaMedicaTable = () => {
 
 
 
-        </div >
+        </Card >
     );
 }
 

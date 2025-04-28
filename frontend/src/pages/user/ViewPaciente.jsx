@@ -7,15 +7,15 @@ import HistoriaClinicaCard from "../../components/cards/HistoriaClinicaCard";
 import BotonAzul from "../../components/ui/BotonAzul";
 import BotonBlanco from "../../components/ui/BotonBlanco";
 import RecetasTable from "../../components/tables/RecetasTable";
-import LabelXl from "../../components/ui/LabelXl";
 import NotaMedicaTable from "../../components/tables/NotaMedicaTable";
 import MainDiv from "../../components/ui/MainDiv";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/Tabs";
-import { Citas, Consultas, EstudiosClinicos, HistoriaClincia, Recetas } from "../../components/icons/Icons";
+import { Consultas } from "../../components/icons/Icons";
 import LinkArrowBack from "../../components/navigation/LinkArrowBack";
 import { USER_ROUTES } from "../../constants/routes";
 import AntecedentesNoPatCard from '../../components/cards/AntecedentesNoPatCard'
-import { UserIcon, DocumentTextIcon, CalendarIcon, DocumentPlusIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { UserIcon, DocumentTextIcon, CalendarIcon, DocumentPlusIcon, PencilSquareIcon, BeakerIcon, } from "@heroicons/react/24/outline";
+import PacienteAside from "../../components/aside/PacienteAside";
 
 
 const ViewPaciente = () => {
@@ -33,8 +33,8 @@ const ViewPaciente = () => {
     return (
         <MainDiv className="flex w-full max-w-full gap-4 flex-col">
 
-            <div className="flex justify-between items-center w-full flex-wrap">
-                <div className="flex items-center gap-4 mb-5">
+            <div className="flex justify-between items-center w-full flex-wrap mb-5">
+                <div className="flex items-center gap-4">
                     <LinkArrowBack to={USER_ROUTES.PACIENTES_LIST} />
                     <h1 className="text-2xl font-semibold">Historia Clínica del Paciente</h1>
                 </div>
@@ -52,7 +52,7 @@ const ViewPaciente = () => {
                 </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="grid gap-4 md:grid-cols-[1fr_300px]">
 
                 <Tabs defaultValue={"Informacion"} className="w-full overflow-hidden">
                     <TabsList
@@ -82,7 +82,7 @@ const ViewPaciente = () => {
                             activeClassName={"bg-white border-0 text-blue-500 font-bold stroke-3"}
                             inactiveClassName="text-gray-500 border-0 font-semibold"
                         >
-                            <DocumentTextIcon className="h-5 w-5 text-gray-500" />
+                            <Consultas className="h-5 w-5 text-gray-500" />
                             <span className="text-sm">Historial</span>
                         </TabsTrigger>
 
@@ -109,14 +109,14 @@ const ViewPaciente = () => {
                             activeClassName={"bg-white border-0 text-blue-500 font-bold stroke-3"}
                             inactiveClassName="text-gray-500 border-0 font-semibold"
                         >
-                            <DocumentTextIcon className="h-5 w-5 text-gray-500" />
+                            <BeakerIcon className="h-5 w-5 text-gray-500" />
                             <span className="text-sm">Laboratorios</span>
                         </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value={"Informacion"}>
                         <PacienteCard />
-                        <AntecedentesNoPatCard/>
+                        <AntecedentesNoPatCard />
                     </TabsContent>
 
                     <TabsContent value={"infomed"}>
@@ -124,25 +124,21 @@ const ViewPaciente = () => {
                     </TabsContent>
 
                     <TabsContent value={"nota"}>
-                        <PacienteCard />
-                        <HistoriaClinicaCard />
+                        <NotaMedicaTable />
                     </TabsContent>
 
                     <TabsContent value={"citas"}>
-                        <PacienteCard />
-                        <HistoriaClinicaCard />
                     </TabsContent>
 
                     <TabsContent value={"recetas"}>
-                        <PacienteCard />
-                        <HistoriaClinicaCard />
+                    <RecetasTable />
+
                     </TabsContent>
 
                 </Tabs>
 
                 <aside>
-                    cita proxima
-                    linea del tiempo
+                    <PacienteAside/>
                 </aside>
 
             </div>
