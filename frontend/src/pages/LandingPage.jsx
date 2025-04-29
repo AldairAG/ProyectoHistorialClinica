@@ -4,6 +4,7 @@ import Login from "../components/forms/Login";
 import RegistrarUser from "../components/forms/RegistrarUser";
 import MainDiv from "../components/ui/MainDiv";
 import img1 from "../assets/lading-page.png";
+import Logo from "../components/ui/Logo";
 
 const LandingPage = () => {
     const [isVisibleRegister, setIsVisibleRegister] = useState(false);
@@ -21,17 +22,23 @@ const LandingPage = () => {
                 </VentanaModal>
 
                 {/* Header */}
-                <header className="w-full flex justify-end p-6 gap-4 shadow-sm bg-blue-600">
-                    <button
-                        onClick={() => setIsVisibleLogin(!isVisibleRegister)}
-                        className="text-sm font-semibold text-blue-950 hover:text-white transition">
-                        Iniciar sesión
-                    </button>
-                    <button
-                        onClick={() => setIsVisibleRegister(!isVisibleRegister)}
-                        className="text-sm font-semibold bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                        Registrarse
-                    </button>
+                <header className="w-full flex justify-between p-6 shadow-sm bg-blue-200">
+
+                    <Logo className={''} />
+
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => setIsVisibleLogin(!isVisibleRegister)}
+                            className="text-sm font-semibold text-blue-950 hover:text-white transition">
+                            Iniciar sesión
+                        </button>
+                        <button
+                            onClick={() => setIsVisibleRegister(!isVisibleRegister)}
+                            className="text-sm font-semibold bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                            Registrarse
+                        </button>
+                    </div>
+
                 </header>
 
                 {/* Cuerpo principal */}
@@ -89,7 +96,7 @@ const LandingPage = () => {
                     {/* Sección derecha: Imagen */}
                     <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
                         <img
-                            src={img1}	
+                            src={img1}
                             alt="Visual de MediNote"
                             className="w-5xl  h-auto rounded-xl shadow-lg"
                         />

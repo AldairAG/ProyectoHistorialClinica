@@ -1,21 +1,19 @@
-import LabelXl from "../../components/ui/LabelXl"
 import { usePaciente } from "../../hooks/usePaciente";
+import { HozPrev } from "../icons/Icons";
+import { Card, CardDescription, CardHead, CardHeader } from "../ui/Card";
 
 const HospitalizacionesPrecCard = () => {
     const { pacienteSelect } = usePaciente()
     return (
 
-        <div className="bg-gray-100 border border-gray-300 rounded-sm p-4 flex-col flex gap-2">
-            <div className="flex gap-3 items-center">
-                <i>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-hospital" viewBox="0 0 16 16">
-                        <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1zM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z" />
-                        <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1zm2 14h2v-3H7zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1zm0-14H6v1h4zm2 7v7h3V8zm-8 7V8H1v7z" />
-                    </svg>
-                </i>
-                <LabelXl>Hozpitalizaciones previas</LabelXl>
-            </div>
-            <label className="text-sm font-semibold text-gray-500">Historial de ingresos hospitalarios</label>
+        <Card className={'p-0'}>
+            <CardHead className="flex flex-col p-4 bg-blue-50 w-full rounded-t-md">
+                <CardHeader className={"flex items-center gap-2 text-2xl font-bold text-gray-900"}>
+                    <HozPrev className='w-6 h-6 text-gray-500 ' />
+                    Hozpitalizaciones previas
+                </CardHeader>
+                <CardDescription className={'font-semibold'}>Historial de ingresos hospitalarios</CardDescription>
+            </CardHead>
 
             <div className="max-h-[500px] overflow-auto flex flex-col gap-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
                 {pacienteSelect?.hospitalizacionesPrevias?.map((item, index) => (
@@ -93,9 +91,7 @@ const HospitalizacionesPrecCard = () => {
                 ))}
             </div>
 
-
-
-        </div>
+        </Card>
     )
 }
 

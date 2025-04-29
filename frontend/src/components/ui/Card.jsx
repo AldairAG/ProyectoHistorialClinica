@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 
 const Card = ({ children, className }) => {
     return (
-        <div className={twMerge("bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-300 space-x-2", className)}>
+        <div className={twMerge("bg-white p-4 shadow-md rounded-lg mb-4 border border-gray-300 space-x-2", className)}>
             {children}
         </div>
     )

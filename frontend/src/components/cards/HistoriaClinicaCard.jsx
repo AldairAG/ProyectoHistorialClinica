@@ -7,7 +7,6 @@ const HistoriaClinicaCard = () => {
     return (
         <div className="flex flex-col gap-4">
             <AntecedentesFamCard/>
-            
             <AntecedentesPatCard/>
             <HospitalizacionesPrevCard/>
             <EnfermedadesCronCard/>
