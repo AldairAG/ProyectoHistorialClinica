@@ -3,6 +3,7 @@ import { usePaciente } from "../../hooks/usePaciente"
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHead, CardHeader } from "../../components/ui/Card"
 import { UserGroupIcon } from "@heroicons/react/24/outline"
+import PacientesTable from "../../components/tables/PacientesTable"
 
 const Home = () => {
     // eslint-disable-next-line no-unused-vars
@@ -85,46 +86,7 @@ const Home = () => {
             </div>
 
             {/* Lista de pacientes */}
-            <div className="overflow-x-auto bg-white rounded-lg shadow p-4">
-                <div className="mb-4 md:mb-0">
-                    <h2 className="text-xl font-bold">Lista de Pacientes</h2>
-                </div>
-                <table className="w-full border-collapse">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="p-3 text-left font-medium text-gray-700">Paciente</th>
-                            <th className="p-3 text-left font-medium text-gray-700">Edad</th>
-                            <th className="p-3 text-left font-medium text-gray-700">Género</th>
-                            <th className="p-3 text-left font-medium text-gray-700">Grupo</th>
-                            <th className="p-3 text-left font-medium text-gray-700">Última Visita</th>
-                            <th className="p-3 text-left font-medium text-gray-700">Próxima Cita</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredPacientes.length > 0 ? (
-                            filteredPacientes.map((paciente, index) => (
-                                <tr
-                                    key={index}
-                                    className={`border-t ${index % 2 === 0 ? 'bg-blue-50' : 'bg-white'} hover:bg-gray-50`}
-                                >
-                                    <td className="p-3">{paciente?.nombre || 'Sin nombre'}</td>
-                                    <td className="p-3">{paciente?.edad || '-'}</td>
-                                    <td className="p-3">{paciente?.sexo || 'No especificado'}</td>
-                                    <td className="p-3">{paciente?.grupoSanguineo || 'A+'}</td>
-                                    <td className="p-3">{paciente?.ultimaVisita || '-'}</td>
-                                    <td className="p-3">{paciente?.proximaCita || 'No programada'}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="6" className="p-4 text-center text-gray-500">
-                                    No hay pacientes disponibles
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+            <PacientesTable variant="home"/>
         </div>
     )
 }
