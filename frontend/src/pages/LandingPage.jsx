@@ -3,8 +3,39 @@ import VentanaModal from "../components/ui/VentanaModal";
 import Login from "../components/forms/Login";
 import RegistrarUser from "../components/forms/RegistrarUser";
 import MainDiv from "../components/ui/MainDiv";
-import img1 from "../assets/lading-page.png";
 import Logo from "../components/ui/Logo";
+import { BotonSquare } from "../components/ui/Botones";
+import { Badge, Card } from "../components/ui/Card";
+import {
+    ChevronRightIcon, ClockIcon, ShieldCheckIcon, UserGroupIcon,
+    PresentationChartLineIcon, CloudArrowUpIcon, CheckCircleIcon
+} from "@heroicons/react/24/outline";
+
+
+
+
+
+
+const beneficios = [
+    {
+        titulo: "Reducción de errores médicos",
+        descripcion: 'Minimiza errores de transcripción y mejora la legibilidad de la información clínica.'
+    },
+    {
+        titulo: "Ahorro de tiempo",
+        descripcion: 'Reduce hasta un 40% el tiempo dedicado a tareas administrativas.'
+    },
+
+    {
+        titulo: "Mejor experiencia del paciente",
+        descripcion: 'Atención más ágil y personalizada gracias al acceso inmediato al historial.'
+    },
+
+    {
+        titulo: "Optimización de recursos",
+        descripcion: 'Reduce costos operativos y mejora la eficiencia de los procesos clínicos.'
+    }
+]
 
 const LandingPage = () => {
     const [isVisibleRegister, setIsVisibleRegister] = useState(false);
@@ -16,99 +47,294 @@ const LandingPage = () => {
                 <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleLogin)}>
                     <Login />
                 </VentanaModal>
-
                 <VentanaModal isOpen={isVisibleRegister} setOpen={() => setIsVisibleRegister(!isVisibleRegister)}>
                     <RegistrarUser />
                 </VentanaModal>
 
-                {/* Header */}
-                <header className="w-full flex justify-between p-6 shadow-sm bg-blue-200">
+                <header className="px-4 lg:px-6 h-16 flex items-center border-b bg-gradient-to-r 
+                    from-[#001b48] to-[#004581] sticky top-0 z-50 shadow-md justify-between">
 
-                    <Logo className={''} />
-
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => setIsVisibleLogin(!isVisibleRegister)}
-                            className="text-sm font-semibold text-blue-950 hover:text-white transition">
-                            Iniciar sesión
-                        </button>
-                        <button
-                            onClick={() => setIsVisibleRegister(!isVisibleRegister)}
-                            className="text-sm font-semibold bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                            Registrarse
-                        </button>
-                    </div>
-
+                    <Logo className="text-2xl font-bold text-gray-800" />
+                    <nav className="flex space-x-4 items-center">
+                        <a>Características</a>
+                        <a>Beneficios</a>
+                        <a>Testimonios</a>
+                        <a>Precios</a>
+                        <BotonSquare onClick={() => setIsVisibleLogin(true)}>Iniciar sesión</BotonSquare>
+                        <BotonSquare onClick={() => setIsVisibleRegister(true)}>Registrarse</BotonSquare>
+                    </nav>
                 </header>
 
-                {/* Cuerpo principal */}
-                <main className="flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-12 flex-1">
-                    {/* Sección izquierda */}
-                    <div className="md:w-1/2 flex flex-col gap-10">
+                <main className="h-screen overflow-auto">
 
-                        {/* Parte superior: Título, descripción, botón */}
-                        <div>
-                            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-                                Bienvenido a <span className="text-blue-600">MediNote</span>
-                            </h1>
-                            <p className="text-lg mb-6 max-w-md">
-                                MediNote es una solución innovadora para la gestión de historiales clínicos. Mejora la atención médica con acceso seguro, digital y eficiente.
+                    <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-[#001b48]
+                     via-[#004581] to-[#018abd]">
+                        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+                            <div className="space-y-2 ">
+                                <div className="mb-4">
+                                    <Badge className={'bg-white px-3 py-1 font-medium text-sm shadow-md'}>Solución Integral</Badge>
+                                </div>
+                                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white drop-shadow-lg">Historia Clínica Digital Inteligente</h1>
+
+                                <p className="max-w-[600px] text-white md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                                    Optimiza la gestión de historias clínicas con nuestra plataforma segura, intuitiva y adaptada a las necesidades de profesionales de la salud.
+                                    Optimiza la gestión de historias clínicas con nuestra plataforma segura, intuitiva y adaptada
+                                    a las necesidades de profesionales de la salud.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col md:flex-row gap-4 mt-8">
+                                <a href="">
+                                    <BotonSquare
+                                        className={'hover:cursor-pointer'}
+                                        onClick={() => setIsVisibleRegister(true)}
+                                    >
+                                        <span className="font-bold text-[#004581]">Solcitar demo gratuita</span>
+                                    </BotonSquare>
+                                </a>
+
+                                <BotonSquare
+                                    className={'flex hover:cursor-pointer'}
+                                >
+                                    <span className="font-bold text-[#004581]">Conocer mas</span>
+                                    <ChevronRightIcon className="h-6 w-6 text-gray-500" />
+                                </BotonSquare>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section
+                        id="caracteristicas"
+                        className="w-full py-12 md:py-24 lg:py-32 bg-[#f0f5f9] relative">
+                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#97cbdc] via-[#018abd] to-[#004581]" />
+                        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+
+                            <div className="flex flex-col items-center justify-center 
+                                space-y-4 text-center">
+                                <div className="space-y-2">
+                                    <div className="inline-block rounded-full bg-gradient-to-r
+                                 from-[#004581] to-[#018abd] px-4 py-1.5 text-sm
+                                  text-white font-medium shadow-sm">
+                                        Características Principales
+                                    </div>
+                                    <h2 className="text-3xl font-bold tracking-tighter 
+                                    md:text-4xl text-[#001b48]">
+                                        Todo lo que necesitas para gestionar historias
+                                        clínicas
+                                    </h2>
+                                    <p className="max-w-[900px] text-[#004581] md:text-xl/relaxed 
+                                    lg:text-base/relaxed xl:text-xl/relaxed">
+                                        Nuestra plataforma está diseñada por y para profesionales
+                                        de la salud, facilitando el registro, acceso y análisis
+                                        de información clínica.
+                                    </p>
+                                </div>
+
+                                <div className="mx-auto grid max-w-5xl items-center gap-8 py-12 lg:grid-cols-3 justify-center">
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300 hover:bg-blue-100">
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#004581] to-[#018abd] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <ClockIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Acceso Inmediato
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Consulta historias clínicas desde cualquier dispositivo, en cualquier
+                                            momento y lugar.
+                                        </p>
+                                    </Card>
+
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300">
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#018abd] to-[#97cbdc] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <ShieldCheckIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Seguridad Avanzada
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Protección de datos con encriptación de nivel hospitalario y
+                                            cumplimiento de normativas.
+                                        </p>
+                                    </Card>
+
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300">
+
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#018abd] to-[#97cbdc] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <UserGroupIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Colaboración
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Facilita la comunicación entre especialistas y la continuidad asistencial.
+                                        </p>
+                                    </Card>
+
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300">
+
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#018abd] to-[#97cbdc] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <PresentationChartLineIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Análisis de Datos
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Genera informes y estadísticas para mejorar la toma de decisiones clínicas.
+                                        </p>
+                                    </Card>
+
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300">
+
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#018abd] to-[#97cbdc] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <CloudArrowUpIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Integración
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Compatible con sistemas hospitalarios y equipos médicos existentes.
+
+                                        </p>
+                                    </Card>
+
+                                    <Card className="w-full h-full flex flex-col justify-between group 
+                                        border-0 hover:scale-105 hover:shadow-lg transition-transform 
+                                        duration-300">
+
+                                        <div className="flex h-14 w-14 items-center justify-center rounded-full 
+                                            bg-gradient-to-br from-[#018abd] to-[#97cbdc] mx-auto shadow-md 
+                                            group-hover:scale-110 transition-transform duration-300">
+                                            <CheckCircleIcon className="h-8 w-8 text-white" />
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-[#001b48]">
+                                            Personalización
+                                        </h3>
+
+                                        <p className="text-[#004581]">
+                                            Adaptable a las necesidades específicas de cada especialidad médica.
+                                        </p>
+                                    </Card>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <section id="beneficios" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br 
+                        from-[#f0f5f9] to-white relative overflow-hidden">
+
+                        <div className="container mx-auto px-4 md:px-6 max-w-7xl relative space-y-4">
+                            <div className="inline-block rounded-full 
+                                bg-gradient-to-r from-[#018abd] to-[#97cbdc] px-4 py-1.5 
+                                text-sm text-white font-medium shadow-sm">
+                                Beneficios
+                            </div>
+
+                            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-[#001b48]">
+                                Transformando la atención médica
+                            </h2>
+                            <p className="max-w-[600px] text-[#004581]/80 md:text-xl/relaxed 
+                                lg:text-base/relaxed xl:text-xl/relaxed">
+                                Nuestra plataforma no solo digitaliza historias clínicas, sino que mejora
+                                todo el proceso de atención al paciente.
                             </p>
-                            <button
-                                onClick={() => setIsVisibleRegister(!isVisibleRegister)}
-                                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-                                Comenzar ahora
-                            </button>
+
+                            <ul className="grid gap-4 pt-4">
+                                {beneficios.map((beneficio, index) => (
+                                    <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/70 
+                                        hover:bg-white hover:shadow-md transition-all duration-300 border 
+                                        border-[#97cbdc]/20">
+
+                                        <div className="flex h-10 w-10 shrink-0 items-center 
+                                            justify-center rounded-full bg-gradient-to-br from-[#018abd] to-[#97cbdc] 
+                                            shadow-sm">
+                                            <CheckCircleIcon className="h-7 w-7 text-white" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-[#001b48]">{beneficio.titulo}</h3>
+                                            <p className="text-sm text-[#004581]/80">{beneficio.descripcion}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        {/* Parte inferior: 3 columnas */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm md:text-base">
-                            <div>
-                                <h2 className="font-semibold mb-2">🧠 Funcionalidades Clave</h2>
-                                <ul className="list-disc list-inside space-y-1">
-                                    <li>Registro de pacientes</li>
-                                    <li>Historial clínico</li>
-                                    <li>Recetas digitales</li>
-                                    <li>Calendario de citas</li>
-                                </ul>
-                            </div>
+                    </section>
 
-                            <div>
-                                <h2 className="font-semibold mb-2">📊 Beneficios Directos</h2>
-                                <ul className="list-disc list-inside space-y-1">
-                                    <li>Menos errores médicos</li>
-                                    <li>Mayor productividad</li>
-                                    <li>Seguimiento continuo</li>
-                                </ul>
-                            </div>
+                    <section id="testimonios" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br">
 
-                            <div>
-                                <h2 className="font-semibold mb-2">🛠️ Tecnología Usada</h2>
-                                <ul className="list-disc list-inside space-y-1">
-                                    <li>App web responsive</li>
-                                    <li>Cifrado de datos</li>
-                                    <li>Arquitectura escalable</li>
-                                </ul>
+                    </section>
+
+
+                    <footer className="w-full border-t bg-gradient-to-r from-[#001b48] to-[#004581] py-8 
+                    text-white">
+                        <div className="container mx-auto px-4 md:px-6 max-w-7xl flex flex-col items-center 
+                    justify-between gap-4 md:flex-row">
+                            <div className="flex items-center gap-2">
+                                <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center 
+                            shadow-md">
+                                </div>
+                                <span className="text-lg font-bold text-white">
+                                    MediNote
+                                </span>
                             </div>
+                            <p className="text-center text-sm text-white md:text-left">
+                                © 2025 MediNote. Todos los derechos reservados.
+                            </p>
+                            <nav className="flex gap-4 sm:gap-6">
+                                <a className="text-sm font-medium text-white hover:text-[#97cbdc] 
+                                        hover:underline underline-offset-4 transition-colors" href="#">
+                                    Términos
+                                </a>
+                                <a className="text-sm font-medium text-white hover:text-[#97cbdc]
+                                     hover:underline underline-offset-4 transition-colors" href="#">
+                                    Privacidad
+                                </a>
+                                <a className="text-sm font-medium text-white 
+                                    hover:text-[#97cbdc] hover:underline underline-offset-4 
+                                    transition-colors" href="#">
+                                    Contacto
+                                </a>
+                            </nav>
                         </div>
-                    </div>
+                    </footer>
+                </main >
 
-                    {/* Sección derecha: Imagen */}
-                    <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
-                        <img
-                            src={img1}
-                            alt="Visual de MediNote"
-                            className="w-5xl  h-auto rounded-xl shadow-lg"
-                        />
-                    </div>
-                </main>
-
-                <footer className="bg-gray-100 w-full py-4 text-center text-sm text-gray-500">
-                    © {new Date().getFullYear()} MediNote. Todos los derechos reservados.
-                </footer>
-            </div>
-
-        </MainDiv>
+            </div >
+        </MainDiv >
     );
 };
 
