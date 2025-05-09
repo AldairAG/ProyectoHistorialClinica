@@ -12,9 +12,26 @@ import {
 } from "@heroicons/react/24/outline";
 
 
-
-
-
+const testimonios = [
+    {
+        nombre: "Dra. María Rodríguez",
+        especialidad: "Médico de Familia",
+        comentario: "La plataforma ha revolucionado mi consulta. Ahora puedo acceder al historial completo de mis pacientes en segundos, lo que me permite ofrecer una atención más personalizada y eficiente.",
+        avatar: "https://via.placeholder.com/40"
+    },
+    {
+        nombre: "Dr. Carlos Méndez",
+        especialidad: "Cardiólogo",
+        comentario: "La capacidad de compartir información con otros especialistas ha mejorado significativamente la coordinación en los casos complejos. Además, los pacientes valoran mucho no tener que repetir su historial en cada visita.",
+        avatar: "https://via.placeholder.com/40"
+    },
+    {
+        nombre: "Dra. Ana Gómez",
+        especialidad: "Directora Clínica",
+        comentario: "Implementar esta solución en nuestra clínica ha supuesto un antes y un después. Hemos reducido errores, optimizado recursos y mejorado la satisfacción tanto de pacientes como de profesionales.",
+        avatar: "https://via.placeholder.com/40"
+    }
+];
 
 const beneficios = [
     {
@@ -44,7 +61,9 @@ const LandingPage = () => {
     return (
         <MainDiv className="bg-gray-50 w-full max-w-full">
             <div className="flex flex-col h-full bg-gray-50">
-                <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleLogin)}>
+                <VentanaModal isOpen={isVisibleLogin} setOpen={() => setIsVisibleLogin(!isVisibleLogin)}
+                    className={'md:max-w-lg'}
+                >
                     <Login />
                 </VentanaModal>
                 <VentanaModal isOpen={isVisibleRegister} setOpen={() => setIsVisibleRegister(!isVisibleRegister)}>
@@ -53,8 +72,7 @@ const LandingPage = () => {
 
                 <header className="px-4 lg:px-6 h-16 flex items-center border-b bg-gradient-to-r 
                     from-[#001b48] to-[#004581] sticky top-0 z-50 shadow-md justify-between">
-
-                    <Logo className="text-2xl font-bold text-gray-800" />
+                    <Logo />
                     <nav className="flex space-x-4 items-center">
                         <a>Características</a>
                         <a>Beneficios</a>
@@ -247,7 +265,6 @@ const LandingPage = () => {
                                     </Card>
 
                                 </div>
-
                             </div>
 
                         </div>
@@ -294,10 +311,53 @@ const LandingPage = () => {
 
                     </section>
 
-                    <section id="testimonios" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br">
+                    <section id="testimonios" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-[#001b48] to-[#004581] relative">
+                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#004581] via-[#018abd] to-[#97cbdc]"></div>
+                        <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+                            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                                <div className="space-y-2">
+                                    <div className="inline-block rounded-full bg-white px-4 py-1.5 text-sm text-[#004581] font-medium shadow-sm">Testimonios</div>
+                                    <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-white drop-shadow-md">Lo que dicen nuestros usuarios</h2>
+                                    <p className="max-w-[900px] text-white md:text-xl lg:text-base xl:text-xl">Profesionales de la salud que ya han transformado su práctica con nuestra plataforma.</p>
+                                </div>
+                            </div>
 
+                            <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3 justify-center">
+
+                                {testimonios.map((testimonio, index) => (
+                                    <div className="rounded-xl border border-[#97cbdc] border-opacity-30 
+                                                    bg-gradient-to-br from-white to-[#dde8f0] bg-opacity-90 p-6 
+                                                    shadow-md hover:shadow-lg transition-all duration-300 
+                                                    hover:-translate-y-1"  key={index}>
+
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-center gap-4">
+                                                <div className="relative">
+                                                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#018abd] to-[#97cbdc] blur-sm"></div>
+                                                    <img
+                                                        alt="Avatar"
+                                                        loading="lazy"
+                                                        width="40"
+                                                        height="40"
+                                                        className="rounded-full relative z-10 border-2 border-white"
+                                                        src={testimonio.avatar}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-semibold text-[#001b48]">{testimonio.nombre}</h3>
+                                                    <p className="text-sm text-[#004581] opacity-80">{testimonio.especialidad}</p>
+                                                </div>
+                                            </div>
+                                            <p className="text-[#004581] opacity-80 italic">
+                                                &quot;{testimonio.comentario}&quot;
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                ))}
+                            </div>
+                        </div>
                     </section>
-
 
                     <footer className="w-full border-t bg-gradient-to-r from-[#001b48] to-[#004581] py-8 
                     text-white">

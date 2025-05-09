@@ -1,5 +1,5 @@
 import { USER_ROUTES } from '../../constants/routes'
-import Avatar from './Avatar'
+import { LogoInline } from '../ui/Logo'
 import { useUser } from '../../hooks/useUser'
 
 const opciones = [
@@ -27,7 +27,7 @@ const SiderBarNav = () => {
         return window.location.pathname === route;
     };
 
-    const handleChangeNavigation =(e,ruta) => {
+    const handleChangeNavigation = (e, ruta) => {
         navigateTo(ruta)
     };
 
@@ -35,9 +35,13 @@ const SiderBarNav = () => {
         <div className={(menuBar ? "w-64 " : "w-20 ") + "relative flex flex-col justify-between h-full overflow-hidden " +
             "bg-gray-50 z-50 transition-[width,left,background-color] duration-500 ease-in-out "}>
 
-            <div className='relative h-25 flex items-center justify-center mb-4 border-gray-200 border-b-1
-                            after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gray-50 after:opacity-20'>
-                <Avatar />
+            <div className='trelative h-20 flex items-center justify-center mb-4 
+                        border-gray-200 border-b-1 after:absolute after:bottom-0 
+                        after:left-0 after:w-full after:h-[1px] after:bg-gray-50 
+                        after:opacity-20'>
+
+                <LogoInline className="text-3xl" navBar={true} isOpen={menuBar}/>
+
             </div>
 
             <nav className="h-full overflow-x-hidden overflow-y-auto ">

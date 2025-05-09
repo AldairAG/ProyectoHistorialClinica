@@ -5,32 +5,55 @@
 
 /* Personaliza el tamaño de la barra de desplazamiento en todos los navegadores */
 ::-webkit-scrollbar {
-    width: 5px; /* Ajusta el tamaño aquí */
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
+  width: 5px;
+  /* Ajusta el tamaño aquí */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+@media print {
+
+  /* Asegurarse de que los encabezados y pies no se muestren */
+  header,
+  footer {
+    display: none;
   }
 
-  @media print {
-    
-    /* Asegurarse de que los encabezados y pies no se muestren */
-    header, footer {
-      display: none;
-    }
-  
-    /* Eliminar márgenes extra */
-    @page {
-      margin: 0;
-    }
+  /* Eliminar márgenes extra */
+  @page {
+    margin: 0;
   }
-  
+}
+
+
+/* select,
+::picker(select) {
+  appearance: base-select;
+}
+
+option {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+::picker(select) {
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+select{
+
+} */

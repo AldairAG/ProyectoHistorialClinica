@@ -1,55 +1,28 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
-import InputWhite from "../ui/InputWhite";
-import BotonAzul from "../ui/BotonAzul";
+import { BotonAzulDegradado } from "../ui/BotonAzul";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
 import { useUser } from "../../hooks/useUser";
+import logo from "../../assets/Logo.png";
+import { InputBlue } from "../ui/Input";
+import { SelectBox } from "../ui/Select";
+import { UserIcon, LockClosedIcon, EnvelopeIcon, ChevronRightIcon, 
+    ArrowUpOnSquareIcon,BuildingOffice2Icon,HomeIcon ,PhoneIcon,MapPinIcon } from "@heroicons/react/24/outline";
 
-const totalSteps = 3;
+const totalSteps = 4;
+const steps = [
+    "Datos Personales", "Informacion de identidad", "Informacion de contacto y direccion",
+
+]
+const generosOpciones = [
+    "Masculino",
+    "Femenino",
+];
 
 const RegistrarUser = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(3);
     const { registro } = useUser();
-
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-            passwordConf: "",
-            nombre: "",
-            apellidoPaterno: "",
-            apellidoMaterno: "",
-            universidad: "",
-            cedula: "",
-        },
-        validationSchema: Yup.object({
-            email: Yup.string()
-                .email("El correo electrónico no es válido")
-                .required("El correo electrónico es obligatorio"),
-
-        }),
-        onSubmit: async (values) => {
-            const request = {
-                email: values.email,
-                password: values.password,
-                nombre: values.nombre,
-                apellidoPaterno: values.apellidoPaterno,
-                apellidoMaterno: values.apellidoMaterno,
-                universidad: values.universidad,
-                cedula: values.cedula,
-            };
-
-            handleRegister(request);
-        },
-    });
-
-    const handleRegister = async (request) => {
-
-        await registro(request); // ya guarda token y user
-        //nextStep(); // Avanza al siguiente paso después de enviar el formulario
-
-    }
 
     const nextStep = () => {
         if (step < 4) setStep(step + 1);
@@ -60,207 +33,285 @@ const RegistrarUser = () => {
     };
 
 
-    // Componente para el indicador de pasos estético
-    const StepIndicator = () => (
-        <div className="flex justify-center mb-6">
-            <div className="flex items-center space-x-3">
-                {[...Array(totalSteps)].map((_, index) => (
-                    <div key={index} className="flex items-center">
-                        {/* Círculo del paso */}
-                        <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center 
-                                      ${index + 1 === step
-                                    ? "bg-[#004581] text-white"
-                                    : index + 1 < step
-                                        ? "bg-[#1e88e5] text-white"
-                                        : "bg-gray-200 text-gray-600"}`}
-                        >
-                            {index + 1}
-                        </div>
 
-                        {/* Línea conectora entre círculos */}
-                        {index < totalSteps - 1 && (
-                            <div
-                                className={`w-10 h-1 ${index + 1 < step ? "bg-[#1e88e5]" : "bg-gray-200"}`}
-                            />
-                        )}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
 
     return (
-        <form onSubmit={formik.handleSubmit} className="space-y-4">
-            {step != 3 && (
-                <div className="min-h-[470px]"> {/* Contenedor con altura mínima fija */}
-                    <StepIndicator />
+        <section className="space-y-4">
+            <Steper step={step} />
 
-                    {step === 1 && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <h1 className="text-center mb-5">
-                                Datos de acceso
-                            </h1>
-                            <InputWhite
-                                label="Correo electrónico"
-                                type="email"
-                                name="email"
-                                placeholder="Correo electrónico"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                                error={formik.touched.email && formik.errors.email}
-                            />
-                            <InputWhite
-                                label="Contraseña"
-                                type="password"
-                                name="password"
-                                placeholder="Contraseña"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.password}
-                                error={formik.touched.password && formik.errors.password}
-                            />
-                            <InputWhite
-                                label="Confirmar contraseña"
-                                id="passwordConf"
-                                type="password"
-                                name="passwordConf"
-                                placeholder="Confirmar contraseña"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.passwordConf}
-                                error={formik.touched.passwordConf && formik.errors.passwordConf}
-                            />
-                            <div className="mt-7 flex justify-end">
-                                <BotonAzul
-                                    type="button"
-                                    label="Siguiente"
-                                    onClick={nextStep}
-                                />
-                            </div>
-                        </motion.div>
-                    )}
+            <LabelTitle title={steps[step - 1]} />
 
-                    {step === 2 && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <h1 className="text-center mb-5">
-                                Datos de usuario
-                            </h1>
-                            <InputWhite
-                                label="Nombre"
-                                id="nombre"
-                                type="text"
-                                name="nombre"
-                                placeholder="Nombre"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.nombre}
-                                error={formik.touched.nombre && formik.errors.nombre}
-                            />
-                            <InputWhite
-                                label="Apellido paterno"
-                                id="apellidoPaterno"
-                                type="text"
-                                name="apellidoPaterno"
-                                placeholder="Apellido paterno"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.apellidoPaterno}
-                                error={formik.touched.apellidoPaterno && formik.errors.apellidoPaterno}
-                            />
-                            <InputWhite
-                                label="Apellido materno"
-                                id="apellidoMaterno"
-                                type="text"
-                                name="apellidoMaterno"
-                                placeholder="Apellido materno"
-                                required={true}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.apellidoMaterno}
-                                error={formik.touched.apellidoMaterno && formik.errors.apellidoMaterno}
-                            />
-                            <InputWhite
-                                label="Universidad"
-                                id="universidad"
-                                type="text"
-                                name="universidad"
-                                placeholder="Universidad"
-                                onChange={formik.handleChange}
-                                required={true}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.universidad}
-                                error={formik.touched.universidad && formik.errors.universidad}
-                            />
-                            <InputWhite
-                                label="Cédula"
-                                id="cedula"
-                                type="text"
-                                name="cedula"
-                                placeholder="Cédula"
-                                onChange={formik.handleChange}
-                                required={true}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.cedula}
-                                error={formik.touched.cedula && formik.errors.cedula}
-                            />
-                            <div className="mt-7 flex justify-end gap-5">
-                                <BotonAzul
-                                    type="button"
-                                    label="Atrás"
-                                    onClick={prevStep}
-                                />
-                                <BotonAzul
-                                    type="submit"
-                                    label="Registrar"
-                                />
-                            </div>
-                        </motion.div>
-                    )}
+            {/*            <form className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <InputBlue
+                        label="Nombre"
+                        id="nombre"
+                        type="text"
+                        placeholder="Nombre"
+                        required
+                        icon={UserIcon}
+                    />
+                    <InputBlue
+                        label="Apellidos"
+                        id="apellidos"
+                        type="text"
+                        placeholder="Tus apellidos"
+                        required
+                        icon={UserIcon}
+                    />
                 </div>
-            )}
+                <InputBlue
+                    label="email"
+                    id="email"
+                    type="email"
+                    placeholder="tu@gmail.com"
+                    required
+                    icon={EnvelopeIcon}
+                />
+                <InputBlue
+                    label="Contraseña"
+                    id="password"
+                    type="password"
+                    placeholder="********"
+                    required
+                    icon={LockClosedIcon}
+                />
+                <InputBlue
+                    label="confirma contraseña"
+                    id="passwordConf"
+                    type="password"
+                    placeholder="********"
+                    required
+                    icon={LockClosedIcon}
+                />
 
-            {step === 3 && (
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="text-center py-10"
-                >
-                    <motion.h2
-                        className="text-3xl font-extrabold text-[#004581]"
-                        initial={{ scale: 0.7, rotate: -5 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ duration: 0.7, ease: "backOut" }}
-                    >
-                        ¡Registro completado con éxito! 🎉
-                    </motion.h2>
-                    <motion.p
-                        className="text-[#1565a0] mt-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                    >
-                        Gracias por registrarte. Ahora puedes iniciar sesión.
-                    </motion.p>
-                </motion.div>
-            )}
-        </form>
+                <BotonAzulDegradado onclick={nextStep}>
+                    <span>Siguiente</span>
+                    <ChevronRightIcon className="h-5 w-5 text-white" />
+                </BotonAzulDegradado > 
+
+            </form>  */}
+
+            {/*             <form className="space-y-4">
+                <InputBlue
+                    label={"Fecha de Nacimiento"}
+                    id="fechaNacimiento"
+                    type="date"
+                    placeholder="Fecha de Nacimiento"
+                    required
+                />
+
+                <SelectBox
+                    options={generosOpciones}
+                />
+
+                <div className="space-y-2">
+                    <label className="text-sm font-medium leading-none 
+                        peer-disabled:cursor-not-allowed peer-disabled:opacity-70 
+                        text-[#004581]">
+                        Foto Personal (opcional)
+                    </label>
+                    <div className="border-2 border-dashed border-[#97cbdc] rounded-lg 
+                        p-4 text-center bg-white">
+                        <label className="cursor-pointer flex flex-col items-center 
+                            space-y-2">
+                            <ArrowUpOnSquareIcon className="w-8 h-8 text-blue-500 stroke-2" />
+
+                            <span className="text-sm text-[#004581]">
+                                Haz clic para subir o arrastra y suelta
+                            </span>
+                            <span className="text-xs text-[#004581]/70">
+                                PDF, JPG o PNG (Max. 5MB)
+                            </span>
+                            <input
+                                id="fotoPersonal"
+                                accept="image/*"
+                                className="hidden"
+                                type="file" />
+                        </label>
+                    </div>
+                </div>
+
+            </form> */}
+
+            {/* <form className="space-y-4">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <InputBlue
+                        className={"col-span-2"}
+                        label="Nombre de Consultorio"
+                        id="nombreConsultorio"
+                        type="text"
+                        placeholder="Nombre de Consultorio"
+                        required
+                        icon={BuildingOffice2Icon }
+                    />
+
+                    <InputBlue
+                        label="Ciudad"
+                        id="ciudad"
+                        type="text"
+                        placeholder="Ciudad"
+                        required
+                        icon={MapPinIcon}
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <InputBlue
+                            label="Número Exterior"
+                            id="numeroExterior"
+                            type="text"
+                            placeholder="Número"
+                            required
+                            icon={BuildingOffice2Icon}
+                        />
+                        <InputBlue
+                            label="Número Interior"
+                            id="numeroInterior"
+                            type="text"
+                            placeholder="(opcional)"
+                            icon={BuildingOffice2Icon}
+                        />
+                    </div>
+
+
+                    <InputBlue
+                        label="Calle"
+                        id="calle"
+                        type="text"
+                        placeholder="Calle"
+                        required
+                        icon={MapPinIcon }
+                    />
+
+                    <InputBlue
+                        label="Colonia"
+                        id="colonia"
+                        type="text"
+                        placeholder="Colonia"
+                        required
+                        icon={MapPinIcon }
+                    />
+
+                    <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                        <InputBlue
+                            label="Teléfono"
+                            id="telefono"
+                            type="text"
+                            placeholder="Teléfono"
+                            required
+                            icon={PhoneIcon}
+                        />
+
+                        <InputBlue
+                            label="Estado"
+                            id="estado"
+                            type="text"
+                            placeholder="Estado"
+                            required
+                            icon={MapPinIcon }
+                        />
+
+                        <InputBlue
+                            label="Código Postal"
+                            id="codigoPostal"
+                            type="text"
+                            placeholder="Código Postal"
+                            required
+                            icon={EnvelopeIcon}
+                        />
+
+                    </div>
+
+
+
+                </div>
+
+                <BotonAzulDegradado onClick={nextStep}>
+                    <span>Siguiente</span>
+                    <ChevronRightIcon className="h-5 w-5 text-white" />
+                </BotonAzulDegradado>
+            </form> */}
+
+            <form>
+                
+            </form>
+
+            <div className="text-center text-sm text-[#004581]/70 pt-4">
+                ¿Ya tienes una cuenta?
+                <button type="button"
+                    className="font-medium text-[#018abd] hover:text-[#004581] transition-colors">
+                    Inicia sesión
+                </button>
+            </div>
+
+        </section>
     );
 };
+
+const Steper = ({ step }) => {
+    return (
+        <div className="flex flex-col text-center sm:text-left space-y-3">
+            <img
+                src={logo}
+                alt="logo"
+                className="w-10 h-10 self-center"
+            />
+            <h2 id="radix-«ReifbH1»" className="tracking-tight text-center text-xl font-bold text-[#001b48]">Crear Cuenta</h2>
+            <p id="radix-«ReifbH2»" className="text-sm text-center text-[#004581]/80">Regístrate para comenzar a utilizar MediNote</p>
+
+            <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center space-x-2 w-full">
+
+                        {[...Array(totalSteps)].map((_, index) => (
+                            <div key={index} className="flex-1 flex items-center">
+                                {/* Círculo del paso */}
+                                <div
+                                    className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-medium 
+                                        text-white 
+                                      ${index + 1 == step
+                                            ? "bg-gradient-to-r from-[#004581] to-[#018abd] text-white"
+                                            : index + 1 < step
+                                                ? "bg-[#1e88e5] text-white"
+                                                : "bg-gray-200 text-gray-600"}`}
+                                >
+                                    {index + 1}
+                                </div>
+
+                                {/* Línea conectora entre círculos */}
+                                {index < totalSteps - 1 && (
+                                    <div className={`h-1 flex-1 mx-1 ${index + 1 < step ? "bg-[#1e88e5]" : "bg-gray-200"}`}>
+                                        <div className="h-full bg-[#dde8f0]" />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
+
+                <div className="text-xs text-[#004581]/80 flex justify-between mb-1">
+                    <span>Paso {step} de 4</span>
+                    <span>{25 * step}% completado</span>
+                </div>
+
+
+                <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div
+                        className="bg-blue-900 h-full transition-all duration-300 ease-in-out"
+                        style={{ width: `${25 * step}%` }}
+                    ></div>
+                </div>
+            </div>
+
+        </div>
+    )
+}
+
+const LabelTitle = ({ title }) => {
+    return <h3 className="font-medium text-[#001b48] border-l-4 border-[#018abd] pl-2">{title}</h3>
+}
 
 export default RegistrarUser;

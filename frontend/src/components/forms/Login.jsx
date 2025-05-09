@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Input } from "../ui/Input";
+import { InputBlue } from "../ui/Input";
 import { useUser } from "../../hooks/useUser";
 import { USER_ROUTES } from "../../constants/routes";
+import { BotonAzulDegradado } from "../ui/BotonAzul";
+import logo from "../../assets/logo.png";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
 const Login = () => {
     const { login, navigateTo } = useUser()
@@ -35,9 +38,15 @@ const Login = () => {
     return (
         <form className="space-y-6" onSubmit={formik.handleSubmit}>
 
-            <h5 className="text-xl font-medium text-gray-900">Inicia sesion</h5>
+            <div className="flex flex-col text-center sm:text-left space-y-3">
+                <div className="mx-auto h-13 w-13 rounded-full bg-gradient-to-br border border-gray-300 flex items-center justify-center shadow-md">
+                    <img src={logo} alt="logo" className="w-8 h-8" />
+                </div>
+                <h2 id="radix-«RaifbH1»" className="tracking-tight text-center text-xl font-bold text-[#001b48]">Iniciar Sesión</h2>
+                <p id="radix-«RaifbH2»" className="text-sm text-center text-[#004581]/80">Accede a tu cuenta para gestionar historias clínicas</p>
+            </div>
 
-            <Input
+            <InputBlue
                 label="Correo Electrónico"
                 id="email"
                 type="email"
@@ -47,9 +56,10 @@ const Login = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
+                icon={EnvelopeIcon}
             />
 
-            <Input
+            <InputBlue
                 label="Contraseña"
                 id="password"
                 type="password"
@@ -59,6 +69,7 @@ const Login = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
+                icon={LockClosedIcon}
             />
 
             <div className="flex items-start">
@@ -66,14 +77,22 @@ const Login = () => {
                         dark:text-blue-500">¿Olvidaste tu contraseña?</a>
             </div>
 
-            <button type="submit"
-                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-                    focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 
-                    py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
-                    dark:focus:ring-blue-800">Iniciar sesion</button>
+            <BotonAzulDegradado type="submit" className="w-full" variant="large">
+                Iniciar sesion
+            </BotonAzulDegradado>
 
-            <div className="text-sm font-medium text-gray-500">
-                ¿Aun no estas registrado? <a onClick={() => navigateTo(USER_ROUTES.REGISTER)}
+            <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-[#97cbdc]/30">
+                    </div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                    <span className="bg-[#f0f5f9] px-2 text-[#004581]/70">o</span>
+                </div>
+            </div>
+
+            <div className="text-sm font-medium text-gray-500 flex items-center justify-center gap-2">
+                    ¿Aun no estas registrado? <a onClick={() => navigateTo(USER_ROUTES.REGISTER)}
                     className="text-blue-700 hover:underline dark:text-blue-500">Crea una cuenta aqui</a>
             </div>
         </form >
